@@ -1,0 +1,54 @@
+{%- comment -%}Shared by the cart drawer and the cart page.{%- endcomment -%}
+{%- if cart.item_count > 0 -%}
+  <ul class="cart-items">
+    {%- for item in cart.items -%}
+      <li class="cart-item" data-cart-item>
+        <a href="{{ item.url }}" tabindex="-1" aria-hidden="true">
+          {%- if item.image -%}
+            <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.image.alt | escape }}" width="84" height="84" loading="lazy" class="cart-item__image">
+          {%- else -%}
+            <span class="cart-item__image"></span>
+          {%- endif -%}
+        </a>
+
+        <div>
+          <a href="{{ item.url }}" class="cart-item__title">{{ item.product.title | escape }}</a>
+
+          {%- unless item.product.has_only_default_variant -%}
+            <div class="cart-item__variant">{{ item.variant.title }}</div>
+          {%- endunless -%}
+
+          {%- for property in item.properties -%}
+            {%- if property.last != blank and property.first != '_' -%}
+              <div class="cart-item__variant">{{ property.first }}: {{ property.last }}</div>
+            {%- endif -%}
+          {%- endfor -%}
+
+          {%- if item.original_line_price > item.final_line_price -%}
+            <div class="cart-item__variant">
+              <s>{{ item.original_line_price | money }}</s>
+              <strong>{{ item.final_line_price | money }}</strong>
+            </div>
+          {%- endif -%}
+
+          {%- if item.line_level_discount_allocations.size > 0 -%}
+            {%- for allocation in item.line_level_discount_allocations -%}
+              <div class="cart-item__variant" style="color:var(--hp-success)">
+                {{ allocation.discount_application.title }} (&minus;{{ allocation.amount | money }})
+              </div>
+            {%- endfor -%}
+          {%- endif -%}
+
+          <div class="cart-item__row">
+            {% render 'quantity-input', id: 'CartQty-', name: 'updates[]', value: item.quantity, line: forloop.index %}
+            <strong>{{ item.final_line_price | money }}</strong>
+          </div>
+
+          <button type="button" class="cart-item__remove" data-cart-remove="{{ forloop.index }}">
+            {{ 'cart.general.remove' | t }}
+          </button>
+        </div>
+      </li>
+    {%- endfor -%}
+  </ul>
+{%- endif -%}

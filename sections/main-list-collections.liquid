@@ -1,0 +1,30 @@
+<div class="collection-hero">
+  <span class="blob blob--1"></span>
+  <div class="page-width" style="position:relative;z-index:1">
+    <h1 class="h1">{{ page_title }}</h1>
+  </div>
+</div>
+
+<div class="page-width section">
+  <div class="tile-grid">
+    {%- for collection in collections -%}
+      <a href="{{ collection.url }}" class="tile">
+        <span class="tile__media media">
+          {%- if collection.featured_image -%}
+            <img src="{{ collection.featured_image | image_url: width: 700 }}" alt="{{ collection.title | escape }}" loading="lazy" width="700" height="933">
+          {%- else -%}
+            {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+        </span>
+        <span class="tile__overlay">
+          <span class="tile__title">{{ collection.title | escape }}</span>
+          <span class="tile__count">{{ 'products.facets.product_count' | t: count: collection.all_products_count }}</span>
+        </span>
+      </a>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Collections list" }
+{% endschema %}

@@ -1,0 +1,412 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Hopits",
+    "theme_author": "Hopits",
+    "theme_version": "1.0.0",
+    "theme_documentation_url": "https://www.hopits.com",
+    "theme_support_url": "https://www.hopits.com/pages/contact"
+  },
+  {
+    "name": "t:settings.brand.name",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "t:settings.brand.logo"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "min": 80,
+        "max": 260,
+        "step": 10,
+        "unit": "px",
+        "label": "t:settings.brand.logo_width",
+        "default": 140
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "t:settings.brand.favicon"
+      },
+      {
+        "type": "textarea",
+        "id": "brand_tagline",
+        "label": "t:settings.brand.tagline",
+        "default": "Shoes built for little adventurers."
+      }
+    ]
+  },
+  {
+    "name": "t:settings.colors.name",
+    "settings": [
+      {
+        "type": "header",
+        "content": "t:settings.colors.core"
+      },
+      {
+        "type": "color",
+        "id": "color_ink",
+        "label": "t:settings.colors.ink",
+        "default": "#16203A"
+      },
+      {
+        "type": "color",
+        "id": "color_ink_soft",
+        "label": "t:settings.colors.ink_soft",
+        "default": "#5B6580"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "t:settings.colors.background",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_surface",
+        "label": "t:settings.colors.surface",
+        "default": "#FFF8F0"
+      },
+      {
+        "type": "header",
+        "content": "t:settings.colors.playful"
+      },
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "t:settings.colors.primary",
+        "default": "#FF5F9E"
+      },
+      {
+        "type": "color",
+        "id": "color_primary_contrast",
+        "label": "t:settings.colors.primary_contrast",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_yellow",
+        "label": "t:settings.colors.yellow",
+        "default": "#FFC53D"
+      },
+      {
+        "type": "color",
+        "id": "color_teal",
+        "label": "t:settings.colors.teal",
+        "default": "#2EC4B6"
+      },
+      {
+        "type": "color",
+        "id": "color_grape",
+        "label": "t:settings.colors.grape",
+        "default": "#7C5CFF"
+      },
+      {
+        "type": "color",
+        "id": "color_coral",
+        "label": "t:settings.colors.coral",
+        "default": "#FF7A5A"
+      },
+      {
+        "type": "header",
+        "content": "t:settings.colors.utility"
+      },
+      {
+        "type": "color",
+        "id": "color_sale",
+        "label": "t:settings.colors.sale",
+        "default": "#E03131"
+      },
+      {
+        "type": "color",
+        "id": "color_success",
+        "label": "t:settings.colors.success",
+        "default": "#12B886"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "label": "t:settings.colors.border",
+        "default": "#E8E4DE"
+      }
+    ]
+  },
+  {
+    "name": "t:settings.typography.name",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "t:settings.typography.heading",
+        "default": "poppins_n6"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "t:settings.typography.body",
+        "default": "assistant_n4"
+      },
+      {
+        "type": "range",
+        "id": "font_body_scale",
+        "min": 90,
+        "max": 130,
+        "step": 5,
+        "unit": "%",
+        "label": "t:settings.typography.body_scale",
+        "default": 100
+      },
+      {
+        "type": "range",
+        "id": "font_heading_scale",
+        "min": 90,
+        "max": 140,
+        "step": 5,
+        "unit": "%",
+        "label": "t:settings.typography.heading_scale",
+        "default": 100
+      },
+      {
+        "type": "checkbox",
+        "id": "heading_uppercase",
+        "label": "t:settings.typography.heading_uppercase",
+        "default": false
+      }
+    ]
+  },
+  {
+    "name": "t:settings.shape.name",
+    "settings": [
+      {
+        "type": "range",
+        "id": "radius_card",
+        "min": 0,
+        "max": 32,
+        "step": 2,
+        "unit": "px",
+        "label": "t:settings.shape.radius_card",
+        "default": 20
+      },
+      {
+        "type": "range",
+        "id": "radius_button",
+        "min": 0,
+        "max": 40,
+        "step": 2,
+        "unit": "px",
+        "label": "t:settings.shape.radius_button",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "radius_input",
+        "min": 0,
+        "max": 32,
+        "step": 2,
+        "unit": "px",
+        "label": "t:settings.shape.radius_input",
+        "default": 12
+      },
+      {
+        "type": "select",
+        "id": "card_shadow",
+        "label": "t:settings.shape.card_shadow",
+        "options": [
+          { "value": "none", "label": "t:settings.shape.shadow_none" },
+          { "value": "soft", "label": "t:settings.shape.shadow_soft" },
+          { "value": "pop", "label": "t:settings.shape.shadow_pop" }
+        ],
+        "default": "soft"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_blobs",
+        "label": "t:settings.shape.enable_blobs",
+        "info": "t:settings.shape.enable_blobs_info",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "t:settings.product_card.name",
+    "settings": [
+      {
+        "type": "select",
+        "id": "card_image_ratio",
+        "label": "t:settings.product_card.image_ratio",
+        "options": [
+          { "value": "square", "label": "t:settings.product_card.ratio_square" },
+          { "value": "portrait", "label": "t:settings.product_card.ratio_portrait" },
+          { "value": "landscape", "label": "t:settings.product_card.ratio_landscape" }
+        ],
+        "default": "square"
+      },
+      {
+        "type": "checkbox",
+        "id": "card_hover_image",
+        "label": "t:settings.product_card.hover_image",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "card_show_vendor",
+        "label": "t:settings.product_card.show_vendor",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "card_show_swatches",
+        "label": "t:settings.product_card.show_swatches",
+        "info": "t:settings.product_card.show_swatches_info",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "card_quick_add",
+        "label": "t:settings.product_card.quick_add",
+        "info": "t:settings.product_card.quick_add_info",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "card_show_sizes",
+        "label": "t:settings.product_card.show_sizes",
+        "info": "t:settings.product_card.show_sizes_info",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "size_option_names",
+        "label": "t:settings.product_card.size_option_names",
+        "info": "t:settings.product_card.size_option_names_info",
+        "default": "Size, UK Size, EU Size"
+      },
+      {
+        "type": "text",
+        "id": "color_option_names",
+        "label": "t:settings.product_card.color_option_names",
+        "default": "Color, Colour, Shade"
+      }
+    ]
+  },
+  {
+    "name": "t:settings.cart.name",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "t:settings.cart.type",
+        "options": [
+          { "value": "drawer", "label": "t:settings.cart.type_drawer" },
+          { "value": "page", "label": "t:settings.cart.type_page" }
+        ],
+        "default": "drawer"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_show_note",
+        "label": "t:settings.cart.show_note",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_free_shipping_bar",
+        "label": "t:settings.cart.free_shipping_bar",
+        "default": true
+      },
+      {
+        "type": "number",
+        "id": "cart_free_shipping_threshold",
+        "label": "t:settings.cart.free_shipping_threshold",
+        "info": "t:settings.cart.free_shipping_threshold_info",
+        "default": 999
+      }
+    ]
+  },
+  {
+    "name": "t:settings.sizing.name",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "t:settings.sizing.intro"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_size_guide",
+        "label": "t:settings.sizing.enable",
+        "default": true
+      },
+      {
+        "type": "textarea",
+        "id": "size_chart_rows",
+        "label": "t:settings.sizing.rows",
+        "info": "t:settings.sizing.rows_info",
+        "default": "21 | 12.8 | 1 - 1.5 yrs\n22 | 13.5 | 1.5 - 2 yrs\n23 | 14.2 | 2 - 2.5 yrs\n24 | 14.9 | 2.5 - 3 yrs\n25 | 15.6 | 3 - 3.5 yrs\n26 | 16.3 | 3.5 - 4 yrs\n27 | 17.0 | 4 - 4.5 yrs\n28 | 17.7 | 4.5 - 5 yrs\n29 | 18.4 | 5 - 6 yrs\n30 | 19.1 | 6 - 7 yrs\n31 | 19.8 | 7 - 8 yrs\n32 | 20.5 | 8 - 9 yrs\n33 | 21.2 | 9 - 10 yrs\n34 | 21.9 | 10 - 11 yrs"
+      },
+      {
+        "type": "textarea",
+        "id": "size_guide_tips",
+        "label": "t:settings.sizing.tips",
+        "info": "t:settings.sizing.tips_info",
+        "default": "Measure in the evening, when feet are at their largest.\nStand your child on paper, mark heel and longest toe, then measure the gap.\nAdd 0.5 cm of growing room and pick the closest size up.\nStill between sizes? Always go up — kids grow fast."
+      }
+    ]
+  },
+  {
+    "name": "t:settings.social.name",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram",
+        "info": "https://instagram.com/shophopits"
+      },
+      { "type": "text", "id": "social_facebook", "label": "Facebook" },
+      { "type": "text", "id": "social_youtube", "label": "YouTube" },
+      { "type": "text", "id": "social_pinterest", "label": "Pinterest" },
+      {
+        "type": "header",
+        "content": "t:settings.social.support"
+      },
+      {
+        "type": "text",
+        "id": "whatsapp_number",
+        "label": "t:settings.social.whatsapp",
+        "info": "t:settings.social.whatsapp_info"
+      },
+      {
+        "type": "text",
+        "id": "whatsapp_message",
+        "label": "t:settings.social.whatsapp_message",
+        "default": "Hi Hopits! I need help picking a size."
+      },
+      {
+        "type": "checkbox",
+        "id": "whatsapp_float",
+        "label": "t:settings.social.whatsapp_float",
+        "default": true
+      },
+      { "type": "text", "id": "support_phone", "label": "t:settings.social.phone" },
+      { "type": "text", "id": "support_email", "label": "t:settings.social.email", "default": "support@hopits.in" }
+    ]
+  },
+  {
+    "name": "t:settings.seo.name",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "share_image",
+        "label": "t:settings.seo.share_image"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_structured_data",
+        "label": "t:settings.seo.structured_data",
+        "info": "t:settings.seo.structured_data_info",
+        "default": true
+      }
+    ]
+  }
+]

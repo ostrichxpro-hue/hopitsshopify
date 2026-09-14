@@ -1,0 +1,9 @@
+<div class="page-width page-width--narrow section">
+  {% render 'breadcrumbs' %}
+  <h1 class="h1">{{ page.title | escape }}</h1>
+  <div class="rte mt-8">{{ page.content }}</div>
+</div>
+
+{% schema %}
+{ "name": "Page" }
+{% endschema %}

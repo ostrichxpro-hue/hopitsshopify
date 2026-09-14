@@ -1,0 +1,103 @@
+{
+  "settings": {
+    "brand": {
+      "name": "Brand",
+      "logo": "Logo",
+      "logo_width": "Logo width",
+      "favicon": "Favicon",
+      "tagline": "Tagline"
+    },
+    "colors": {
+      "name": "Colours",
+      "core": "Core",
+      "playful": "Playful accents",
+      "utility": "Utility",
+      "ink": "Text",
+      "ink_soft": "Muted text",
+      "background": "Page background",
+      "surface": "Soft surface",
+      "primary": "Primary",
+      "primary_contrast": "Text on primary",
+      "yellow": "Sunshine",
+      "teal": "Splash",
+      "grape": "Grape",
+      "coral": "Coral",
+      "sale": "Sale",
+      "success": "Success",
+      "border": "Borders"
+    },
+    "typography": {
+      "name": "Typography",
+      "heading": "Heading font",
+      "body": "Body font",
+      "body_scale": "Body size",
+      "heading_scale": "Heading size",
+      "heading_uppercase": "Uppercase headings"
+    },
+    "shape": {
+      "name": "Shape and depth",
+      "radius_card": "Card corner radius",
+      "radius_button": "Button corner radius",
+      "radius_input": "Input corner radius",
+      "card_shadow": "Card shadow",
+      "shadow_none": "None",
+      "shadow_soft": "Soft",
+      "shadow_pop": "Pop",
+      "enable_blobs": "Show decorative blobs",
+      "enable_blobs_info": "Playful background shapes behind key sections."
+    },
+    "product_card": {
+      "name": "Product cards",
+      "image_ratio": "Image shape",
+      "ratio_square": "Square",
+      "ratio_portrait": "Portrait",
+      "ratio_landscape": "Landscape",
+      "hover_image": "Show second image on hover",
+      "show_vendor": "Show vendor",
+      "show_swatches": "Show colour swatches",
+      "show_swatches_info": "Pulls from the colour option on each product.",
+      "quick_add": "Enable quick add",
+      "quick_add_info": "Adds to cart without leaving the grid.",
+      "show_sizes": "Show size picker on card",
+      "show_sizes_info": "Shoppers pick a size right in the grid — far fewer clicks to cart.",
+      "size_option_names": "Size option names",
+      "size_option_names_info": "Comma separated. Used to detect which option is the size.",
+      "color_option_names": "Colour option names"
+    },
+    "cart": {
+      "name": "Cart",
+      "type": "Cart style",
+      "type_drawer": "Slide-out drawer",
+      "type_page": "Separate page",
+      "show_note": "Enable order note",
+      "free_shipping_bar": "Show free shipping progress bar",
+      "free_shipping_threshold": "Free shipping threshold",
+      "free_shipping_threshold_info": "In your store currency, without decimals."
+    },
+    "sizing": {
+      "name": "Kids size guide",
+      "intro": "Sizing is the number one reason kids' footwear gets returned. This guide appears on every product page and in the quick add.",
+      "enable": "Enable size guide",
+      "rows": "Size chart rows",
+      "rows_info": "One row per line: SIZE | FOOT LENGTH (cm) | AGE",
+      "tips": "Measuring tips",
+      "tips_info": "One tip per line."
+    },
+    "social": {
+      "name": "Social and support",
+      "support": "Customer support",
+      "whatsapp": "WhatsApp number",
+      "whatsapp_info": "Include country code, digits only. Example: 919876543210",
+      "whatsapp_message": "Pre-filled WhatsApp message",
+      "whatsapp_float": "Show floating WhatsApp button",
+      "phone": "Support phone",
+      "email": "Support email"
+    },
+    "seo": {
+      "name": "SEO and sharing",
+      "share_image": "Default social sharing image",
+      "structured_data": "Output structured data",
+      "structured_data_info": "Helps Google show ratings, prices and breadcrumbs."
+    }
+  }
+}

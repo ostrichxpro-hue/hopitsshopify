@@ -1,0 +1,96 @@
+<article class="page-width page-width--narrow article">
+  {% render 'breadcrumbs' %}
+
+  <header class="article__header">
+    <h1 class="h1">{{ article.title | escape }}</h1>
+    <div class="text-muted">
+      {{ article.published_at | date: format: 'date' }}
+      {%- if article.author != blank %} &middot; {{ 'blogs.article.by_author' | t: author: article.author }}{% endif -%}
+    </div>
+  </header>
+
+  {%- if article.image -%}
+    <div class="article__hero media media--wide">
+      <img
+        src="{{ article.image | image_url: width: 1400 }}"
+        alt="{{ article.image.alt | escape }}"
+        width="{{ article.image.width }}"
+        height="{{ article.image.height }}"
+        loading="eager"
+      >
+    </div>
+  {%- endif -%}
+
+  <div class="rte">{{ article.content }}</div>
+
+  {%- if blog.comments_enabled? -%}
+    <div class="mt-8">
+      <h2 class="h4">{{ 'blogs.article.comments' | t: count: article.comments_count }}</h2>
+
+      {%- for comment in article.comments -%}
+        <div class="card mt-6" style="padding:1.8rem;background:var(--hp-surface)">
+          <div class="rte">{{ comment.content }}</div>
+          <div class="text-muted mt-4" style="font-size:1.3rem">
+            {{ comment.author }} &middot; {{ comment.created_at | date: format: 'date' }}
+          </div>
+        </div>
+      {%- endfor -%}
+
+      {%- form 'new_comment', article, class: 'stack stack-4 mt-8' -%}
+        {%- if form.errors -%}
+          <div class="form-status form-status--error">{{ form.errors.messages.form }}</div>
+        {%- elsif form.posted_successfully? -%}
+          <div class="form-status form-status--success">
+            {%- if blog.moderated? -%}
+              {{ 'blogs.article.success_moderated' | t }}
+            {%- else -%}
+              {{ 'blogs.article.success' | t }}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        <div class="field">
+          <label class="field__label" for="CommentAuthor">{{ 'blogs.article.name' | t }}</label>
+          <input type="text" id="CommentAuthor" name="comment[author]" class="field__input" required>
+        </div>
+        <div class="field">
+          <label class="field__label" for="CommentEmail">{{ 'blogs.article.email' | t }}</label>
+          <input type="email" id="CommentEmail" name="comment[email]" class="field__input" required>
+        </div>
+        <div class="field">
+          <label class="field__label" for="CommentBody">{{ 'blogs.article.message' | t }}</label>
+          <textarea id="CommentBody" name="comment[body]" class="field__input" rows="5" required></textarea>
+        </div>
+
+        {%- if blog.moderated? -%}
+          <p class="text-muted" style="font-size:1.3rem">{{ 'blogs.article.moderated' | t }}</p>
+        {%- endif -%}
+
+        <button type="submit" class="button button--primary">{{ 'blogs.article.post' | t }}</button>
+      {%- endform -%}
+    </div>
+  {%- endif -%}
+
+  <a href="{{ blog.url }}" class="button button--ghost mt-8">
+    {{ 'blogs.article.back_to_blog' | t: title: blog.title }}
+  </a>
+</article>
+
+{%- if settings.enable_structured_data -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": {{ article.title | json }},
+      "datePublished": {{ article.published_at | date: '%Y-%m-%d' | json }},
+      "author": { "@type": "Person", "name": {{ article.author | json }} }
+      {%- if article.image %},
+        "image": {{ article.image | image_url: width: 1200 | prepend: "https:" | json }}
+      {%- endif %}
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{ "name": "Article" }
+{% endschema %}

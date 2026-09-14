@@ -1,0 +1,316 @@
+{
+  "general": {
+    "accessibility": {
+      "skip_to_content": "Skip to content",
+      "close": "Close",
+      "menu": "Menu",
+      "previous": "Previous",
+      "next": "Next",
+      "loading": "Loading",
+      "refresh_page": "Choosing a selection results in a full page refresh."
+    },
+    "search": {
+      "title": "Search",
+      "placeholder": "Search for sneakers, sandals, sizes…",
+      "submit": "Search",
+      "results_for": "Results for \"{{ terms }}\"",
+      "no_results": "No results for \"{{ terms }}\". Try a different spelling or browse the collections below.",
+      "results_count": {
+        "one": "{{ count }} result",
+        "other": "{{ count }} results"
+      },
+      "suggestions": "Suggestions",
+      "products": "Products",
+      "collections": "Collections",
+      "pages": "Pages",
+      "view_all": "View all results"
+    },
+    "pagination": {
+      "label": "Pagination",
+      "previous": "Previous",
+      "next": "Next",
+      "page": "Page {{ number }}"
+    },
+    "newsletter": {
+      "label": "Email",
+      "placeholder": "you@email.com",
+      "submit": "Join the club",
+      "success": "Welcome to the Hopits club! Check your inbox."
+    },
+    "share": {
+      "label": "Share",
+      "copied": "Link copied"
+    },
+    "breadcrumbs": {
+      "home": "Home",
+      "label": "Breadcrumbs"
+    },
+    "back_to_top": "Back to top",
+    "meta": {
+      "tags": "Tagged \"{{ tags }}\"",
+      "page": "Page {{ page }}"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "adding": "Adding…",
+      "added": "Added!",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable",
+      "notify_me": "Email me when back in stock",
+      "quantity": "Quantity",
+      "increase": "Increase quantity",
+      "decrease": "Decrease quantity",
+      "view_details": "View details",
+      "quick_add": "Quick add",
+      "choose_size": "Choose a size",
+      "select_size_first": "Please pick a size",
+      "size_guide": "Size guide",
+      "vendor": "Brand",
+      "sku": "SKU",
+      "description": "Description",
+      "on_sale": "Save {{ amount }}",
+      "sale_badge": "Sale",
+      "new_badge": "New",
+      "bestseller_badge": "Bestseller",
+      "low_stock": "Only {{ count }} left",
+      "in_stock": "In stock — ships in 24 hrs",
+      "out_of_stock_size": "{{ size }} is sold out",
+      "media_gallery": "Product media",
+      "zoom": "Open media in full screen",
+      "price_from": "From",
+      "inclusive_of_tax": "Inclusive of all taxes",
+      "pincode_label": "Check delivery",
+      "pincode_placeholder": "Enter pincode",
+      "pincode_submit": "Check",
+      "you_may_also_like": "You may also like",
+      "complete_the_look": "Pairs well with"
+    },
+    "facets": {
+      "filter_and_sort": "Filter and sort",
+      "filter_by": "Filter",
+      "sort_by": "Sort by",
+      "clear": "Clear",
+      "clear_all": "Clear all",
+      "apply": "Show results",
+      "from": "From",
+      "to": "To",
+      "max_price": "The highest price is {{ price }}",
+      "product_count": {
+        "one": "{{ count }} product",
+        "other": "{{ count }} products"
+      },
+      "no_products": "No products match these filters yet.",
+      "show_more": "Show more",
+      "show_less": "Show less"
+    },
+    "size_guide": {
+      "title": "Find the right size",
+      "intro": "Kids' feet grow about 1 cm every few months. Measure before every new pair.",
+      "size": "Size",
+      "foot_length": "Foot length (cm)",
+      "age": "Approx. age",
+      "how_to_measure": "How to measure",
+      "calculator_title": "Size finder",
+      "calculator_label": "Your child's foot length in cm",
+      "calculator_placeholder": "e.g. 17.5",
+      "calculator_submit": "Find my size",
+      "calculator_result": "We recommend size {{ size }}",
+      "calculator_grown": "This includes 0.5 cm of growing room.",
+      "calculator_out_of_range": "That's outside our size range — message us and we'll help.",
+      "calculator_invalid": "Enter a foot length between 10 and 26 cm."
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Your cart",
+      "empty": "Your cart is empty",
+      "empty_message": "Let's find something brilliant for those little feet.",
+      "continue_shopping": "Continue shopping",
+      "subtotal": "Subtotal",
+      "taxes_and_shipping": "Taxes and shipping calculated at checkout",
+      "checkout": "Checkout",
+      "view_cart": "View cart",
+      "remove": "Remove",
+      "item_count": {
+        "one": "{{ count }} item",
+        "other": "{{ count }} items"
+      },
+      "note": "Order note",
+      "note_placeholder": "Gift wrap, delivery instructions…",
+      "update": "Update",
+      "free_shipping_progress": "You're {{ amount }} away from free shipping",
+      "free_shipping_unlocked": "Free shipping unlocked!",
+      "cart_error": "Something went wrong. Please try again."
+    }
+  },
+  "sections": {
+    "header": {
+      "announcement": "Announcement",
+      "cart_count": {
+        "one": "{{ count }} item in cart",
+        "other": "{{ count }} items in cart"
+      },
+      "account": "Account",
+      "log_in": "Log in",
+      "menu": "Menu"
+    },
+    "footer": {
+      "follow_us": "Follow us",
+      "payment_methods": "We accept",
+      "newsletter_title": "Get 10% off your first pair",
+      "newsletter_text": "New drops, sizing tips and the odd surprise. No spam, promise."
+    },
+    "collection": {
+      "all_products": "All products",
+      "browse": "Browse"
+    }
+  },
+  "blogs": {
+    "article": {
+      "read_more": "Read more",
+      "posted_on": "Posted on",
+      "by_author": "by {{ author }}",
+      "back_to_blog": "Back to {{ title }}",
+      "comments": {
+        "one": "{{ count }} comment",
+        "other": "{{ count }} comments"
+      },
+      "moderated": "Comments are moderated before they appear.",
+      "success": "Thanks! Your comment has been posted.",
+      "success_moderated": "Thanks! Your comment will appear once approved.",
+      "name": "Name",
+      "email": "Email",
+      "message": "Comment",
+      "post": "Post comment"
+    }
+  },
+  "customer": {
+    "account": {
+      "title": "My account",
+      "details": "Account details",
+      "view_addresses": "View addresses",
+      "return": "Return to account details",
+      "log_out": "Log out"
+    },
+    "orders": {
+      "title": "Order history",
+      "none": "You haven't placed any orders yet.",
+      "order_number": "Order",
+      "date": "Date",
+      "payment_status": "Payment",
+      "fulfillment_status": "Delivery",
+      "total": "Total",
+      "product": "Product",
+      "sku": "SKU",
+      "price": "Price",
+      "quantity": "Qty",
+      "subtotal": "Subtotal",
+      "shipping": "Shipping",
+      "tax": "Tax",
+      "track_shipment": "Track shipment",
+      "fulfilled_at": "Shipped on {{ date }}",
+      "billing_address": "Billing address",
+      "shipping_address": "Shipping address",
+      "discount": "Discount"
+    },
+    "login": {
+      "title": "Log in",
+      "email": "Email",
+      "password": "Password",
+      "forgot_password": "Forgot your password?",
+      "submit": "Log in",
+      "guest_title": "Continue as a guest",
+      "guest_continue": "Continue",
+      "create_account": "Create account",
+      "no_account": "New to Hopits?"
+    },
+    "recover_password": {
+      "title": "Reset your password",
+      "subtext": "We'll email you a reset link.",
+      "submit": "Send reset link",
+      "cancel": "Cancel",
+      "success": "We've sent you an email with a link to update your password."
+    },
+    "register": {
+      "title": "Create account",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Create account",
+      "has_account": "Already have an account?"
+    },
+    "addresses": {
+      "title": "Addresses",
+      "add_new": "Add a new address",
+      "edit": "Edit",
+      "delete": "Delete",
+      "delete_confirm": "Delete this address?",
+      "default": "Default address",
+      "set_default": "Set as default address",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "company": "Company",
+      "address1": "Address",
+      "address2": "Apartment, suite, etc.",
+      "city": "City",
+      "country": "Country/Region",
+      "province": "State",
+      "zip": "PIN code",
+      "phone": "Phone",
+      "save": "Save",
+      "cancel": "Cancel",
+      "none": "You haven't saved an address yet."
+    },
+    "activate_account": {
+      "title": "Activate account",
+      "subtext": "Create your password to activate your account.",
+      "password": "Password",
+      "password_confirm": "Confirm password",
+      "submit": "Activate account",
+      "decline": "Decline invitation"
+    },
+    "reset_password": {
+      "title": "Set a new password",
+      "subtext": "Choose a new password for your account.",
+      "password": "Password",
+      "password_confirm": "Confirm password",
+      "submit": "Save password"
+    }
+  },
+  "contact": {
+    "form": {
+      "title": "Get in touch",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "message": "How can we help?",
+      "send": "Send message",
+      "success": "Thanks! We'll get back to you within one working day."
+    }
+  },
+  "gift_cards": {
+    "issued": {
+      "title": "Here's your {{ value }} Hopits gift card",
+      "subtext": "Your gift card",
+      "code": "Gift card code",
+      "expires_on": "Expires on {{ date }}",
+      "copy_code": "Copy code",
+      "shop_link": "Start shopping",
+      "print": "Print"
+    }
+  },
+  "errors": {
+    "404": {
+      "title": "This page went for a walk",
+      "subtext": "The page you're after doesn't exist — but the good stuff is one tap away.",
+      "cta": "Shop all shoes"
+    }
+  },
+  "onboarding": {
+    "product_title": "Example product",
+    "collection_title": "Example collection"
+  }
+}

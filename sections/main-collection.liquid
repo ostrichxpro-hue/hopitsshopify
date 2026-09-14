@@ -1,0 +1,100 @@
+{%- paginate collection.products by section.settings.products_per_page -%}
+  <div class="collection-hero">
+    <span class="blob blob--1"></span>
+    <span class="blob blob--2"></span>
+    <div class="page-width" style="position:relative;z-index:1">
+      {% render 'breadcrumbs' %}
+      <h1 class="h1">{{ collection.title | escape }}</h1>
+      {%- if collection.description != blank and section.settings.show_description -%}
+        <div class="collection-hero__text rte">{{ collection.description }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if section.settings.show_subcollections and linklists[collection.handle].links.size > 0 -%}
+    <div class="page-width" style="padding-top:2.4rem">
+      <div style="display:flex;gap:.8rem;overflow-x:auto;padding-bottom:.8rem">
+        {%- for link in linklists[collection.handle].links -%}
+          <a href="{{ link.url }}" class="pill{% if link.current %} pill--active{% endif %}">{{ link.title }}</a>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  <div class="page-width">
+    <div class="collection-layout">
+      <div>
+        <button type="button" class="button button--secondary button--full facets__mobile-toggle" data-panel-open="FacetPanel">
+          {% render 'icon', icon: 'filter' %}
+          {{ 'products.facets.filter_and_sort' | t }}
+        </button>
+        {% render 'facets', results: collection, enable_sorting: true %}
+      </div>
+
+      <div>
+        <div class="facets__bar">
+          <span class="facets__count" data-facet-count>
+            {{ 'products.facets.product_count' | t: count: collection.products_count }}
+          </span>
+        </div>
+
+        {% render 'active-filters', results: collection %}
+
+        <div data-product-results>
+          {%- if collection.products.size > 0 -%}
+            <ul class="product-grid product-grid--{{ section.settings.columns }}">
+              {%- for product in collection.products -%}
+                {%- liquid
+                  assign card_lazy = true
+                  if forloop.index0 < 4
+                    assign card_lazy = false
+                  endif
+                -%}
+                <li>
+                  {% render 'product-card', product: product, lazy: card_lazy %}
+                </li>
+              {%- endfor -%}
+            </ul>
+
+            {% render 'pagination', paginate: paginate %}
+          {%- else -%}
+            <div class="empty-state">
+              <p class="h4">{{ 'products.facets.no_products' | t }}</p>
+              <a href="{{ collection.url }}" class="button button--primary mt-4" data-facet-link>
+                {{ 'products.facets.clear_all' | t }}
+              </a>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    { "type": "checkbox", "id": "show_description", "label": "Show collection description", "default": true },
+    {
+      "type": "checkbox",
+      "id": "show_subcollections",
+      "label": "Show sub-collection pills",
+      "info": "Create a menu whose handle matches the collection handle to populate this.",
+      "default": true
+    },
+    { "type": "range", "id": "products_per_page", "min": 12, "max": 48, "step": 4, "label": "Products per page", "default": 24 },
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "Columns on desktop",
+      "options": [
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" },
+        { "value": "5", "label": "5" }
+      ],
+      "default": "4"
+    }
+  ]
+}
+{% endschema %}

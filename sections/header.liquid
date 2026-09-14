@@ -1,0 +1,196 @@
+<header class="header{% if section.settings.layout == 'center' %} header--center{% endif %}">
+  <div class="page-width header__inner">
+    <button
+      type="button"
+      class="header__menu-toggle"
+      data-panel-open="MobileNav"
+      aria-label="{{ 'general.accessibility.menu' | t }}"
+    >
+      {% render 'icon', icon: 'menu' %}
+    </button>
+
+    {%- if section.settings.layout == 'center' -%}
+      <nav class="nav" role="navigation">{% render 'nav-list', menu: section.settings.menu, section: section %}</nav>
+    {%- endif -%}
+
+    <a href="{{ routes.root_url }}" class="header__logo">
+      {%- if settings.logo != blank -%}
+        <img
+          src="{{ settings.logo | image_url: width: 400 }}"
+          alt="{{ shop.name | escape }}"
+          width="{{ settings.logo.width }}"
+          height="{{ settings.logo.height }}"
+          style="--logo-width: {{ settings.logo_width }}px"
+        >
+      {%- else -%}
+        <span class="header__logo-text">{{ shop.name }}</span>
+      {%- endif -%}
+    </a>
+
+    {%- if section.settings.layout != 'center' -%}
+      <nav class="nav" role="navigation">{% render 'nav-list', menu: section.settings.menu, section: section %}</nav>
+    {%- endif -%}
+
+    <div class="header__actions">
+      <button type="button" class="header__icon" data-panel-open="SearchModal" aria-label="{{ 'general.search.title' | t }}">
+        {% render 'icon', icon: 'search' %}
+      </button>
+
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{{ routes.account_url }}" class="header__icon" aria-label="{{ 'sections.header.account' | t }}">
+          {% render 'icon', icon: 'user' %}
+        </a>
+      {%- endif -%}
+
+      {%- if settings.cart_type == 'drawer' -%}
+        <button type="button" class="header__icon" data-panel-open="CartDrawer" aria-label="{{ 'sections.header.cart_count' | t: count: cart.item_count }}">
+          {% render 'icon', icon: 'cart' %}
+          <span class="cart-count" data-cart-count {% if cart.item_count == 0 %}hidden{% endif %}>{{ cart.item_count }}</span>
+        </button>
+      {%- else -%}
+        <a href="{{ routes.cart_url }}" class="header__icon" aria-label="{{ 'sections.header.cart_count' | t: count: cart.item_count }}">
+          {% render 'icon', icon: 'cart' %}
+          <span class="cart-count" data-cart-count {% if cart.item_count == 0 %}hidden{% endif %}>{{ cart.item_count }}</span>
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</header>
+
+{%- comment -%} Mobile navigation drawer {%- endcomment -%}
+<div id="MobileNav" class="mobile-nav" aria-hidden="true" role="dialog" aria-label="{{ 'general.accessibility.menu' | t }}">
+  <div class="mobile-nav__header">
+    <strong>{{ 'sections.header.menu' | t }}</strong>
+    <button type="button" class="header__icon" data-panel-close="MobileNav" aria-label="{{ 'general.accessibility.close' | t }}">
+      {% render 'icon', icon: 'close' %}
+    </button>
+  </div>
+
+  <div class="mobile-nav__body">
+    <ul class="mobile-nav__list">
+      {%- for link in section.settings.menu.links -%}
+        <li>
+          {%- if link.links.size > 0 -%}
+            <button
+              type="button"
+              class="mobile-nav__link"
+              data-mobile-submenu
+              aria-expanded="false"
+              aria-controls="MobileSub-{{ forloop.index }}"
+            >
+              <span>{{ link.title }}</span>
+              <span class="mobile-nav__toggle-icon">{% render 'icon', icon: 'chevron-down' %}</span>
+            </button>
+            <ul class="mobile-nav__sublist" id="MobileSub-{{ forloop.index }}">
+              <li><a href="{{ link.url }}"><strong>All {{ link.title | downcase }}</strong></a></li>
+              {%- for child in link.links -%}
+                <li><a href="{{ child.url }}">{{ child.title }}</a></li>
+                {%- for grandchild in child.links -%}
+                  <li><a href="{{ grandchild.url }}" style="padding-left:1.2rem">{{ grandchild.title }}</a></li>
+                {%- endfor -%}
+              {%- endfor -%}
+            </ul>
+          {%- else -%}
+            <a href="{{ link.url }}" class="mobile-nav__link">
+              <span>{{ link.title }}</span>
+              {% render 'icon', icon: 'chevron-right' %}
+            </a>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    {%- if settings.enable_size_guide -%}
+      <button type="button" class="button button--secondary button--full mt-6" data-panel-open="SizeGuideModal">
+        {% render 'icon', icon: 'ruler' %}
+        {{ 'products.product.size_guide' | t }}
+      </button>
+    {%- endif -%}
+
+    {%- if shop.customer_accounts_enabled -%}
+      <a href="{{ routes.account_url }}" class="button button--ghost mt-6">{{ 'sections.header.log_in' | t }}</a>
+    {%- endif -%}
+  </div>
+</div>
+
+{%- comment -%} Search modal with predictive results {%- endcomment -%}
+<div id="SearchModal" class="search-modal" aria-hidden="true" role="dialog" aria-label="{{ 'general.search.title' | t }}">
+  <div class="search-modal__panel" data-predictive-search>
+    <form action="{{ routes.search_url }}" method="get" role="search" class="search-modal__form">
+      <span style="color:var(--hp-ink-soft)">{% render 'icon', icon: 'search' %}</span>
+      <input
+        type="search"
+        name="q"
+        class="search-modal__input"
+        placeholder="{{ 'general.search.placeholder' | t }}"
+        aria-label="{{ 'general.search.title' | t }}"
+        autocomplete="off"
+        data-search-input
+      >
+      <button type="button" class="header__icon" data-panel-close="SearchModal" aria-label="{{ 'general.accessibility.close' | t }}">
+        {% render 'icon', icon: 'close' %}
+      </button>
+    </form>
+
+    <div class="search-modal__results" data-search-results></div>
+
+    {%- if section.settings.search_links != blank -%}
+      <div style="padding: 0 1.6rem 1.6rem">
+        <div class="predictive-group__title">{{ 'general.search.suggestions' | t }}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:.6rem">
+          {%- for link in section.settings.search_links.links -%}
+            <a href="{{ link.url }}" class="pill">{{ link.title }}</a>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "left", "label": "Logo left, menu right" },
+        { "value": "center", "label": "Logo centred" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "link_list",
+      "id": "search_links",
+      "label": "Popular search links",
+      "info": "Shown under the search box when it is empty."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "mega_menu",
+      "name": "Mega menu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "parent_title",
+          "label": "Top level menu item",
+          "info": "Must match a menu item exactly, e.g. Shop"
+        },
+        { "type": "link_list", "id": "column_1", "label": "Column 1" },
+        { "type": "text", "id": "column_1_title", "label": "Column 1 heading" },
+        { "type": "link_list", "id": "column_2", "label": "Column 2" },
+        { "type": "text", "id": "column_2_title", "label": "Column 2 heading" },
+        { "type": "link_list", "id": "column_3", "label": "Column 3" },
+        { "type": "text", "id": "column_3_title", "label": "Column 3 heading" },
+        { "type": "image_picker", "id": "promo_image", "label": "Promo image" },
+        { "type": "text", "id": "promo_title", "label": "Promo title" },
+        { "type": "url", "id": "promo_link", "label": "Promo link" }
+      ]
+    }
+  ]
+}
+{% endschema %}

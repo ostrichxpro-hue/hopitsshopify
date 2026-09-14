@@ -1,0 +1,91 @@
+<div class="section{% if section.settings.background == 'surface' %} section--surface{% endif %}">
+  <div class="page-width page-width--narrow">
+    <div class="section-header section-header--center">
+      <div class="section-header__text">
+        <h2 class="section-header__title h2">{{ section.settings.heading | escape }}</h2>
+        {%- if section.settings.subheading != blank -%}
+          <p class="section-header__subtitle">{{ section.settings.subheading | escape }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="accordion">
+      {%- for block in section.blocks -%}
+        <div class="accordion__item" {{ block.shopify_attributes }}>
+          <h3 style="margin:0">
+            <button
+              type="button"
+              class="accordion__trigger"
+              data-accordion-trigger
+              aria-expanded="false"
+              aria-controls="Faq-{{ section.id }}-{{ forloop.index }}"
+            >
+              <span>{{ block.settings.question | escape }}</span>
+              <span class="accordion__icon">{% render 'icon', icon: 'plus' %}</span>
+            </button>
+          </h3>
+          <div class="accordion__panel rte" id="Faq-{{ section.id }}-{{ forloop.index }}" hidden>
+            {{ block.settings.answer }}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{%- if settings.enable_structured_data and section.blocks.size > 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for block in section.blocks -%}
+          {
+            "@type": "Question",
+            "name": {{ block.settings.question | json }},
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": {{ block.settings.answer | strip_html | json }}
+            }
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Questions parents ask" },
+    { "type": "text", "id": "subheading", "label": "Subheading" },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "default", "label": "Page background" },
+        { "value": "surface", "label": "Soft surface" }
+      ],
+      "default": "default"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "How do I pick the right size?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Measure your child's foot length in cm and use our size finder. Add 0.5 cm of growing room.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [{ "type": "question" }, { "type": "question" }, { "type": "question" }]
+    }
+  ]
+}
+{% endschema %}

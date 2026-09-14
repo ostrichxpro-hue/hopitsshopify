@@ -1,0 +1,61 @@
+<div class="usp-bar">
+  <div class="page-width">
+    <div class="usp-bar__grid">
+      {%- for block in section.blocks -%}
+        <div class="usp" {{ block.shopify_attributes }}>
+          <span class="usp__icon">{% render 'icon', icon: block.settings.icon %}</span>
+          <span>
+            <span class="usp__title">{{ block.settings.title | escape }}</span>
+            {%- if block.settings.text != blank -%}
+              <span class="usp__text" style="display:block">{{ block.settings.text | escape }}</span>
+            {%- endif -%}
+          </span>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Trust bar",
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "usp",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "truck", "label": "Delivery" },
+            { "value": "return", "label": "Returns" },
+            { "value": "shield", "label": "Quality" },
+            { "value": "rupee", "label": "Payment" },
+            { "value": "foot", "label": "Fit" },
+            { "value": "ruler", "label": "Sizing" },
+            { "value": "heart", "label": "Care" },
+            { "value": "sparkle", "label": "Sparkle" }
+          ],
+          "default": "truck"
+        },
+        { "type": "text", "id": "title", "label": "Title", "default": "Free shipping" },
+        { "type": "text", "id": "text", "label": "Text", "default": "On orders above ₹999" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust bar",
+      "blocks": [
+        { "type": "usp", "settings": { "icon": "truck", "title": "Free shipping", "text": "On orders above ₹999" } },
+        { "type": "usp", "settings": { "icon": "return", "title": "7-day exchange", "text": "Wrong size? Swap it free" } },
+        { "type": "usp", "settings": { "icon": "rupee", "title": "Cash on delivery", "text": "Available across India" } },
+        { "type": "usp", "settings": { "icon": "shield", "title": "Kid-safe materials", "text": "Non-toxic, skin friendly" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

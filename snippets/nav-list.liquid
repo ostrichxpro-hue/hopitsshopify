@@ -1,0 +1,87 @@
+{%- comment -%}
+  Desktop navigation. A top level link renders a mega menu when a "Mega menu"
+  block in the header section names it; otherwise it falls back to a simple
+  dropdown built from the menu itself.
+{%- endcomment -%}
+<ul class="nav__list">
+  {%- for link in menu.links -%}
+    {%- liquid
+      assign mega_block = nil
+      for block in section.blocks
+        if block.type == 'mega_menu' and block.settings.parent_title == link.title
+          assign mega_block = block
+        endif
+      endfor
+    -%}
+    <li class="nav__item">
+      <a
+        href="{{ link.url }}"
+        class="nav__link{% if link.title contains 'Sale' or link.title contains 'Offer' %} nav__link--highlight{% endif %}"
+        {% if link.current %}aria-current="page"{% endif %}
+      >
+        {{ link.title }}
+        {%- if link.links.size > 0 or mega_block -%}{% render 'icon', icon: 'chevron-down' %}{%- endif -%}
+      </a>
+
+      {%- if mega_block -%}
+        <div class="nav__mega" {{ mega_block.shopify_attributes }}>
+          <div class="nav__mega-grid">
+            {%- for i in (1..3) -%}
+              {%- liquid
+                case i
+                  when 1
+                    assign col = mega_block.settings.column_1
+                    assign col_title = mega_block.settings.column_1_title
+                  when 2
+                    assign col = mega_block.settings.column_2
+                    assign col_title = mega_block.settings.column_2_title
+                  when 3
+                    assign col = mega_block.settings.column_3
+                    assign col_title = mega_block.settings.column_3_title
+                endcase
+              -%}
+              {%- if col != blank and col.links.size > 0 -%}
+                <div>
+                  {%- if col_title != blank -%}
+                    <div class="nav__mega-heading">{{ col_title | escape }}</div>
+                  {%- endif -%}
+                  <ul class="nav__mega-list">
+                    {%- for child in col.links -%}
+                      <li><a href="{{ child.url }}">{{ child.title }}</a></li>
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+
+            {%- if mega_block.settings.promo_image != blank -%}
+              <a href="{{ mega_block.settings.promo_link | default: link.url }}" class="nav__mega-promo" style="text-decoration:none">
+                <span class="media media--landscape">
+                  <img
+                    src="{{ mega_block.settings.promo_image | image_url: width: 600 }}"
+                    alt="{{ mega_block.settings.promo_title | escape }}"
+                    loading="lazy"
+                    width="600"
+                    height="450"
+                  >
+                </span>
+                {%- if mega_block.settings.promo_title != blank -%}
+                  <span class="nav__mega-promo-body">
+                    <strong>{{ mega_block.settings.promo_title | escape }}</strong>
+                  </span>
+                {%- endif -%}
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+
+      {%- elsif link.links.size > 0 -%}
+        <ul class="nav__dropdown">
+          {%- for child in link.links -%}
+            <li><a href="{{ child.url }}">{{ child.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </li>
+  {%- endfor -%}
+</ul>

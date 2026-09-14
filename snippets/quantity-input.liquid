@@ -1,0 +1,15 @@
+{%- comment -%}Accepts: id, name, value, min, line (optional, for cart){%- endcomment -%}
+<div class="quantity">
+  <button type="button" class="quantity__button" data-quantity-step="down" aria-label="{{ 'products.product.decrease' | t }}">&minus;</button>
+  <input
+    type="number"
+    class="quantity__input"
+    id="{{ id }}"
+    name="{{ name | default: 'quantity' }}"
+    value="{{ value | default: 1 }}"
+    min="{{ min | default: 1 }}"
+    {% if line %}data-cart-quantity="{{ line }}"{% endif %}
+    aria-label="{{ 'products.product.quantity' | t }}"
+  >
+  <button type="button" class="quantity__button" data-quantity-step="up" aria-label="{{ 'products.product.increase' | t }}">+</button>
+</div>

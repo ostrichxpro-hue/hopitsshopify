@@ -1,0 +1,31 @@
+{%- if settings.cart_free_shipping_bar and settings.cart_free_shipping_threshold > 0 -%}
+  {%- liquid
+    assign threshold = settings.cart_free_shipping_threshold | times: 100
+    assign remaining = threshold | minus: cart.total_price
+    assign pct = 0
+    if threshold > 0
+      assign pct = cart.total_price | times: 100 | divided_by: threshold
+    endif
+    if pct > 100
+      assign pct = 100
+    endif
+  -%}
+  <div
+    class="free-shipping{% if remaining <= 0 %} free-shipping--unlocked{% endif %}"
+    data-free-shipping
+    data-cart-total="{{ cart.total_price }}"
+    data-progress-text="{{ 'cart.general.free_shipping_progress' | t: amount: '[amount]' | escape }}"
+    data-unlocked-text="{{ 'cart.general.free_shipping_unlocked' | t | escape }}"
+  >
+    <span data-free-shipping-label>
+      {%- if remaining <= 0 -%}
+        {{ 'cart.general.free_shipping_unlocked' | t }}
+      {%- else -%}
+        {{ 'cart.general.free_shipping_progress' | t: amount: remaining | money }}
+      {%- endif -%}
+    </span>
+    <div class="free-shipping__track">
+      <div class="free-shipping__fill" data-free-shipping-fill style="width: {{ pct }}%"></div>
+    </div>
+  </div>
+{%- endif -%}

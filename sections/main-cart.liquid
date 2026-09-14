@@ -1,0 +1,60 @@
+<div class="page-width cart-page" data-section-type="main-cart">
+  <div data-cart-root data-section-id="{{ section.id }}">
+    <h1 class="h2">{{ 'cart.general.title' | t }}</h1>
+
+    {%- if cart.item_count > 0 -%}
+      <div class="cart-page__layout">
+        <div>
+          {% render 'cart-items' %}
+
+          {%- if settings.cart_show_note -%}
+            <div class="field mt-8">
+              <label class="field__label" for="CartNote">{{ 'cart.general.note' | t }}</label>
+              <textarea id="CartNote" class="field__input" data-cart-note rows="3" placeholder="{{ 'cart.general.note_placeholder' | t }}">{{ cart.note }}</textarea>
+            </div>
+          {%- endif -%}
+        </div>
+
+        <aside class="cart-page__aside">
+          {% render 'free-shipping-bar' %}
+
+          {%- for discount in cart.cart_level_discount_applications -%}
+            <div class="cart-summary__row" style="color:var(--hp-success)">
+              <span>{{ discount.title }}</span>
+              <span>&minus;{{ discount.total_allocated_amount | money }}</span>
+            </div>
+          {%- endfor -%}
+
+          <div class="cart-summary__row">
+            <span>{{ 'cart.general.subtotal' | t }}</span>
+            <span class="cart-summary__total">{{ cart.total_price | money }}</span>
+          </div>
+          <p class="cart-summary__note">{{ 'cart.general.taxes_and_shipping' | t }}</p>
+
+          <form action="{{ routes.cart_url }}" method="post">
+            <button type="submit" name="checkout" class="button button--primary button--large button--full">
+              {{ 'cart.general.checkout' | t }}
+            </button>
+          </form>
+
+          <a href="{{ routes.all_products_collection_url }}" class="button button--ghost mt-6" style="display:block;text-align:center">
+            {{ 'cart.general.continue_shopping' | t }}
+          </a>
+        </aside>
+      </div>
+    {%- else -%}
+      <div class="cart-empty">
+        <div class="cart-empty__emoji" aria-hidden="true">👟</div>
+        <h2 class="h3">{{ 'cart.general.empty' | t }}</h2>
+        <p class="text-muted">{{ 'cart.general.empty_message' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="button button--primary mt-6">
+          {{ 'cart.general.continue_shopping' | t }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Cart" }
+{% endschema %}

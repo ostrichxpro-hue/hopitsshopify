@@ -1,0 +1,119 @@
+{%- comment -%}
+  Global size guide. Opened from any product page or card via
+  data-panel-open="SizeGuideModal".
+
+  The chart is merchant-editable in Theme settings > Kids size guide, one row
+  per line as: SIZE | FOOT LENGTH (cm) | AGE
+{%- endcomment -%}
+{%- if settings.enable_size_guide -%}
+  {%- liquid
+    assign rows = settings.size_chart_rows | newline_to_br | split: '<br />'
+    assign tips = settings.size_guide_tips | newline_to_br | split: '<br />'
+  -%}
+
+  <div
+    id="SizeGuideModal"
+    class="modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="SizeGuideTitle"
+    aria-hidden="true"
+  >
+    <div class="modal__panel">
+      <div class="modal__header">
+        <h2 class="modal__title" id="SizeGuideTitle">{{ 'products.size_guide.title' | t }}</h2>
+        <button type="button" class="header__icon" data-panel-close="SizeGuideModal" aria-label="{{ 'general.accessibility.close' | t }}">
+          {% render 'icon', icon: 'close' %}
+        </button>
+      </div>
+
+      <div class="modal__body">
+        <p class="text-muted">{{ 'products.size_guide.intro' | t }}</p>
+
+        {%- capture size_rows_json -%}
+          [
+          {%- for row in rows -%}
+            {%- assign cells = row | strip_html | strip | split: '|' -%}
+            {%- if cells.size >= 2 -%}
+              {"size": {{ cells[0] | strip | json }}, "length": {{ cells[1] | strip | json }}}{% unless forloop.last %},{% endunless %}
+            {%- endif -%}
+          {%- endfor -%}
+          ]
+        {%- endcapture -%}
+
+        <div
+          class="size-finder"
+          data-size-finder
+          data-size-rows="{{ size_rows_json | strip_newlines | escape }}"
+          data-result-text="{{ 'products.size_guide.calculator_result' | t: size: '[size]' | escape }}"
+          data-grown-text="{{ 'products.size_guide.calculator_grown' | t | escape }}"
+          data-out-of-range-text="{{ 'products.size_guide.calculator_out_of_range' | t | escape }}"
+          data-invalid-text="{{ 'products.size_guide.calculator_invalid' | t | escape }}"
+        >
+          <strong>{{ 'products.size_guide.calculator_title' | t }}</strong>
+          <div class="size-finder__row">
+            <div class="field">
+              <label class="field__label" for="SizeFinderInput">
+                {{ 'products.size_guide.calculator_label' | t }}
+              </label>
+              <input
+                type="number"
+                inputmode="decimal"
+                step="0.1"
+                min="10"
+                max="26"
+                id="SizeFinderInput"
+                class="field__input"
+                placeholder="{{ 'products.size_guide.calculator_placeholder' | t }}"
+                data-size-input
+              >
+            </div>
+            <button type="button" class="button button--primary" data-size-submit>
+              {{ 'products.size_guide.calculator_submit' | t }}
+            </button>
+          </div>
+          <div class="size-finder__result" data-size-result hidden></div>
+        </div>
+
+        <div class="size-table__wrap">
+          <table class="size-table">
+            <thead>
+              <tr>
+                <th scope="col">{{ 'products.size_guide.size' | t }}</th>
+                <th scope="col">{{ 'products.size_guide.foot_length' | t }}</th>
+                <th scope="col">{{ 'products.size_guide.age' | t }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {%- for row in rows -%}
+                {%- assign cells = row | strip_html | strip | split: '|' -%}
+                {%- if cells.size >= 2 -%}
+                  <tr data-size="{{ cells[0] | strip | escape }}">
+                    <th scope="row">{{ cells[0] | strip }}</th>
+                    <td>{{ cells[1] | strip }}</td>
+                    <td>{{ cells[2] | strip }}</td>
+                  </tr>
+                {%- endif -%}
+              {%- endfor -%}
+            </tbody>
+          </table>
+        </div>
+
+        {%- if tips.size > 0 -%}
+          <h3 class="h5 mt-8">{{ 'products.size_guide.how_to_measure' | t }}</h3>
+          <ol class="tips-list">
+            {%- for tip in tips -%}
+              {%- assign tip_text = tip | strip_html | strip -%}
+              {%- if tip_text != blank -%}
+                <li>
+                  <span class="tips-list__num">{{ forloop.index }}</span>
+                  <span>{{ tip_text }}</span>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ol>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}

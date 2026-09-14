@@ -1,0 +1,83 @@
+{%- paginate search.results by 24 -%}
+  <div class="collection-hero">
+    <span class="blob blob--1"></span>
+    <div class="page-width" style="position:relative;z-index:1">
+      <h1 class="h2">
+        {%- if search.performed -%}
+          {{ 'general.search.results_for' | t: terms: search.terms }}
+        {%- else -%}
+          {{ 'general.search.title' | t }}
+        {%- endif -%}
+      </h1>
+
+      <form action="{{ routes.search_url }}" method="get" role="search" style="max-width:52rem;margin:2rem auto 0;display:flex;gap:.8rem">
+        <input
+          type="search"
+          name="q"
+          value="{{ search.terms | escape }}"
+          class="field__input"
+          placeholder="{{ 'general.search.placeholder' | t }}"
+          aria-label="{{ 'general.search.title' | t }}"
+        >
+        <button type="submit" class="button button--primary">{{ 'general.search.submit' | t }}</button>
+      </form>
+
+      {%- if search.performed -%}
+        <p class="text-muted mt-4">{{ 'general.search.results_count' | t: count: search.results_count }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="page-width">
+    {%- if search.performed -%}
+      <div class="collection-layout">
+        <div>
+          <button type="button" class="button button--secondary button--full facets__mobile-toggle" data-panel-open="FacetPanel">
+            {% render 'icon', icon: 'filter' %}
+            {{ 'products.facets.filter_and_sort' | t }}
+          </button>
+          {% render 'facets', results: search, enable_sorting: true %}
+        </div>
+
+        <div>
+          {% render 'active-filters', results: search %}
+
+          <div data-product-results>
+            {%- if search.results.size > 0 -%}
+              <ul class="product-grid product-grid--4">
+                {%- for item in search.results -%}
+                  {%- liquid
+                    assign card_lazy = true
+                    if forloop.index0 < 4
+                      assign card_lazy = false
+                    endif
+                  -%}
+                  <li>
+                    {%- if item.object_type == 'product' -%}
+                      {% render 'product-card', product: item, lazy: card_lazy %}
+                    {%- else -%}
+                      <a href="{{ item.url }}" class="card" style="display:block;padding:1.8rem;text-decoration:none">
+                        <h3 class="h5">{{ item.title | escape }}</h3>
+                        <p class="text-muted">{{ item.content | strip_html | truncatewords: 22 }}</p>
+                      </a>
+                    {%- endif -%}
+                  </li>
+                {%- endfor -%}
+              </ul>
+
+              {% render 'pagination', paginate: paginate %}
+            {%- else -%}
+              <div class="empty-state">
+                <p class="h4">{{ 'general.search.no_results' | t: terms: search.terms }}</p>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+{%- endpaginate -%}
+
+{% schema %}
+{ "name": "Search results" }
+{% endschema %}

@@ -1,0 +1,49 @@
+<div class="announcement announcement--rotating" data-announcement data-interval="{{ section.settings.interval }}">
+  <div class="announcement__inner page-width">
+    {%- for block in section.blocks -%}
+      <div class="announcement__item{% if forloop.first %} is-active{% endif %}" {{ block.shopify_attributes }}>
+        {%- if block.settings.link != blank -%}
+          <a href="{{ block.settings.link }}">{{ block.settings.text | escape }}</a>
+        {%- else -%}
+          {{ block.settings.text | escape }}
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "max_blocks": 5,
+  "settings": [
+    {
+      "type": "range",
+      "id": "interval",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "unit": "s",
+      "label": "Rotation speed",
+      "default": 5
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "Announcement",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Free shipping on orders above ₹999" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "announcement", "settings": { "text": "Free shipping on orders above ₹999" } },
+      { "type": "announcement", "settings": { "text": "Easy 7-day size exchange — because kids grow fast" } },
+      { "type": "announcement", "settings": { "text": "Cash on delivery available across India" } }
+    ]
+  }
+}
+{% endschema %}

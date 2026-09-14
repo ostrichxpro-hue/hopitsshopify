@@ -1,0 +1,100 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.color_primary }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+      <link rel="apple-touch-icon" href="{{ settings.favicon | image_url: width: 180, height: 180 }}">
+    {%- endif -%}
+
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} &ndash; {{ 'general.meta.tags' | t: tags: current_tags | join: ', ' }}{% endif -%}
+      {%- if current_page != 1 %} &ndash; {{ 'general.pagination.page' | t: number: current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
+
+    {% render 'meta-tags' %}
+
+    {{ content_for_header }}
+
+    {%- liquid
+      assign body_font = settings.font_body
+      assign heading_font = settings.font_heading
+      assign body_bold = body_font | font_modify: 'weight', 'bolder'
+      assign body_italic = body_font | font_modify: 'style', 'italic'
+      assign heading_bold = heading_font | font_modify: 'weight', 'bolder'
+    -%}
+
+    {{ body_font | font_face: font_display: 'swap' }}
+    {{ body_bold | font_face: font_display: 'swap' }}
+    {{ body_italic | font_face: font_display: 'swap' }}
+    {{ heading_font | font_face: font_display: 'swap' }}
+    {{ heading_bold | font_face: font_display: 'swap' }}
+
+    {% render 'css-variables' %}
+
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+
+    <script>
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+      window.Hopits = {
+        routes: {
+          root: {{ routes.root_url | json }},
+          cart: {{ routes.cart_url | json }},
+          cartAdd: {{ routes.cart_add_url | json }},
+          cartChange: {{ routes.cart_change_url | json }},
+          cartUpdate: {{ routes.cart_update_url | json }},
+          predictiveSearch: {{ routes.predictive_search_url | json }}
+        },
+        cartType: {{ settings.cart_type | json }},
+        moneyFormat: {{ shop.money_format | json }},
+        strings: {
+          addToCart: {{ 'products.product.add_to_cart' | t | json }},
+          adding: {{ 'products.product.adding' | t | json }},
+          added: {{ 'products.product.added' | t | json }},
+          soldOut: {{ 'products.product.sold_out' | t | json }},
+          unavailable: {{ 'products.product.unavailable' | t | json }},
+          selectSize: {{ 'products.product.select_size_first' | t | json }},
+          cartError: {{ 'cart.general.cart_error' | t | json }},
+          copied: {{ 'general.share.copied' | t | json }}
+        },
+        freeShipping: {
+          enabled: {{ settings.cart_free_shipping_bar | json }},
+          threshold: {{ settings.cart_free_shipping_threshold | times: 100 | json }}
+        }
+      };
+    </script>
+
+    <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+  </head>
+
+  <body class="template-{{ request.page_type | handle }} card-shadow-{{ settings.card_shadow }}{% if settings.enable_blobs %} blobs-on{% endif %}">
+    <a class="skip-link button button--primary" href="#MainContent">
+      {{ 'general.accessibility.skip_to_content' | t }}
+    </a>
+
+    {% sections 'header-group' %}
+
+    <main id="MainContent" class="main-content" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+
+    {%- if settings.cart_type == 'drawer' -%}
+      {% section 'cart-drawer' %}
+    {%- endif -%}
+
+    {% render 'size-guide-modal' %}
+    {% render 'whatsapp-button' %}
+
+    <div id="ToastRegion" class="toast-region" role="status" aria-live="polite"></div>
+  </body>
+</html>

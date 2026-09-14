@@ -1,0 +1,50 @@
+{% layout none %}
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{{ 'gift_cards.issued.title' | t: value: gift_card.initial_value | money }}</title>
+    {{ content_for_header }}
+    {%- liquid
+      assign body_font = settings.font_body
+      assign heading_font = settings.font_heading
+    -%}
+    {{ body_font | font_face: font_display: 'swap' }}
+    {{ heading_font | font_face: font_display: 'swap' }}
+    {% render 'css-variables' %}
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+  </head>
+  <body>
+    <div class="page-width page-width--narrow section text-center">
+      {%- if settings.logo != blank -%}
+        <img src="{{ settings.logo | image_url: width: 300 }}" alt="{{ shop.name | escape }}" width="140" height="40" style="margin-inline:auto">
+      {%- endif -%}
+
+      <h1 class="h2 mt-8">{{ 'gift_cards.issued.title' | t: value: gift_card.initial_value | money }}</h1>
+
+      <div class="card mt-8" style="padding:3.2rem;background:var(--hp-surface)">
+        <div class="h1" style="color:var(--hp-primary)">{{ gift_card.balance | money }}</div>
+
+        {%- if gift_card.expires_on -%}
+          <p class="text-muted">{{ 'gift_cards.issued.expires_on' | t: date: gift_card.expires_on | date: format: 'date' }}</p>
+        {%- endif -%}
+
+        {{ gift_card.qr_identifier }}
+
+        <div class="field mt-8">
+          <label class="field__label" for="GiftCardCode">{{ 'gift_cards.issued.code' | t }}</label>
+          <input type="text" id="GiftCardCode" class="field__input text-center" value="{{ gift_card.code | format_code }}" readonly>
+        </div>
+
+        <button type="button" class="button button--secondary mt-4" data-share="{{ gift_card.code | format_code }}">
+          {{ 'gift_cards.issued.copy_code' | t }}
+        </button>
+      </div>
+
+      <a href="{{ shop.url }}" class="button button--primary mt-8">{{ 'gift_cards.issued.shop_link' | t }}</a>
+    </div>
+
+    <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+  </body>
+</html>

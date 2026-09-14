@@ -1,0 +1,149 @@
+<div class="hero" data-slideshow data-autoplay="{{ section.settings.autoplay }}" data-speed="{{ section.settings.speed }}">
+  <span class="blob blob--1"></span>
+  <span class="blob blob--2"></span>
+
+  {%- for block in section.blocks -%}
+    <div class="slideshow__slide{% if forloop.first %} is-active{% endif %}" data-slide {{ block.shopify_attributes }}>
+      <div class="page-width">
+        <div class="hero__grid{% if block.settings.media_position == 'left' %} hero--media-left{% endif %}">
+          <div class="hero__body">
+            {%- if block.settings.eyebrow != blank -%}
+              <span class="hero__eyebrow">
+                {% render 'icon', icon: 'sparkle' %}
+                {{ block.settings.eyebrow | escape }}
+              </span>
+            {%- endif -%}
+
+            <h1 class="hero__title h1">{{ block.settings.heading }}</h1>
+
+            {%- if block.settings.text != blank -%}
+              <p class="hero__text">{{ block.settings.text | escape }}</p>
+            {%- endif -%}
+
+            <div class="hero__buttons">
+              {%- if block.settings.button_label != blank -%}
+                <a href="{{ block.settings.button_link }}" class="button button--primary button--large">
+                  {{ block.settings.button_label | escape }}
+                </a>
+              {%- endif -%}
+              {%- if block.settings.button_2_label != blank -%}
+                <a href="{{ block.settings.button_2_link }}" class="button button--secondary button--large">
+                  {{ block.settings.button_2_label | escape }}
+                </a>
+              {%- endif -%}
+            </div>
+
+            {%- if section.settings.show_stats -%}
+              <div class="hero__stats">
+                {%- if section.settings.stat_1_value != blank -%}
+                  <div>
+                    <span class="hero__stat-value">{{ section.settings.stat_1_value | escape }}</span>
+                    <span class="hero__stat-label">{{ section.settings.stat_1_label | escape }}</span>
+                  </div>
+                {%- endif -%}
+                {%- if section.settings.stat_2_value != blank -%}
+                  <div>
+                    <span class="hero__stat-value">{{ section.settings.stat_2_value | escape }}</span>
+                    <span class="hero__stat-label">{{ section.settings.stat_2_label | escape }}</span>
+                  </div>
+                {%- endif -%}
+                {%- if section.settings.stat_3_value != blank -%}
+                  <div>
+                    <span class="hero__stat-value">{{ section.settings.stat_3_value | escape }}</span>
+                    <span class="hero__stat-label">{{ section.settings.stat_3_label | escape }}</span>
+                  </div>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          </div>
+
+          <div class="hero__media">
+            {%- if block.settings.image != blank -%}
+              <span class="media media--landscape">
+                <img
+                  src="{{ block.settings.image | image_url: width: 1200 }}"
+                  srcset="{{ block.settings.image | image_url: width: 600 }} 600w, {{ block.settings.image | image_url: width: 1200 }} 1200w, {{ block.settings.image | image_url: width: 1800 }} 1800w"
+                  sizes="(min-width: 750px) 50vw, 100vw"
+                  alt="{{ block.settings.image.alt | default: block.settings.heading | escape }}"
+                  width="{{ block.settings.image.width }}"
+                  height="{{ block.settings.image.height }}"
+                  loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                  {% if forloop.first %}fetchpriority="high"{% endif %}
+                >
+              </span>
+            {%- else -%}
+              <span class="media media--landscape">
+                {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              </span>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  {%- endfor -%}
+
+  {%- if section.blocks.size > 1 -%}
+    <div class="slideshow__dots">
+      {%- for block in section.blocks -%}
+        <button
+          type="button"
+          class="slideshow__dot"
+          data-slide-dot
+          aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
+          aria-label="Slide {{ forloop.index }}"
+        ></button>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Hero",
+  "max_blocks": 4,
+  "settings": [
+    { "type": "checkbox", "id": "autoplay", "label": "Auto-rotate slides", "default": true },
+    { "type": "range", "id": "speed", "min": 4, "max": 12, "step": 1, "unit": "s", "label": "Slide duration", "default": 6 },
+    { "type": "header", "content": "Trust stats" },
+    { "type": "checkbox", "id": "show_stats", "label": "Show stats row", "default": true },
+    { "type": "text", "id": "stat_1_value", "label": "Stat 1 value", "default": "50,000+" },
+    { "type": "text", "id": "stat_1_label", "label": "Stat 1 label", "default": "Happy little feet" },
+    { "type": "text", "id": "stat_2_value", "label": "Stat 2 value", "default": "4.6★" },
+    { "type": "text", "id": "stat_2_label", "label": "Stat 2 label", "default": "Average rating" },
+    { "type": "text", "id": "stat_3_value", "label": "Stat 3 value", "default": "7 days" },
+    { "type": "text", "id": "stat_3_label", "label": "Stat 3 label", "default": "Easy size exchange" }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "New season drop" },
+        { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>Shoes built for <em>little adventurers</em></p>" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Lightweight, flexible and tough enough for every puddle, playground and school run." },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        {
+          "type": "select",
+          "id": "media_position",
+          "label": "Image position",
+          "options": [
+            { "value": "right", "label": "Right" },
+            { "value": "left", "label": "Left" }
+          ],
+          "default": "right"
+        },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop all shoes" },
+        { "type": "url", "id": "button_link", "label": "Button link" },
+        { "type": "text", "id": "button_2_label", "label": "Second button label", "default": "Find my size" },
+        { "type": "url", "id": "button_2_link", "label": "Second button link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero",
+      "blocks": [{ "type": "slide" }]
+    }
+  ]
+}
+{% endschema %}

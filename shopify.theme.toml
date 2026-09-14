@@ -1,0 +1,13 @@
+# Shopify CLI theme environments.
+# Usage:
+#   shopify theme dev   --environment development   # hot-reloading local preview
+#   shopify theme push  --environment development   # push to an unpublished dev theme
+#   shopify theme push  --environment production    # push to the live theme (asks first)
+
+[environments.development]
+store = "hopits.myshopify.com"
+theme = "Hopits D2C (dev)"
+unpublished = true
+
+[environments.production]
+store = "hopits.myshopify.com"

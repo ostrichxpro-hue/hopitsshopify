@@ -1,0 +1,47 @@
+{%- liquid
+  assign body_font = settings.font_body
+  assign heading_font = settings.font_heading
+  assign body_scale = settings.font_body_scale | divided_by: 100.0
+  assign heading_scale = settings.font_heading_scale | divided_by: 100.0
+-%}
+<style>
+  :root {
+    --hp-ink: {{ settings.color_ink }};
+    --hp-ink-soft: {{ settings.color_ink_soft }};
+    --hp-bg: {{ settings.color_background }};
+    --hp-surface: {{ settings.color_surface }};
+    --hp-primary: {{ settings.color_primary }};
+    --hp-on-primary: {{ settings.color_primary_contrast }};
+    --hp-yellow: {{ settings.color_yellow }};
+    --hp-teal: {{ settings.color_teal }};
+    --hp-grape: {{ settings.color_grape }};
+    --hp-coral: {{ settings.color_coral }};
+    --hp-sale: {{ settings.color_sale }};
+    --hp-success: {{ settings.color_success }};
+    --hp-border: {{ settings.color_border }};
+
+    --hp-primary-rgb: {{ settings.color_primary | color_extract: 'red' }}, {{ settings.color_primary | color_extract: 'green' }}, {{ settings.color_primary | color_extract: 'blue' }};
+    --hp-ink-rgb: {{ settings.color_ink | color_extract: 'red' }}, {{ settings.color_ink | color_extract: 'green' }}, {{ settings.color_ink | color_extract: 'blue' }};
+    --hp-primary-dark: {{ settings.color_primary | color_darken: 10 }};
+    --hp-primary-tint: {{ settings.color_primary | color_lighten: 38 }};
+    --hp-teal-tint: {{ settings.color_teal | color_lighten: 42 }};
+    --hp-yellow-tint: {{ settings.color_yellow | color_lighten: 30 }};
+    --hp-grape-tint: {{ settings.color_grape | color_lighten: 36 }};
+
+    --hp-font-body: {{ body_font.family }}, {{ body_font.fallback_families }};
+    --hp-font-body-weight: {{ body_font.weight }};
+    --hp-font-body-style: {{ body_font.style }};
+    --hp-font-heading: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+    --hp-font-heading-weight: {{ heading_font.weight }};
+    --hp-font-heading-style: {{ heading_font.style }};
+
+    --hp-body-scale: {{ body_scale }};
+    --hp-heading-scale: {{ heading_scale }};
+    --hp-heading-transform: {% if settings.heading_uppercase %}uppercase{% else %}none{% endif %};
+    --hp-heading-spacing: {% if settings.heading_uppercase %}0.04em{% else %}-0.01em{% endif %};
+
+    --hp-radius-card: {{ settings.radius_card }}px;
+    --hp-radius-button: {{ settings.radius_button }}px;
+    --hp-radius-input: {{ settings.radius_input }}px;
+  }
+</style>

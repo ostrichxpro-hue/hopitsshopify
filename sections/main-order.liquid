@@ -1,0 +1,80 @@
+<div class="page-width section">
+  <a href="{{ routes.account_url }}" class="button button--ghost">{{ 'customer.account.return' | t }}</a>
+
+  <h1 class="h3 mt-6">{{ 'customer.orders.order_number' | t }} {{ order.name }}</h1>
+  <p class="text-muted">{{ order.created_at | date: format: 'date_at_time' }}</p>
+
+  {%- if order.cancelled -%}
+    <div class="form-status form-status--error mt-4">{{ order.cancel_reason_label }}</div>
+  {%- endif -%}
+
+  <div class="table-wrap mt-8">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th scope="col">{{ 'customer.orders.product' | t }}</th>
+          <th scope="col">{{ 'customer.orders.sku' | t }}</th>
+          <th scope="col">{{ 'customer.orders.price' | t }}</th>
+          <th scope="col">{{ 'customer.orders.quantity' | t }}</th>
+          <th scope="col">{{ 'customer.orders.total' | t }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%- for line_item in order.line_items -%}
+          <tr>
+            <th scope="row">
+              <a href="{{ line_item.product.url }}">{{ line_item.title }}</a>
+            </th>
+            <td>{{ line_item.sku }}</td>
+            <td>{{ line_item.price | money }}</td>
+            <td>{{ line_item.quantity }}</td>
+            <td>{{ line_item.final_line_price | money }}</td>
+          </tr>
+        {%- endfor -%}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="4">{{ 'customer.orders.subtotal' | t }}</td>
+          <td>{{ order.line_items_subtotal_price | money }}</td>
+        </tr>
+        {%- for discount in order.cart_level_discount_applications -%}
+          <tr>
+            <td colspan="4">{{ 'customer.orders.discount' | t }} ({{ discount.title }})</td>
+            <td>&minus;{{ discount.total_allocated_amount | money }}</td>
+          </tr>
+        {%- endfor -%}
+        {%- for shipping_method in order.shipping_methods -%}
+          <tr>
+            <td colspan="4">{{ 'customer.orders.shipping' | t }} ({{ shipping_method.title }})</td>
+            <td>{{ shipping_method.price | money }}</td>
+          </tr>
+        {%- endfor -%}
+        {%- for tax_line in order.tax_lines -%}
+          <tr>
+            <td colspan="4">{{ 'customer.orders.tax' | t }} ({{ tax_line.title }})</td>
+            <td>{{ tax_line.price | money }}</td>
+          </tr>
+        {%- endfor -%}
+        <tr>
+          <td colspan="4"><strong>{{ 'customer.orders.total' | t }}</strong></td>
+          <td><strong>{{ order.total_net_amount | money }}</strong></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="split mt-8">
+    <div>
+      <h2 class="h6">{{ 'customer.orders.billing_address' | t }}</h2>
+      <div class="text-muted">{{ order.billing_address | format_address }}</div>
+    </div>
+    <div>
+      <h2 class="h6">{{ 'customer.orders.shipping_address' | t }}</h2>
+      <div class="text-muted">{{ order.shipping_address | format_address }}</div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Order" }
+{% endschema %}

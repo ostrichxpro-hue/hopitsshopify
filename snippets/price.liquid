@@ -1,0 +1,47 @@
+{%- comment -%}
+  Renders a price block.
+  Accepts: product (or variant), use_variant (bool), show_save (bool), class
+{%- endcomment -%}
+{%- liquid
+  if use_variant and product.selected_or_first_available_variant
+    assign target = product.selected_or_first_available_variant
+    assign compare_at = target.compare_at_price
+    assign price = target.price
+  elsif variant
+    assign target = variant
+    assign compare_at = variant.compare_at_price
+    assign price = variant.price
+  else
+    assign target = product
+    assign compare_at = product.compare_at_price_max
+    assign price = product.price_min
+  endif
+
+  assign on_sale = false
+  if compare_at > price
+    assign on_sale = true
+  endif
+
+  assign show_range = false
+  if use_variant == false and variant == nil and product.price_varies
+    assign show_range = true
+  endif
+-%}
+<div class="price {{ class }}{% if on_sale %} price--on-sale{% endif %}">
+  {%- if show_range -%}
+    <span class="price__from">{{ 'products.product.price_from' | t }}</span>
+  {%- endif -%}
+
+  <span class="price__regular{% if on_sale %} price__regular--on-sale{% endif %}">
+    {{ price | money }}
+  </span>
+
+  {%- if on_sale -%}
+    <s class="price__compare">{{ compare_at | money }}</s>
+    {%- if show_save -%}
+      {%- assign saved = compare_at | minus: price -%}
+      {%- assign pct = saved | times: 100 | divided_by: compare_at -%}
+      <span class="price__save">{{ 'products.product.on_sale' | t: amount: pct | append: '%' }}</span>
+    {%- endif -%}
+  {%- endif -%}
+</div>

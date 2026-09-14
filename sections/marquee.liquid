@@ -1,0 +1,40 @@
+<div class="section--tight" style="background: {{ section.settings.background_color }};">
+  <div class="marquee">
+    {%- comment -%} Duplicated track so the loop has no visible seam. {%- endcomment -%}
+    {%- for i in (1..2) -%}
+      <div class="marquee__track" aria-hidden="{% if i == 2 %}true{% else %}false{% endif %}">
+        {%- for block in section.blocks -%}
+          <span class="marquee__item" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</span>
+        {%- endfor -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Scrolling text",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#FFC53D" }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Text",
+      "settings": [{ "type": "text", "id": "text", "label": "Text", "default": "Built for play" }]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Scrolling text",
+      "blocks": [
+        { "type": "item", "settings": { "text": "Built for play" } },
+        { "type": "item", "settings": { "text": "Sized for growing feet" } },
+        { "type": "item", "settings": { "text": "Monsoon ready" } },
+        { "type": "item", "settings": { "text": "Free size exchange" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

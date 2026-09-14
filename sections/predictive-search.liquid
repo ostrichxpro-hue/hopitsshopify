@@ -1,0 +1,63 @@
+{%- comment -%}
+  Rendered by the Predictive Search API and injected into the search modal.
+{%- endcomment -%}
+<div data-predictive-root>
+  {%- if predictive_search.performed -%}
+    {%- if predictive_search.resources.products.size > 0 -%}
+      <div class="predictive-group">
+        <div class="predictive-group__title">{{ 'general.search.products' | t }}</div>
+        {%- for product in predictive_search.resources.products -%}
+          <a href="{{ product.url }}" class="predictive-item">
+            {%- if product.featured_media -%}
+              <img src="{{ product.featured_media | image_url: width: 120 }}" alt="" class="predictive-item__image" width="56" height="56" loading="lazy">
+            {%- else -%}
+              <span class="predictive-item__image"></span>
+            {%- endif -%}
+            <span>
+              <span class="predictive-item__title" style="display:block">{{ product.title | escape }}</span>
+              <span class="predictive-item__meta">{{ product.price | money }}</span>
+            </span>
+          </a>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if predictive_search.resources.collections.size > 0 -%}
+      <div class="predictive-group">
+        <div class="predictive-group__title">{{ 'general.search.collections' | t }}</div>
+        {%- for collection in predictive_search.resources.collections -%}
+          <a href="{{ collection.url }}" class="predictive-item">
+            <span class="predictive-item__title">{{ collection.title | escape }}</span>
+          </a>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if predictive_search.resources.pages.size > 0 -%}
+      <div class="predictive-group">
+        <div class="predictive-group__title">{{ 'general.search.pages' | t }}</div>
+        {%- for page in predictive_search.resources.pages -%}
+          <a href="{{ page.url }}" class="predictive-item">
+            <span class="predictive-item__title">{{ page.title | escape }}</span>
+          </a>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if predictive_search.resources.products.size == 0
+        and predictive_search.resources.collections.size == 0
+        and predictive_search.resources.pages.size == 0 -%}
+      <p class="text-muted" style="padding:1.6rem 0">
+        {{ 'general.search.no_results' | t: terms: predictive_search.terms }}
+      </p>
+    {%- else -%}
+      <a href="{{ routes.search_url }}?q={{ predictive_search.terms | url_encode }}" class="button button--secondary button--full mt-6">
+        {{ 'general.search.view_all' | t }}
+      </a>
+    {%- endif -%}
+  {%- endif -%}
+</div>
+
+{% schema %}
+{ "name": "Predictive search" }
+{% endschema %}

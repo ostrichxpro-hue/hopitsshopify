@@ -1,0 +1,87 @@
+{
+  "current": {
+    "logo_width": 140,
+    "brand_tagline": "Shoes built for little adventurers.",
+
+    "color_ink": "#16203A",
+    "color_ink_soft": "#5B6580",
+    "color_background": "#FFFFFF",
+    "color_surface": "#FFF8F0",
+    "color_primary": "#FF5F9E",
+    "color_primary_contrast": "#FFFFFF",
+    "color_yellow": "#FFC53D",
+    "color_teal": "#2EC4B6",
+    "color_grape": "#7C5CFF",
+    "color_coral": "#FF7A5A",
+    "color_sale": "#E03131",
+    "color_success": "#12B886",
+    "color_border": "#E8E4DE",
+
+    "font_heading": "poppins_n6",
+    "font_body": "assistant_n4",
+    "font_body_scale": 100,
+    "font_heading_scale": 100,
+    "heading_uppercase": false,
+
+    "radius_card": 20,
+    "radius_button": 40,
+    "radius_input": 12,
+    "card_shadow": "soft",
+    "enable_blobs": true,
+
+    "card_image_ratio": "square",
+    "card_hover_image": true,
+    "card_show_vendor": false,
+    "card_show_swatches": true,
+    "card_quick_add": true,
+    "card_show_sizes": true,
+    "size_option_names": "Size, UK Size, EU Size",
+    "color_option_names": "Color, Colour, Shade",
+
+    "cart_type": "drawer",
+    "cart_show_note": true,
+    "cart_free_shipping_bar": true,
+    "cart_free_shipping_threshold": 999,
+
+    "enable_size_guide": true,
+    "size_chart_rows": "21 | 12.8 | 1 - 1.5 yrs\n22 | 13.5 | 1.5 - 2 yrs\n23 | 14.2 | 2 - 2.5 yrs\n24 | 14.9 | 2.5 - 3 yrs\n25 | 15.6 | 3 - 3.5 yrs\n26 | 16.3 | 3.5 - 4 yrs\n27 | 17.0 | 4 - 4.5 yrs\n28 | 17.7 | 4.5 - 5 yrs\n29 | 18.4 | 5 - 6 yrs\n30 | 19.1 | 6 - 7 yrs\n31 | 19.8 | 7 - 8 yrs\n32 | 20.5 | 8 - 9 yrs\n33 | 21.2 | 9 - 10 yrs\n34 | 21.9 | 10 - 11 yrs",
+    "size_guide_tips": "Measure in the evening, when feet are at their largest.\nStand your child on paper, mark heel and longest toe, then measure the gap.\nAdd 0.5 cm of growing room and pick the closest size up.\nStill between sizes? Always go up — kids grow fast.",
+
+    "social_instagram": "",
+    "social_facebook": "",
+    "social_youtube": "",
+    "social_pinterest": "",
+    "whatsapp_number": "",
+    "whatsapp_message": "Hi Hopits! I need help picking a size.",
+    "whatsapp_float": true,
+    "support_phone": "",
+    "support_email": "support@hopits.in",
+
+    "enable_structured_data": true,
+
+    "sections": {},
+    "blocks": {}
+  },
+  "presets": {
+    "Hopits Playful": {
+      "color_primary": "#FF5F9E",
+      "color_yellow": "#FFC53D",
+      "color_teal": "#2EC4B6",
+      "color_grape": "#7C5CFF",
+      "color_surface": "#FFF8F0",
+      "radius_button": 40,
+      "radius_card": 20,
+      "enable_blobs": true
+    },
+    "Hopits Calm": {
+      "color_primary": "#2EC4B6",
+      "color_yellow": "#FFD79A",
+      "color_teal": "#4EA8DE",
+      "color_grape": "#8E7DFF",
+      "color_surface": "#F6F8FA",
+      "radius_button": 14,
+      "radius_card": 14,
+      "enable_blobs": false
+    }
+  }
+}

@@ -1,0 +1,50 @@
+<div class="page-width auth-layout">
+  <div class="auth-card">
+    <h1 class="h3 text-center">{{ 'customer.login.title' | t }}</h1>
+
+    {%- form 'customer_login', class: 'stack stack-4 mt-6' -%}
+      {{ form.errors | default_errors }}
+
+      <div class="field">
+        <label class="field__label" for="LoginEmail">{{ 'customer.login.email' | t }}</label>
+        <input type="email" id="LoginEmail" name="customer[email]" class="field__input" autocomplete="email" required>
+      </div>
+
+      {%- if form.password_needed -%}
+        <div class="field">
+          <label class="field__label" for="LoginPassword">{{ 'customer.login.password' | t }}</label>
+          <input type="password" id="LoginPassword" name="customer[password]" class="field__input" autocomplete="current-password">
+        </div>
+        <a href="#recover" class="text-muted" style="font-size:1.35rem">{{ 'customer.login.forgot_password' | t }}</a>
+      {%- endif -%}
+
+      <button type="submit" class="button button--primary button--full">{{ 'customer.login.submit' | t }}</button>
+    {%- endform -%}
+
+    <p class="text-center mt-6" style="font-size:1.4rem">
+      {{ 'customer.login.no_account' | t }}
+      <a href="{{ routes.account_register_url }}">{{ 'customer.login.create_account' | t }}</a>
+    </p>
+  </div>
+
+  <div class="auth-card mt-8" id="recover">
+    <h2 class="h5">{{ 'customer.recover_password.title' | t }}</h2>
+    <p class="text-muted" style="font-size:1.4rem">{{ 'customer.recover_password.subtext' | t }}</p>
+
+    {%- form 'recover_customer_password', class: 'stack stack-4 mt-4' -%}
+      {{ form.errors | default_errors }}
+      {%- if form.posted_successfully? -%}
+        <div class="form-status form-status--success">{{ 'customer.recover_password.success' | t }}</div>
+      {%- endif -%}
+      <div class="field">
+        <label class="field__label" for="RecoverEmail">{{ 'customer.login.email' | t }}</label>
+        <input type="email" id="RecoverEmail" name="email" class="field__input" autocomplete="email" required>
+      </div>
+      <button type="submit" class="button button--secondary">{{ 'customer.recover_password.submit' | t }}</button>
+    {%- endform -%}
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Login" }
+{% endschema %}

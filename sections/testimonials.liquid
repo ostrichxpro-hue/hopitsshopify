@@ -1,0 +1,69 @@
+<div class="section{% if section.settings.background == 'surface' %} section--surface{% endif %}">
+  <div class="page-width">
+    <div class="section-header section-header--center">
+      <div class="section-header__text">
+        <h2 class="section-header__title h2">{{ section.settings.heading | escape }}</h2>
+        {%- if section.settings.subheading != blank -%}
+          <p class="section-header__subtitle">{{ section.settings.subheading | escape }}</p>
+        {%- endif -%}
+        <span class="squiggle">{% render 'icon', icon: 'squiggle' %}</span>
+      </div>
+    </div>
+
+    <div class="testimonial-grid">
+      {%- for block in section.blocks -%}
+        <blockquote class="testimonial" {{ block.shopify_attributes }}>
+          <div class="testimonial__stars" aria-label="{{ block.settings.rating }} out of 5">
+            {%- for i in (1..block.settings.rating) -%}{% render 'icon', icon: 'star' %}{%- endfor -%}
+          </div>
+          <p class="testimonial__quote">{{ block.settings.quote | escape }}</p>
+          <footer>
+            <div class="testimonial__author">{{ block.settings.author | escape }}</div>
+            {%- if block.settings.meta != blank -%}
+              <div class="testimonial__meta">{{ block.settings.meta | escape }}</div>
+            {%- endif -%}
+          </footer>
+        </blockquote>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Loved by parents" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "What families tell us after a few months of wear and tear." },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "default", "label": "Page background" },
+        { "value": "surface", "label": "Soft surface" }
+      ],
+      "default": "surface"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        { "type": "range", "id": "rating", "min": 1, "max": 5, "step": 1, "label": "Rating", "default": 5 },
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "My daughter wore these every single day through monsoon season and they still look new." },
+        { "type": "text", "id": "author", "label": "Author", "default": "Priya S." },
+        { "type": "text", "id": "meta", "label": "Meta", "default": "Mum of two, Bengaluru" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [{ "type": "testimonial" }, { "type": "testimonial" }, { "type": "testimonial" }]
+    }
+  ]
+}
+{% endschema %}

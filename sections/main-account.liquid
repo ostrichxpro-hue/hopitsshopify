@@ -1,0 +1,62 @@
+<div class="page-width account-layout">
+  <aside>
+    <h1 class="h4">{{ 'customer.account.title' | t }}</h1>
+    <nav class="account-nav mt-6">
+      <a href="{{ routes.account_url }}">{{ 'customer.orders.title' | t }}</a>
+      <a href="{{ routes.account_addresses_url }}">{{ 'customer.addresses.title' | t }}</a>
+      <a href="{{ routes.account_logout_url }}">{{ 'customer.account.log_out' | t }}</a>
+    </nav>
+
+    <div class="card mt-8" style="padding:1.8rem;background:var(--hp-surface)">
+      <h2 class="h6">{{ 'customer.account.details' | t }}</h2>
+      <div class="text-muted" style="font-size:1.4rem">{{ customer.default_address | format_address }}</div>
+      <a href="{{ routes.account_addresses_url }}" class="button button--ghost mt-4">
+        {{ 'customer.account.view_addresses' | t }}
+      </a>
+    </div>
+  </aside>
+
+  <div>
+    <h2 class="h4">{{ 'customer.orders.title' | t }}</h2>
+
+    {%- paginate customer.orders by 20 -%}
+      {%- if customer.orders.size > 0 -%}
+        <div class="table-wrap mt-6">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th scope="col">{{ 'customer.orders.order_number' | t }}</th>
+                <th scope="col">{{ 'customer.orders.date' | t }}</th>
+                <th scope="col">{{ 'customer.orders.payment_status' | t }}</th>
+                <th scope="col">{{ 'customer.orders.fulfillment_status' | t }}</th>
+                <th scope="col">{{ 'customer.orders.total' | t }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {%- for order in customer.orders -%}
+                <tr>
+                  <th scope="row"><a href="{{ order.customer_url }}">{{ order.name }}</a></th>
+                  <td>{{ order.created_at | date: format: 'date' }}</td>
+                  <td>{{ order.financial_status_label }}</td>
+                  <td>{{ order.fulfillment_status_label }}</td>
+                  <td>{{ order.total_net_amount | money }}</td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+        </div>
+
+        {% render 'pagination', paginate: paginate %}
+      {%- else -%}
+        <p class="text-muted mt-6">{{ 'customer.orders.none' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="button button--primary mt-4">
+          {{ 'cart.general.continue_shopping' | t }}
+        </a>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Account" }
+{% endschema %}

@@ -1,0 +1,70 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": { "type": "vendor", "settings": {} },
+        "title": { "type": "title", "settings": {} },
+        "price": { "type": "price", "settings": {} },
+        "variant_picker": { "type": "variant_picker", "settings": {} },
+        "stock": { "type": "stock", "settings": {} },
+        "buy_buttons": { "type": "buy_buttons", "settings": { "show_dynamic_checkout": true } },
+        "trust": {
+          "type": "trust",
+          "settings": {
+            "item_1": "Free shipping on orders above ₹999",
+            "item_2": "Free size exchange within 7 days",
+            "item_3": "Cash on delivery available",
+            "item_4": "Skin-friendly, non-toxic materials"
+          }
+        },
+        "description": { "type": "description", "settings": {} },
+        "shipping": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "Shipping and returns",
+            "content": "<p>Dispatched within 24 hours. Metro cities in 2-4 working days, rest of India in 4-7. Free size exchange within 7 days of delivery on unworn shoes in their original box.</p>"
+          }
+        },
+        "care": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "Care instructions",
+            "content": "<p>Wipe with a damp cloth and mild soap. Air dry away from direct sunlight. Waterproof styles can be rinsed under a tap.</p>"
+          }
+        },
+        "share": { "type": "share", "settings": {} }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "price",
+        "variant_picker",
+        "stock",
+        "buy_buttons",
+        "trust",
+        "description",
+        "shipping",
+        "care",
+        "share"
+      ],
+      "settings": { "low_stock_threshold": 5 }
+    },
+    "related": {
+      "type": "related-products",
+      "settings": { "heading": "You may also like", "products_to_show": 4 }
+    },
+    "usp_bar": {
+      "type": "usp-bar",
+      "blocks": {
+        "u1": { "type": "usp", "settings": { "icon": "truck", "title": "Free shipping", "text": "On orders above ₹999" } },
+        "u2": { "type": "usp", "settings": { "icon": "return", "title": "7-day exchange", "text": "Wrong size? Swap it free" } },
+        "u3": { "type": "usp", "settings": { "icon": "rupee", "title": "Cash on delivery", "text": "Available across India" } },
+        "u4": { "type": "usp", "settings": { "icon": "ruler", "title": "Size help", "text": "Message us on WhatsApp" } }
+      },
+      "block_order": ["u1", "u2", "u3", "u4"],
+      "settings": {}
+    }
+  },
+  "order": ["main", "related", "usp_bar"]
+}

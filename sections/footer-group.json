@@ -1,0 +1,26 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "heading": "Get 10% off your first pair",
+        "text": "New drops, sizing tips and the odd surprise. No spam, promise.",
+        "button_label": "Join the club",
+        "disclaimer": "Unsubscribe any time."
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "shop": { "type": "menu", "settings": { "heading": "Shop" } },
+        "help": { "type": "menu", "settings": { "heading": "Help" } },
+        "company": { "type": "menu", "settings": { "heading": "Company" } }
+      },
+      "block_order": ["shop", "help", "company"],
+      "settings": { "show_payment_icons": true }
+    }
+  },
+  "order": ["newsletter", "footer"]
+}

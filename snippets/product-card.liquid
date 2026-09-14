@@ -1,0 +1,194 @@
+{%- comment -%}
+  Product card.
+  Accepts: product, show_quick_add (default: theme setting), lazy (bool), sizes (int)
+
+  Kids' footwear lives and dies on size availability, so the card surfaces the
+  size row up front rather than hiding it behind a hover state. When a product
+  has more than one option (colour + size), the row shows the sizes belonging to
+  the currently featured colour, which is the one the card image is showing.
+{%- endcomment -%}
+{%- liquid
+  assign card_product = product
+  assign ratio_class = 'media--square'
+  if settings.card_image_ratio == 'portrait'
+    assign ratio_class = 'media--portrait'
+  elsif settings.card_image_ratio == 'landscape'
+    assign ratio_class = 'media--landscape'
+  endif
+
+  assign loading = 'lazy'
+  if lazy == false
+    assign loading = 'eager'
+  endif
+
+  assign quick_add = settings.card_quick_add
+  if show_quick_add != nil
+    assign quick_add = show_quick_add
+  endif
+
+  comment
+    Work out which option index holds the size, and which holds the colour.
+  endcomment
+  assign size_index = -1
+  assign color_index = -1
+  assign size_names = settings.size_option_names | downcase | split: ','
+  assign color_names = settings.color_option_names | downcase | split: ','
+
+  for option in card_product.options_with_values
+    assign option_name = option.name | downcase | strip
+    for candidate in size_names
+      assign candidate_name = candidate | strip
+      if option_name == candidate_name and size_index == -1
+        assign size_index = forloop.parentloop.index0
+      endif
+    endfor
+    for candidate in color_names
+      assign candidate_name = candidate | strip
+      if option_name == candidate_name and color_index == -1
+        assign color_index = forloop.parentloop.index0
+      endif
+    endfor
+  endfor
+
+  assign featured_variant = card_product.selected_or_first_available_variant
+  assign second_image = card_product.media[1].preview_image
+-%}
+
+<div class="product-card" data-product-card data-product-id="{{ card_product.id }}">
+  <div class="product-card__media-wrap">
+    <a href="{{ card_product.url }}" tabindex="-1" aria-hidden="true" class="media {{ ratio_class }}">
+      {%- if card_product.featured_media -%}
+        <img
+          src="{{ card_product.featured_media | image_url: width: 700 }}"
+          srcset="
+            {{ card_product.featured_media | image_url: width: 350 }} 350w,
+            {{ card_product.featured_media | image_url: width: 550 }} 550w,
+            {{ card_product.featured_media | image_url: width: 750 }} 750w
+          "
+          sizes="(min-width: 1100px) 25vw, (min-width: 750px) 33vw, 46vw"
+          alt="{{ card_product.featured_media.alt | escape }}"
+          width="{{ card_product.featured_media.width }}"
+          height="{{ card_product.featured_media.height }}"
+          loading="{{ loading }}"
+          class="product-card__image"
+        >
+        {%- if settings.card_hover_image and second_image -%}
+          <img
+            src="{{ second_image | image_url: width: 700 }}"
+            alt=""
+            width="{{ second_image.width }}"
+            height="{{ second_image.height }}"
+            loading="lazy"
+            aria-hidden="true"
+            class="product-card__image product-card__image--hover"
+          >
+        {%- endif -%}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+    </a>
+
+    <div class="product-card__badges">
+      {%- liquid
+        assign is_new = false
+        assign now_seconds = 'now' | date: '%s' | plus: 0
+        assign created_seconds = card_product.created_at | date: '%s' | plus: 0
+        assign days_old = now_seconds | minus: created_seconds | divided_by: 86400
+        if days_old < 30
+          assign is_new = true
+        endif
+      -%}
+      {%- unless card_product.available -%}
+        <span class="badge badge--soldout">{{ 'products.product.sold_out' | t }}</span>
+      {%- else -%}
+        {%- if card_product.compare_at_price_max > card_product.price_min -%}
+          {%- assign saved = card_product.compare_at_price_max | minus: card_product.price_min -%}
+          {%- assign pct = saved | times: 100 | divided_by: card_product.compare_at_price_max -%}
+          <span class="badge badge--sale">{{ pct }}% off</span>
+        {%- endif -%}
+        {%- if is_new -%}
+          <span class="badge badge--new">{{ 'products.product.new_badge' | t }}</span>
+        {%- endif -%}
+        {%- if card_product.tags contains 'bestseller' or card_product.tags contains 'Bestseller' -%}
+          <span class="badge badge--best">{{ 'products.product.bestseller_badge' | t }}</span>
+        {%- endif -%}
+      {%- endunless -%}
+    </div>
+  </div>
+
+  <div class="product-card__info">
+    {%- if settings.card_show_vendor and card_product.vendor != blank -%}
+      <span class="product-card__vendor">{{ card_product.vendor }}</span>
+    {%- endif -%}
+
+    <h3 class="product-card__title">
+      <a href="{{ card_product.url }}">{{ card_product.title | escape }}</a>
+    </h3>
+
+    {% render 'price', product: card_product, use_variant: false %}
+
+    {%- if settings.card_show_swatches and color_index > -1 -%}
+      {%- assign color_option = card_product.options_with_values[color_index] -%}
+      {%- if color_option.values.size > 1 -%}
+        <div class="swatch-row" aria-label="{{ color_option.name }}">
+          {%- for value in color_option.values limit: 5 -%}
+            {% render 'swatch', value: value %}
+          {%- endfor -%}
+          {%- if color_option.values.size > 5 -%}
+            <span class="swatch-more">+{{ color_option.values.size | minus: 5 }}</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+
+    <div class="product-card__footer">
+      {%- if settings.card_show_sizes and size_index > -1 and card_product.available -%}
+        <div class="card-sizes" role="group" aria-label="{{ 'products.product.choose_size' | t }}">
+          {%- for variant in card_product.variants -%}
+            {%- liquid
+              assign show_variant = true
+              if featured_variant and card_product.options.size > 1
+                for opt_value in variant.options
+                  unless forloop.index0 == size_index
+                    unless opt_value == featured_variant.options[forloop.index0]
+                      assign show_variant = false
+                    endunless
+                  endunless
+                endfor
+              endif
+            -%}
+            {%- if show_variant -%}
+              <button
+                type="button"
+                class="card-sizes__btn"
+                data-variant-id="{{ variant.id }}"
+                aria-pressed="false"
+                {% unless variant.available %}disabled aria-label="{{ 'products.product.out_of_stock_size' | t: size: variant.options[size_index] }}"{% endunless %}
+              >
+                {{- variant.options[size_index] -}}
+              </button>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+        <input type="hidden" data-quick-add-variant value="">
+      {%- endif -%}
+
+      {%- if quick_add and card_product.available -%}
+        {%- if size_index > -1 -%}
+          <div class="quick-add">
+            <button type="button" class="button button--ink button--small button--full" data-quick-add>
+              {{ 'products.product.quick_add' | t }}
+            </button>
+          </div>
+        {%- elsif card_product.variants.size == 1 -%}
+          <div class="quick-add">
+            <input type="hidden" data-quick-add-variant value="{{ card_product.variants.first.id }}">
+            <button type="button" class="button button--ink button--small button--full" data-quick-add>
+              {{ 'products.product.add_to_cart' | t }}
+            </button>
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+  </div>
+</div>

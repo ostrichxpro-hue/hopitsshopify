@@ -1,0 +1,25 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "show_description": true,
+        "show_subcollections": true,
+        "products_per_page": 24,
+        "columns": "4"
+      }
+    },
+    "usp_bar": {
+      "type": "usp-bar",
+      "blocks": {
+        "u1": { "type": "usp", "settings": { "icon": "truck", "title": "Free shipping", "text": "On orders above ₹999" } },
+        "u2": { "type": "usp", "settings": { "icon": "return", "title": "7-day exchange", "text": "Wrong size? Swap it free" } },
+        "u3": { "type": "usp", "settings": { "icon": "rupee", "title": "Cash on delivery", "text": "Available across India" } },
+        "u4": { "type": "usp", "settings": { "icon": "shield", "title": "Kid-safe materials", "text": "Non-toxic, skin friendly" } }
+      },
+      "block_order": ["u1", "u2", "u3", "u4"],
+      "settings": {}
+    }
+  },
+  "order": ["main", "usp_bar"]
+}

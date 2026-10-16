@@ -1,4 +1,7 @@
-<div class="usp-bar">
+<div class="usp-bar usp-bar--{{ section.settings.layout | default: 'bar' }}">
+  {%- if section.settings.divider_top != 'none' and section.settings.divider_top != blank -%}
+    {% render 'section-divider', shape: section.settings.divider_top, position: 'top', color: section.settings.divider_color %}
+  {%- endif -%}
   <div class="page-width">
     <div class="usp-bar__grid">
       {%- for block in section.blocks -%}
@@ -20,6 +23,32 @@
 {
   "name": "Trust bar",
   "max_blocks": 4,
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "bar", "label": "Dark bar" },
+        { "value": "panel", "label": "Soft panel with circular icons" }
+      ],
+      "default": "bar"
+    },
+    { "type": "header", "content": "Decorative edge" },
+    {
+      "type": "select",
+      "id": "divider_top",
+      "label": "Top edge",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "wave", "label": "Wave" },
+        { "value": "scallop", "label": "Scallop" },
+        { "value": "zigzag", "label": "Zigzag" }
+      ],
+      "default": "none"
+    },
+    { "type": "color", "id": "divider_color", "label": "Edge colour", "default": "#FFFFFF" }
+  ],
   "blocks": [
     {
       "type": "usp",

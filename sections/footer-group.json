@@ -2,52 +2,52 @@
   "type": "footer",
   "name": "Footer group",
   "sections": {
-    "newsletter": {
-      "type": "newsletter",
-      "settings": {
-        "heading": "Get 10% off your first pair",
-        "text": "New drops, sizing tips and the odd surprise. No spam, promise.",
-        "button_label": "Join the club",
-        "disclaimer": "Unsubscribe any time."
-      }
-    },
     "footer": {
       "type": "footer",
       "blocks": {
-        "shop": {
+        "company": {
+          "type": "menu",
+          "settings": {
+            "heading": "Company",
+            "menu": "footer-menu-2"
+          }
+        },
+        "collections": {
           "type": "menu",
           "settings": {
             "heading": "Shop",
             "menu": "main-menu"
           }
         },
-        "help": {
+        "support": {
           "type": "menu",
           "settings": {
-            "heading": "Help",
-            "menu": "footer-menu-2"
+            "heading": "Support",
+            "menu": "footer"
           }
         },
-        "company": {
-          "type": "menu",
+        "signup": {
+          "type": "newsletter",
           "settings": {
-            "heading": "Policies",
-            "menu": "footer"
+            "heading": "Join the club",
+            "text": "Sizing tips, new drops and 10% off your first pair.",
+            "legal": "<p>By subscribing you agree to our <a href=\"/policies/privacy-policy\">Privacy Policy</a>.</p>"
           }
         }
       },
       "block_order": [
-        "shop",
-        "help",
-        "company"
+        "company",
+        "collections",
+        "support",
+        "signup"
       ],
       "settings": {
+        "color_scheme": "surface",
         "show_payment_icons": true
       }
     }
   },
   "order": [
-    "newsletter",
     "footer"
   ]
 }

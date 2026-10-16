@@ -1,0 +1,95 @@
+{%- comment -%}Press / partner logos. Greyscale until hover so they never outshout the brand.{%- endcomment -%}
+<div class="section section--tight{% if section.settings.background == 'surface' %} section--surface{% endif %}">
+  {%- if section.settings.divider_top != 'none' and section.settings.divider_top != blank -%}
+    {% render 'section-divider', shape: section.settings.divider_top, position: 'top', color: section.settings.divider_color %}
+  {%- endif -%}
+
+  <div class="page-width">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="eyebrow text-center">{{ section.settings.eyebrow | escape }}</p>
+    {%- endif -%}
+
+    <div class="logo-row">
+      {%- for block in section.blocks -%}
+        {%- capture logo_markup -%}
+          {%- if block.settings.image != blank -%}
+            <img
+              src="{{ block.settings.image | image_url: width: 400 }}"
+              alt="{{ block.settings.image.alt | default: block.settings.name | escape }}"
+              width="160"
+              height="48"
+              loading="lazy"
+            >
+          {%- else -%}
+            <span class="logo-row__name">{{ block.settings.name | escape }}</span>
+          {%- endif -%}
+        {%- endcapture -%}
+
+        {%- if block.settings.link != blank -%}
+          <a class="logo-row__item" href="{{ block.settings.link }}" target="_blank" rel="noopener" {{ block.shopify_attributes }}>
+            {{ logo_markup }}
+          </a>
+        {%- else -%}
+          <div class="logo-row__item" {{ block.shopify_attributes }}>{{ logo_markup }}</div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Logo list",
+  "max_blocks": 10,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "As featured in" },
+    {
+      "type": "checkbox",
+      "id": "greyscale",
+      "label": "Greyscale until hover",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "default", "label": "Page background" },
+        { "value": "surface", "label": "Soft surface" }
+      ],
+      "default": "default"
+    },
+    { "type": "header", "content": "Decorative edge" },
+    {
+      "type": "select",
+      "id": "divider_top",
+      "label": "Top edge",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "wave", "label": "Wave" },
+        { "value": "scallop", "label": "Scallop" },
+        { "value": "zigzag", "label": "Zigzag" }
+      ],
+      "default": "none"
+    },
+    { "type": "color", "id": "divider_color", "label": "Edge colour", "default": "#FFFFFF" }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Logo",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Logo" },
+        { "type": "text", "id": "name", "label": "Name", "info": "Shown as text when no logo is uploaded.", "default": "Publication" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Logo list",
+      "blocks": [{ "type": "logo" }, { "type": "logo" }, { "type": "logo" }, { "type": "logo" }, { "type": "logo" }]
+    }
+  ]
+}
+{% endschema %}

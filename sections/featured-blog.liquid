@@ -1,0 +1,126 @@
+{%- comment -%}
+  Latest journal posts. The category tag comes from the article's first tag, so
+  it stays accurate as posts are retagged rather than being typed per block.
+{%- endcomment -%}
+{%- assign blog_source = blogs[section.settings.blog] -%}
+{%- if blog_source.articles.size > 0 or request.design_mode -%}
+<div class="section{% if section.settings.background == 'surface' %} section--surface{% endif %}">
+  {%- if section.settings.divider_top != 'none' and section.settings.divider_top != blank -%}
+    {% render 'section-divider', shape: section.settings.divider_top, position: 'top', color: section.settings.divider_color %}
+  {%- endif -%}
+
+  <div class="page-width">
+    <div class="section-header section-header--center">
+      <div class="section-header__text">
+        <h2 class="section-header__title h2">{{ section.settings.heading | escape }}</h2>
+        {%- if section.settings.subheading != blank -%}
+          <p class="section-header__subtitle">{{ section.settings.subheading | escape }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if blog_source.articles.size > 0 -%}
+      <div class="journal-grid">
+        {%- for article in blog_source.articles limit: section.settings.posts_to_show -%}
+          <article class="journal-card">
+            <a href="{{ article.url }}" class="journal-card__media" tabindex="-1" aria-hidden="true">
+              {%- if article.image -%}
+                <img
+                  src="{{ article.image | image_url: width: 700 }}"
+                  srcset="{{ article.image | image_url: width: 350 }} 350w, {{ article.image | image_url: width: 700 }} 700w"
+                  sizes="(min-width: 750px) 33vw, 90vw"
+                  alt="{{ article.image.alt | escape }}"
+                  width="700"
+                  height="470"
+                  loading="lazy"
+                >
+              {%- else -%}
+                {{ 'blog-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+
+              {%- if section.settings.show_tag and article.tags.size > 0 -%}
+                <span class="journal-card__tag">{{ article.tags.first | escape }}</span>
+              {%- endif -%}
+            </a>
+
+            <div class="journal-card__body">
+              <div class="journal-card__meta">
+                {{ article.published_at | date: format: 'date' }}
+                {%- if section.settings.show_author and article.author != blank %}
+                  <span aria-hidden="true">&bull;</span> {{ article.author }}
+                {%- endif -%}
+              </div>
+              <h3 class="journal-card__title">
+                <a href="{{ article.url }}">{{ article.title | escape }}</a>
+              </h3>
+              <span class="journal-card__link">{{ section.settings.link_label | default: 'Read more' | escape }}</span>
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+
+      {%- if section.settings.show_view_all and blog_source.url != blank -%}
+        <div class="text-center mt-8">
+          <a href="{{ blog_source.url }}" class="button button--secondary">
+            {{ section.settings.view_all_label | default: 'Read the journal' | escape }}
+          </a>
+        </div>
+      {%- endif -%}
+    {%- elsif request.design_mode -%}
+      {%- comment -%}
+        Only surface this to the merchant in the editor. On the live storefront
+        an empty blog renders nothing rather than an empty band.
+      {%- endcomment -%}
+      <p class="empty-state">
+        {%- if blog_source == blank -%}
+          Choose a blog in the theme editor to show posts here.
+        {%- else -%}
+          &ldquo;{{ blog_source.title }}&rdquo; has no published posts yet. This section stays hidden on your live store until it does.
+        {%- endif -%}
+      </p>
+    {%- endif -%}
+  </div>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Blog posts",
+  "settings": [
+    { "type": "blog", "id": "blog", "label": "Blog" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "From the journal" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Sizing tips, school-run survival and everything in between." },
+    { "type": "range", "id": "posts_to_show", "min": 2, "max": 6, "step": 1, "label": "Posts to show", "default": 3 },
+    { "type": "checkbox", "id": "show_tag", "label": "Show category tag", "default": true },
+    { "type": "checkbox", "id": "show_author", "label": "Show author", "default": false },
+    { "type": "text", "id": "link_label", "label": "Post link label", "default": "Read more" },
+    { "type": "checkbox", "id": "show_view_all", "label": "Show view all button", "default": true },
+    { "type": "text", "id": "view_all_label", "label": "View all label", "default": "Read the journal" },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "default", "label": "Page background" },
+        { "value": "surface", "label": "Soft surface" }
+      ],
+      "default": "default"
+    },
+    { "type": "header", "content": "Decorative edge" },
+    {
+      "type": "select",
+      "id": "divider_top",
+      "label": "Top edge",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "wave", "label": "Wave" },
+        { "value": "scallop", "label": "Scallop" },
+        { "value": "zigzag", "label": "Zigzag" }
+      ],
+      "default": "none"
+    },
+    { "type": "color", "id": "divider_color", "label": "Edge colour", "default": "#FFFFFF" }
+  ],
+  "presets": [{ "name": "Blog posts" }]
+}
+{% endschema %}

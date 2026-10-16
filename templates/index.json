@@ -561,6 +561,164 @@
         "divider_top": "wave",
         "divider_color": "#FFFFFF"
       }
+    },
+    "journal": {
+      "type": "featured-blog",
+      "settings": {
+        "blog": "news",
+        "heading": "From the journal",
+        "subheading": "Sizing tips, school-run survival and everything in between.",
+        "posts_to_show": 3,
+        "show_tag": true,
+        "show_author": false,
+        "link_label": "Read more",
+        "show_view_all": true,
+        "view_all_label": "Read the journal",
+        "background": "default",
+        "divider_top": "none"
+      }
+    },
+    "follow": {
+      "type": "follow-us",
+      "blocks": {
+        "g1": {
+          "type": "post",
+          "settings": {}
+        },
+        "g2": {
+          "type": "post",
+          "settings": {}
+        },
+        "g3": {
+          "type": "post",
+          "settings": {}
+        },
+        "g4": {
+          "type": "post",
+          "settings": {}
+        },
+        "g5": {
+          "type": "post",
+          "settings": {}
+        },
+        "g6": {
+          "type": "post",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "g1",
+        "g2",
+        "g3",
+        "g4",
+        "g5",
+        "g6"
+      ],
+      "settings": {
+        "eyebrow": "Follow us",
+        "heading": "@hopits",
+        "subheading": "Tag us in your little one's adventures.",
+        "profile_url": "",
+        "button_label": "Follow on Instagram",
+        "background": "default",
+        "divider_top": "none"
+      }
+    },
+    "press": {
+      "type": "logo-list",
+      "blocks": {
+        "l1": {
+          "type": "logo",
+          "settings": {
+            "name": "Publication"
+          }
+        },
+        "l2": {
+          "type": "logo",
+          "settings": {
+            "name": "Publication"
+          }
+        },
+        "l3": {
+          "type": "logo",
+          "settings": {
+            "name": "Publication"
+          }
+        },
+        "l4": {
+          "type": "logo",
+          "settings": {
+            "name": "Publication"
+          }
+        },
+        "l5": {
+          "type": "logo",
+          "settings": {
+            "name": "Publication"
+          }
+        }
+      },
+      "block_order": [
+        "l1",
+        "l2",
+        "l3",
+        "l4",
+        "l5"
+      ],
+      "settings": {
+        "eyebrow": "As featured in",
+        "greyscale": true,
+        "background": "default",
+        "divider_top": "none"
+      }
+    },
+    "service": {
+      "type": "usp-bar",
+      "blocks": {
+        "s1": {
+          "type": "usp",
+          "settings": {
+            "icon": "ruler",
+            "title": "Sizing help",
+            "text": "Message us on WhatsApp before you order"
+          }
+        },
+        "s2": {
+          "type": "usp",
+          "settings": {
+            "icon": "truck",
+            "title": "Free shipping",
+            "text": "On every order above ₹999"
+          }
+        },
+        "s3": {
+          "type": "usp",
+          "settings": {
+            "icon": "return",
+            "title": "Free size exchange",
+            "text": "Swap sizes free within 7 days"
+          }
+        },
+        "s4": {
+          "type": "usp",
+          "settings": {
+            "icon": "shield",
+            "title": "Secure payment",
+            "text": "UPI, cards, net banking and COD"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "settings": {
+        "layout": "panel",
+        "divider_top": "wave",
+        "divider_color": "#FFFFFF"
+      }
     }
   },
   "order": [
@@ -576,6 +734,10 @@
     "new_in",
     "shop_the_look",
     "testimonials",
-    "faq"
+    "faq",
+    "journal",
+    "follow",
+    "press",
+    "service"
   ]
 }

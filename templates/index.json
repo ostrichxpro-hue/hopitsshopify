@@ -162,7 +162,8 @@
         "show_counts": true,
         "background": "default",
         "tile_style": "blob",
-        "divider_top": "none"
+        "divider_top": "none",
+        "blob_shape": "arch"
       }
     },
     "bestsellers": {

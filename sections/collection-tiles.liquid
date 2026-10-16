@@ -24,7 +24,22 @@
             assign tile_collection = collections[block.settings.collection]
             assign shape_cycle = 'pebble,arch,petal,cloud,squircle' | split: ','
             assign shape_index = forloop.index0 | modulo: 5
-            assign blob_shape = block.settings.shape | default: shape_cycle[shape_index]
+
+            comment
+              One shape across the row by default. Cycling is still available,
+              but a uniform silhouette reads as a deliberate set rather than
+              five unrelated stickers.
+            endcomment
+            assign section_shape = section.settings.blob_shape | default: 'arch'
+            if section_shape == 'cycle'
+              assign blob_shape = shape_cycle[shape_index]
+            else
+              assign blob_shape = section_shape
+            endif
+            if block.settings.shape != blank
+              assign blob_shape = block.settings.shape
+            endif
+
             assign color_index = forloop.index0 | modulo: 5
           -%}
           <a href="{{ tile_collection.url | default: block.settings.link | default: '#' }}" class="blob-tile" {{ block.shopify_attributes }}>
@@ -113,6 +128,21 @@
     },
     {
       "type": "select",
+      "id": "blob_shape",
+      "label": "Blob shape",
+      "info": "Blob style only. One shape across the row reads as a set.",
+      "options": [
+        { "value": "arch", "label": "Arch \u2014 oval top, flat bottom" },
+        { "value": "pebble", "label": "Pebble" },
+        { "value": "petal", "label": "Petal" },
+        { "value": "cloud", "label": "Cloud" },
+        { "value": "squircle", "label": "Squircle" },
+        { "value": "cycle", "label": "Cycle through all five" }
+      ],
+      "default": "arch"
+    },
+    {
+      "type": "select",
       "id": "background",
       "label": "Background",
       "options": [
@@ -135,9 +165,9 @@
           "type": "select",
           "id": "shape",
           "label": "Blob shape",
-          "info": "Blob style only. Leave on Auto to cycle through all five.",
+          "info": "Overrides the section shape for this tile only.",
           "options": [
-            { "value": "", "label": "Auto" },
+            { "value": "", "label": "Use section shape" },
             { "value": "pebble", "label": "Pebble" },
             { "value": "arch", "label": "Arch" },
             { "value": "petal", "label": "Petal" },

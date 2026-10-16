@@ -38,6 +38,9 @@
     --hp-blush: {{ settings.color_coral }};
     --hp-green-pale: {{ settings.color_primary | color_lighten: 20 }};
 
+    {%- comment -%}Neutral ground behind photography, so transparent PNGs pick up no colour cast.{%- endcomment -%}
+    --hp-image-bg: {{ settings.color_background }};
+
     --hp-teal-tint: {{ settings.color_teal }};
     --hp-yellow-tint: {{ settings.color_yellow }};
     --hp-grape-tint: {{ settings.color_grape }};

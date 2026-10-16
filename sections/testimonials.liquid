@@ -1,4 +1,7 @@
 <div class="section{% if section.settings.background == 'surface' %} section--surface{% endif %}">
+  {%- if section.settings.divider_top != 'none' and section.settings.divider_top != blank -%}
+  {% render 'section-divider', shape: section.settings.divider_top, position: 'top', color: section.settings.divider_color %}
+{%- endif -%}
   <div class="page-width">
     <div class="section-header section-header--center">
       <div class="section-header__text">
@@ -45,6 +48,29 @@
         { "value": "surface", "label": "Soft surface" }
       ],
       "default": "surface"
+    },
+    {
+      "type": "header",
+      "content": "Decorative edge"
+    },
+    {
+      "type": "select",
+      "id": "divider_top",
+      "label": "Top edge",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "wave", "label": "Wave" },
+        { "value": "scallop", "label": "Scallop" },
+        { "value": "zigzag", "label": "Zigzag" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Edge colour",
+      "info": "Match the background of the section ABOVE this one.",
+      "default": "#FFFFFF"
     }
   ],
   "blocks": [

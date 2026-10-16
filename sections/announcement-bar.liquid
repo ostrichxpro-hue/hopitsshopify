@@ -1,4 +1,4 @@
-<div class="announcement announcement--rotating" data-announcement data-interval="{{ section.settings.interval }}">
+<div class="announcement announcement--rotating" style="background: {{ section.settings.background_color }}; color: {{ section.settings.text_color }};" data-announcement data-interval="{{ section.settings.interval }}">
   <div class="announcement__inner page-width">
     {%- for block in section.blocks -%}
       <div class="announcement__item{% if forloop.first %} is-active{% endif %}" {{ block.shopify_attributes }}>
@@ -10,6 +10,7 @@
       </div>
     {%- endfor -%}
   </div>
+  {% render 'section-divider', shape: 'zigzag', position: 'bottom', color: section.settings.divider_color %}
 </div>
 
 {% schema %}
@@ -26,6 +27,25 @@
       "unit": "s",
       "label": "Rotation speed",
       "default": 5
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#D7E8DC"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#16203A"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Zigzag edge colour",
+      "info": "Match the page background below the bar.",
+      "default": "#FFFFFF"
     }
   ],
   "blocks": [

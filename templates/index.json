@@ -159,8 +159,10 @@
         "link": "/collections",
         "columns": "4",
         "align": "left",
-        "show_counts": false,
-        "background": "default"
+        "show_counts": true,
+        "background": "default",
+        "tile_style": "blob",
+        "divider_top": "none"
       }
     },
     "bestsellers": {
@@ -174,7 +176,9 @@
         "products_to_show": 8,
         "columns": "4",
         "layout": "grid",
-        "background": "surface"
+        "background": "surface",
+        "divider_top": "wave",
+        "divider_color": "#FFFFFF"
       }
     },
     "shop_by_age": {
@@ -222,7 +226,9 @@
       "settings": {
         "heading": "Shop by age",
         "subheading": "Sized right for every stage. Not sure? Our size finder takes ten seconds.",
-        "background": "default"
+        "background": "default",
+        "divider_top": "scallop",
+        "divider_color": "#FFF8F0"
       }
     },
     "marquee": {
@@ -267,7 +273,8 @@
         "m5"
       ],
       "settings": {
-        "background_color": "#FFC53D"
+        "background_color": "#FFFFFF",
+        "item_style": "pill"
       }
     },
     "story": {
@@ -310,7 +317,9 @@
         "text": "<p>Kids' feet grow roughly a centimetre every few months, and they spend most of that time running. We design every pair around both facts — light enough to move in, sturdy enough to last, and priced so outgrowing them doesn't sting.</p>",
         "button_label": "Read our story",
         "button_link": "/pages/about-us",
-        "background": "default"
+        "background": "default",
+        "ring_text": "Built for little adventurers",
+        "divider_top": "none"
       }
     },
     "new_in": {
@@ -366,7 +375,9 @@
       "settings": {
         "heading": "Loved by parents",
         "subheading": "What families tell us after a few months of wear and tear.",
-        "background": "surface"
+        "background": "surface",
+        "divider_top": "wave",
+        "divider_color": "#FFFFFF"
       }
     },
     "faq": {

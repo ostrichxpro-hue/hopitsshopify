@@ -1,0 +1,34 @@
+{%- comment -%}
+  Decorative edge between two sections — the device that makes a page read as
+  "kids" faster than any amount of colour.
+
+  Accepts:
+    shape    wave | zigzag | scallop   (default: wave)
+    position top | bottom              (default: bottom)
+    color    CSS colour of the section being revealed BEHIND the edge
+
+  The SVG is filled with the NEXT section's background, so it reads as that
+  section biting into this one. preserveAspectRatio="none" lets one path
+  stretch to any viewport width without extra breakpoints.
+{%- endcomment -%}
+{%- liquid
+  assign edge_shape = shape | default: 'wave'
+  assign edge_position = position | default: 'bottom'
+  assign edge_color = color | default: 'var(--hp-surface)'
+-%}
+<div class="sdivider sdivider--{{ edge_position }}" aria-hidden="true" style="color: {{ edge_color }};">
+  {%- case edge_shape -%}
+    {%- when 'zigzag' -%}
+      <svg viewBox="0 0 120 8" preserveAspectRatio="none" focusable="false">
+        <path fill="currentColor" d="M0 8V4l5 4 5-4 5 4 5-4 5 4 5-4 5 4 5-4 5 4 5-4 5 4 5-4 5 4 5-4 5 4 5-4 5 4 5-4 5 4 5-4 5 4 5-4 5 4 5-4v4z"/>
+      </svg>
+    {%- when 'scallop' -%}
+      <svg viewBox="0 0 120 10" preserveAspectRatio="none" focusable="false">
+        <path fill="currentColor" d="M0 10V2a5 5 0 0 1 10 0 5 5 0 0 1 10 0 5 5 0 0 1 10 0 5 5 0 0 1 10 0 5 5 0 0 1 10 0 5 5 0 0 1 10 0 5 5 0 0 1 10 0 5 5 0 0 1 10 0 5 5 0 0 1 10 0 5 5 0 0 1 10 0 5 5 0 0 1 10 0 5 5 0 0 1 10 0v8z"/>
+      </svg>
+    {%- else -%}
+      <svg viewBox="0 0 120 12" preserveAspectRatio="none" focusable="false">
+        <path fill="currentColor" d="M0 12V5c10-5 20 5 30 3s20-8 30-5 20 8 30 6 20-7 30-6v9z"/>
+      </svg>
+  {%- endcase -%}
+</div>

@@ -1,10 +1,12 @@
 <div class="section--tight" style="background: {{ section.settings.background_color }};">
-  <div class="marquee">
+  <div class="marquee marquee--{{ section.settings.item_style | default: "pill" }}">
     {%- comment -%} Duplicated track so the loop has no visible seam. {%- endcomment -%}
     {%- for i in (1..2) -%}
       <div class="marquee__track" aria-hidden="{% if i == 2 %}true{% else %}false{% endif %}">
         {%- for block in section.blocks -%}
-          <span class="marquee__item" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</span>
+          {%- assign pill_index = forloop.index0 | modulo: 5 -%}
+          <span class="marquee__pill marquee__pill--c{{ pill_index }}" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</span>
+          <span class="marquee__sep">{% render 'icon', icon: 'starburst' %}</span>
         {%- endfor -%}
       </div>
     {%- endfor -%}
@@ -16,7 +18,17 @@
   "name": "Scrolling text",
   "max_blocks": 8,
   "settings": [
-    { "type": "color", "id": "background_color", "label": "Background", "default": "#FFC53D" }
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#FFFFFF" },
+    {
+      "type": "select",
+      "id": "item_style",
+      "label": "Item style",
+      "options": [
+        { "value": "pill", "label": "Coloured pills" },
+        { "value": "plain", "label": "Plain text" }
+      ],
+      "default": "pill"
+    }
   ],
   "blocks": [
     {

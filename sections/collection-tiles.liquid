@@ -12,28 +12,61 @@
       {%- endif -%}
     </div>
 
-    <div class="tile-grid tile-grid--{{ section.settings.columns }}">
-      {%- for block in section.blocks -%}
-        {%- assign tile_collection = collections[block.settings.collection] -%}
-        <a href="{{ tile_collection.url | default: block.settings.link | default: '#' }}" class="tile" {{ block.shopify_attributes }}>
-          <span class="tile__media media">
-            {%- if block.settings.image != blank -%}
-              <img src="{{ block.settings.image | image_url: width: 700 }}" alt="{{ block.settings.heading | default: tile_collection.title | escape }}" loading="lazy" width="700" height="933">
-            {%- elsif tile_collection.featured_image -%}
-              <img src="{{ tile_collection.featured_image | image_url: width: 700 }}" alt="{{ tile_collection.title | escape }}" loading="lazy" width="700" height="933">
-            {%- else -%}
-              {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
-            {%- endif -%}
-          </span>
-          <span class="tile__overlay">
-            <span class="tile__title">{{ block.settings.heading | default: tile_collection.title | escape }}</span>
+    {%- if section.settings.tile_style == 'blob' -%}
+      {%- comment -%}
+        Blob style: each image is masked into its own organic shape and sits on a
+        saturated ground, with the label underneath. Shape and colour cycle so a
+        row never repeats itself.
+      {%- endcomment -%}
+      <div class="blob-grid blob-grid--{{ section.settings.columns }}">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign tile_collection = collections[block.settings.collection]
+            assign shape_cycle = 'pebble,arch,petal,cloud,squircle' | split: ','
+            assign shape_index = forloop.index0 | modulo: 5
+            assign blob_shape = block.settings.shape | default: shape_cycle[shape_index]
+            assign color_index = forloop.index0 | modulo: 5
+          -%}
+          <a href="{{ tile_collection.url | default: block.settings.link | default: '#' }}" class="blob-tile" {{ block.shopify_attributes }}>
+            <span class="blob-tile__shape blob-tile__shape--{{ blob_shape }} blob-tile__shape--c{{ color_index }}"
+              {% if block.settings.background_color != blank %}style="background: {{ block.settings.background_color }};"{% endif %}>
+              {%- if block.settings.image != blank -%}
+                <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.heading | default: tile_collection.title | escape }}" loading="lazy" width="600" height="600">
+              {%- elsif tile_collection.featured_image -%}
+                <img src="{{ tile_collection.featured_image | image_url: width: 600 }}" alt="{{ tile_collection.title | escape }}" loading="lazy" width="600" height="600">
+              {%- endif -%}
+            </span>
+            <span class="blob-tile__title">{{ block.settings.heading | default: tile_collection.title | escape }}</span>
             {%- if section.settings.show_counts and tile_collection != blank -%}
-              <span class="tile__count">{{ 'products.facets.product_count' | t: count: tile_collection.all_products_count }}</span>
+              <span class="blob-tile__count">{{ 'products.facets.product_count' | t: count: tile_collection.all_products_count }}</span>
             {%- endif -%}
-          </span>
-        </a>
-      {%- endfor -%}
-    </div>
+          </a>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="tile-grid tile-grid--{{ section.settings.columns }}">
+        {%- for block in section.blocks -%}
+          {%- assign tile_collection = collections[block.settings.collection] -%}
+          <a href="{{ tile_collection.url | default: block.settings.link | default: '#' }}" class="tile" {{ block.shopify_attributes }}>
+            <span class="tile__media media">
+              {%- if block.settings.image != blank -%}
+                <img src="{{ block.settings.image | image_url: width: 700 }}" alt="{{ block.settings.heading | default: tile_collection.title | escape }}" loading="lazy" width="700" height="933">
+              {%- elsif tile_collection.featured_image -%}
+                <img src="{{ tile_collection.featured_image | image_url: width: 700 }}" alt="{{ tile_collection.title | escape }}" loading="lazy" width="700" height="933">
+              {%- else -%}
+                {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            </span>
+            <span class="tile__overlay">
+              <span class="tile__title">{{ block.settings.heading | default: tile_collection.title | escape }}</span>
+              {%- if section.settings.show_counts and tile_collection != blank -%}
+                <span class="tile__count">{{ 'products.facets.product_count' | t: count: tile_collection.all_products_count }}</span>
+              {%- endif -%}
+            </span>
+          </a>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
   </div>
 </div>
 
@@ -67,7 +100,17 @@
       ],
       "default": "left"
     },
-    { "type": "checkbox", "id": "show_counts", "label": "Show product counts", "default": false },
+    { "type": "checkbox", "id": "show_counts", "label": "Show product counts", "default": true },
+    {
+      "type": "select",
+      "id": "tile_style",
+      "label": "Tile style",
+      "options": [
+        { "value": "blob", "label": "Blob \u2014 masked shape on colour, label below" },
+        { "value": "card", "label": "Card \u2014 full-bleed image, label overlaid" }
+      ],
+      "default": "blob"
+    },
     {
       "type": "select",
       "id": "background",
@@ -87,7 +130,23 @@
         { "type": "collection", "id": "collection", "label": "Collection" },
         { "type": "url", "id": "link", "label": "Link", "info": "Used when no collection is chosen." },
         { "type": "image_picker", "id": "image", "label": "Image override" },
-        { "type": "text", "id": "heading", "label": "Heading override" }
+        { "type": "text", "id": "heading", "label": "Heading override" },
+        {
+          "type": "select",
+          "id": "shape",
+          "label": "Blob shape",
+          "info": "Blob style only. Leave on Auto to cycle through all five.",
+          "options": [
+            { "value": "", "label": "Auto" },
+            { "value": "pebble", "label": "Pebble" },
+            { "value": "arch", "label": "Arch" },
+            { "value": "petal", "label": "Petal" },
+            { "value": "cloud", "label": "Cloud" },
+            { "value": "squircle", "label": "Squircle" }
+          ],
+          "default": ""
+        },
+        { "type": "color", "id": "background_color", "label": "Background colour", "info": "Blob style only. Leave empty to cycle." }
       ]
     }
   ],

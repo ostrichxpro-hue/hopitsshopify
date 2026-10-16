@@ -2061,3 +2061,193 @@ input:checked + .variant-option--swatch { background: var(--hp-bg); border-color
 [hidden] { display: none !important; }
 
 .header.is-stuck { box-shadow: 0 4px 20px rgba(var(--hp-ink-rgb), 0.08); }
+
+/* ==========================================================================
+   Playful primitives
+   Decorative devices that carry the kids-brand feel: organic shape masks,
+   scalloped section edges, coloured pill marquees and rotating badges.
+   ========================================================================== */
+
+/* --- Section dividers ----------------------------------------------------- */
+.sdivider {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  line-height: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.sdivider svg { display: block; width: 100%; height: 100%; }
+.sdivider--bottom { bottom: -1px; height: clamp(1.4rem, 3vw, 3.2rem); }
+.sdivider--top {
+  top: -1px;
+  height: clamp(1.4rem, 3vw, 3.2rem);
+  transform: scaleY(-1);
+}
+
+/* Any section hosting a divider needs a positioning context. */
+.section,
+.hero,
+.usp-bar,
+.collection-hero,
+.announcement { position: relative; }
+
+/* --- Blob collection tiles ------------------------------------------------ */
+.blob-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.4rem 1.6rem;
+}
+@media screen and (min-width: 750px) {
+  .blob-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3.2rem 2.4rem; }
+  .blob-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .blob-grid--6 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+@media screen and (min-width: 1100px) {
+  .blob-grid--6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+
+.blob-tile {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+}
+.blob-tile__shape {
+  position: relative;
+  display: block;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--hp-surface);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.blob-tile:hover .blob-tile__shape { transform: translateY(-6px) rotate(-1.5deg); }
+.blob-tile__shape img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: multiply;
+}
+
+/* Shape language. Border-radius handles the smooth forms crisply at any size;
+   the two trickier silhouettes use a stretched SVG mask. */
+.blob-tile__shape--pebble { border-radius: 56% 44% 47% 53% / 52% 47% 53% 48%; }
+.blob-tile__shape--arch { border-radius: 50% 50% 16% 16% / 40% 40% 12% 12%; }
+.blob-tile__shape--squircle { border-radius: 26%; }
+
+.blob-tile__shape--petal {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M50 0c15 0 25 10 25 25 15 0 25 10 25 25s-10 25-25 25c0 15-10 25-25 25s-25-10-25-25C10 75 0 65 0 50s10-25 25-25C25 10 35 0 50 0z' fill='%23000'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M50 0c15 0 25 10 25 25 15 0 25 10 25 25s-10 25-25 25c0 15-10 25-25 25s-25-10-25-25C10 75 0 65 0 50s10-25 25-25C25 10 35 0 50 0z' fill='%23000'/%3E%3C/svg%3E");
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+.blob-tile__shape--cloud {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M22 92C10 92 0 82 0 70c0-9 5-17 13-21-1-3-1-5-1-8C12 23 26 9 43 9c11 0 21 6 27 15 3-1 6-2 9-2 12 0 21 9 21 21 0 4-1 8-3 11 2 4 3 9 3 14 0 13-10 24-23 24z' fill='%23000'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M22 92C10 92 0 82 0 70c0-9 5-17 13-21-1-3-1-5-1-8C12 23 26 9 43 9c11 0 21 6 27 15 3-1 6-2 9-2 12 0 21 9 21 21 0 4-1 8-3 11 2 4 3 9 3 14 0 13-10 24-23 24z' fill='%23000'/%3E%3C/svg%3E");
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+/* Ground colours cycle so neighbouring tiles always differ. */
+.blob-tile__shape--c0 { background: var(--hp-primary-tint); }
+.blob-tile__shape--c1 { background: var(--hp-teal-tint); }
+.blob-tile__shape--c2 { background: var(--hp-yellow-tint); }
+.blob-tile__shape--c3 { background: var(--hp-grape-tint); }
+.blob-tile__shape--c4 { background: var(--hp-surface); }
+
+.blob-tile__title {
+  display: block;
+  margin-top: 1.4rem;
+  font-family: var(--hp-font-heading);
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: var(--hp-ink);
+}
+.blob-tile:hover .blob-tile__title { color: var(--hp-primary); }
+.blob-tile__count {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 1.3rem;
+  color: var(--hp-ink-soft);
+}
+
+/* --- Coloured pill marquee ------------------------------------------------ */
+.marquee--pill .marquee__track { gap: 1.6rem; }
+.marquee--pill { gap: 1.6rem; }
+
+.marquee__pill {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  padding: 0.9rem 2.2rem;
+  border-radius: 999px;
+  font-family: var(--hp-font-heading);
+  font-size: 1.6rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.marquee__pill--c0 { background: var(--hp-yellow-tint); color: #8a5a00; }
+.marquee__pill--c1 { background: var(--hp-teal-tint); color: #0b6b60; }
+.marquee__pill--c2 { background: var(--hp-grape-tint); color: #4a32c4; }
+.marquee__pill--c3 { background: var(--hp-primary-tint); color: #a8215c; }
+.marquee__pill--c4 { background: var(--hp-surface); color: var(--hp-ink); }
+
+.marquee__sep {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  color: var(--hp-coral);
+}
+.marquee__sep svg { width: 2rem; height: 2rem; }
+.marquee--pill .marquee__item::after { content: none; }
+
+/* --- Rotating badge ------------------------------------------------------- */
+.ring-badge {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: clamp(11rem, 16vw, 15rem);
+  aspect-ratio: 1;
+  margin-inline: auto;
+}
+.ring-badge__text {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: ring-spin 18s linear infinite;
+}
+.ring-badge__text text {
+  font-family: var(--hp-font-heading);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  fill: var(--hp-ink-soft);
+}
+.ring-badge__icon {
+  display: grid;
+  place-items: center;
+  width: 4.4rem;
+  height: 4.4rem;
+  color: var(--hp-ink);
+}
+.ring-badge__icon svg { width: 2.4rem; height: 2.4rem; }
+@keyframes ring-spin {
+  to { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ring-badge__text { animation: none; }
+}
+
+/* --- Inline decorative glyphs --------------------------------------------- */
+.glyph {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1em;
+  margin-inline: 0.15em;
+}
+.glyph--petal { color: var(--hp-grape); }
+.glyph--asterisk { color: var(--hp-teal); }
+.glyph--starburst { color: var(--hp-coral); }
+.glyph svg { width: 100%; height: 100%; }

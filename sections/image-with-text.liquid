@@ -1,4 +1,7 @@
 <div class="section{% if section.settings.background == 'surface' %} section--surface{% endif %}">
+  {%- if section.settings.divider_top != 'none' and section.settings.divider_top != blank -%}
+  {% render 'section-divider', shape: section.settings.divider_top, position: 'top', color: section.settings.divider_color %}
+{%- endif -%}
   <div class="page-width">
     <div class="split{% if section.settings.media_position == 'right' %} split--reverse{% endif %}">
       <div class="split__media">
@@ -20,6 +23,9 @@
       </div>
 
       <div class="split__body">
+        {%- if section.settings.ring_text != blank -%}
+          {% render 'rotating-badge', text: section.settings.ring_text, id: section.id %}
+        {%- endif -%}
         {%- if section.settings.eyebrow != blank -%}
           <span class="hero__eyebrow">{{ section.settings.eyebrow | escape }}</span>
         {%- endif -%}
@@ -70,6 +76,7 @@
       "default": "left"
     },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "text", "id": "ring_text", "label": "Rotating badge text", "info": "Leave empty to hide the circular badge." },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Built for growing feet" },
     { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Every pair is designed around how kids actually move — and how fast they outgrow things.</p>" },
     { "type": "text", "id": "button_label", "label": "Button label" },
@@ -83,6 +90,29 @@
         { "value": "surface", "label": "Soft surface" }
       ],
       "default": "default"
+    },
+    {
+      "type": "header",
+      "content": "Decorative edge"
+    },
+    {
+      "type": "select",
+      "id": "divider_top",
+      "label": "Top edge",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "wave", "label": "Wave" },
+        { "value": "scallop", "label": "Scallop" },
+        { "value": "zigzag", "label": "Zigzag" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Edge colour",
+      "info": "Match the background of the section ABOVE this one.",
+      "default": "#FFFFFF"
     }
   ],
   "blocks": [

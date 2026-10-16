@@ -1,0 +1,22 @@
+{%- comment -%}
+  Circular rotating text badge with a glyph in the middle.
+  Accepts: text (the ring copy), icon (default: arrow-up-right), id
+{%- endcomment -%}
+{%- liquid
+  assign ring_text = text | default: 'Made for little adventurers'
+  assign ring_id = id | default: 'ring'
+  assign ring_icon = icon | default: 'arrow-up-right'
+-%}
+<div class="ring-badge" aria-hidden="true">
+  <svg viewBox="0 0 120 120" class="ring-badge__text" focusable="false">
+    <defs>
+      <path id="RingPath-{{ ring_id }}" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"/>
+    </defs>
+    <text>
+      <textPath href="#RingPath-{{ ring_id }}" startOffset="0">
+        {{- ring_text | escape }} &#160;&#183;&#160; {{ ring_text | escape }} &#160;&#183;&#160;
+      </textPath>
+    </text>
+  </svg>
+  <span class="ring-badge__icon">{% render 'icon', icon: ring_icon %}</span>
+</div>

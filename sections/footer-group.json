@@ -14,13 +14,40 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "shop": { "type": "menu", "settings": { "heading": "Shop" } },
-        "help": { "type": "menu", "settings": { "heading": "Help" } },
-        "company": { "type": "menu", "settings": { "heading": "Company" } }
+        "shop": {
+          "type": "menu",
+          "settings": {
+            "heading": "Shop",
+            "menu": "main-menu"
+          }
+        },
+        "help": {
+          "type": "menu",
+          "settings": {
+            "heading": "Help",
+            "menu": "footer-menu-2"
+          }
+        },
+        "company": {
+          "type": "menu",
+          "settings": {
+            "heading": "Policies",
+            "menu": "footer"
+          }
+        }
       },
-      "block_order": ["shop", "help", "company"],
-      "settings": { "show_payment_icons": true }
+      "block_order": [
+        "shop",
+        "help",
+        "company"
+      ],
+      "settings": {
+        "show_payment_icons": true
+      }
     }
   },
-  "order": ["newsletter", "footer"]
+  "order": [
+    "newsletter",
+    "footer"
+  ]
 }

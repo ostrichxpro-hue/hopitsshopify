@@ -27,9 +27,16 @@
                 </a>
               {%- endif -%}
               {%- if block.settings.button_2_label != blank -%}
-                <a href="{{ block.settings.button_2_link }}" class="button button--secondary button--large">
-                  {{ block.settings.button_2_label | escape }}
-                </a>
+                {%- if block.settings.button_2_link != blank -%}
+                  <a href="{{ block.settings.button_2_link }}" class="button button--secondary button--large">
+                    {{ block.settings.button_2_label | escape }}
+                  </a>
+                {%- elsif settings.enable_size_guide -%}
+                  <button type="button" class="button button--secondary button--large" data-panel-open="SizeGuideModal">
+                    {% render 'icon', icon: 'ruler' %}
+                    {{ block.settings.button_2_label | escape }}
+                  </button>
+                {%- endif -%}
               {%- endif -%}
             </div>
 
@@ -135,7 +142,7 @@
         { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop all shoes" },
         { "type": "url", "id": "button_link", "label": "Button link" },
         { "type": "text", "id": "button_2_label", "label": "Second button label", "default": "Find my size" },
-        { "type": "url", "id": "button_2_link", "label": "Second button link" }
+        { "type": "url", "id": "button_2_link", "label": "Second button link", "info": "Leave empty to open the size guide instead of navigating." }
       ]
     }
   ],

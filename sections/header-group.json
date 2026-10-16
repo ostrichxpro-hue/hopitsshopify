@@ -5,32 +5,44 @@
     "announcement-bar": {
       "type": "announcement-bar",
       "blocks": {
-        "a1": { "type": "announcement", "settings": { "text": "Free shipping on orders above ₹999" } },
-        "a2": { "type": "announcement", "settings": { "text": "Easy 7-day size exchange — because kids grow fast" } },
-        "a3": { "type": "announcement", "settings": { "text": "Cash on delivery available across India" } }
-      },
-      "block_order": ["a1", "a2", "a3"],
-      "settings": { "interval": 5 }
-    },
-    "header": {
-      "type": "header",
-      "blocks": {
-        "mega_shop": {
-          "type": "mega_menu",
+        "a1": {
+          "type": "announcement",
           "settings": {
-            "parent_title": "Shop",
-            "column_1_title": "By category",
-            "column_2_title": "By age",
-            "column_3_title": "By range"
+            "text": "Free shipping on orders above ₹999"
+          }
+        },
+        "a2": {
+          "type": "announcement",
+          "settings": {
+            "text": "Easy 7-day size exchange — because kids grow fast"
+          }
+        },
+        "a3": {
+          "type": "announcement",
+          "settings": {
+            "text": "Cash on delivery available across India"
           }
         }
       },
-      "block_order": ["mega_shop"],
+      "block_order": [
+        "a1",
+        "a2",
+        "a3"
+      ],
+      "settings": {
+        "interval": 5
+      }
+    },
+    "header": {
+      "type": "header",
       "settings": {
         "menu": "main-menu",
         "layout": "left"
       }
     }
   },
-  "order": ["announcement-bar", "header"]
+  "order": [
+    "announcement-bar",
+    "header"
+  ]
 }

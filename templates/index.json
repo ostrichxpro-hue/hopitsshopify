@@ -13,7 +13,7 @@
             "button_label": "Shop all shoes",
             "button_link": "/collections/shop",
             "button_2_label": "Find my size",
-            "button_2_link": "/pages/size-guide"
+            "button_2_link": ""
           }
         },
         "slide_2": {
@@ -25,12 +25,15 @@
             "media_position": "right",
             "button_label": "Shop SplashSteps",
             "button_link": "/collections/waterproof-sandals",
-            "button_2_label": "See all sandals",
-            "button_2_link": "/collections/sandals"
+            "button_2_label": "Find my size",
+            "button_2_link": ""
           }
         }
       },
-      "block_order": ["slide_1", "slide_2"],
+      "block_order": [
+        "slide_1",
+        "slide_2"
+      ],
       "settings": {
         "autoplay": true,
         "speed": 6,
@@ -43,32 +46,112 @@
         "stat_3_label": "Easy size exchange"
       }
     },
-
     "usp_bar": {
       "type": "usp-bar",
       "blocks": {
-        "u1": { "type": "usp", "settings": { "icon": "truck", "title": "Free shipping", "text": "On orders above ₹999" } },
-        "u2": { "type": "usp", "settings": { "icon": "return", "title": "7-day exchange", "text": "Wrong size? Swap it free" } },
-        "u3": { "type": "usp", "settings": { "icon": "rupee", "title": "Cash on delivery", "text": "Available across India" } },
-        "u4": { "type": "usp", "settings": { "icon": "shield", "title": "Kid-safe materials", "text": "Non-toxic, skin friendly" } }
+        "u1": {
+          "type": "usp",
+          "settings": {
+            "icon": "truck",
+            "title": "Free shipping",
+            "text": "On orders above ₹999"
+          }
+        },
+        "u2": {
+          "type": "usp",
+          "settings": {
+            "icon": "return",
+            "title": "7-day exchange",
+            "text": "Wrong size? Swap it free"
+          }
+        },
+        "u3": {
+          "type": "usp",
+          "settings": {
+            "icon": "rupee",
+            "title": "Cash on delivery",
+            "text": "Available across India"
+          }
+        },
+        "u4": {
+          "type": "usp",
+          "settings": {
+            "icon": "shield",
+            "title": "Kid-safe materials",
+            "text": "Non-toxic, skin friendly"
+          }
+        }
       },
-      "block_order": ["u1", "u2", "u3", "u4"],
+      "block_order": [
+        "u1",
+        "u2",
+        "u3",
+        "u4"
+      ],
       "settings": {}
     },
-
     "categories": {
       "type": "collection-tiles",
       "blocks": {
-        "t1": { "type": "tile", "settings": { "collection": "sneakers" } },
-        "t2": { "type": "tile", "settings": { "collection": "sandals" } },
-        "t3": { "type": "tile", "settings": { "collection": "ballerinas" } },
-        "t4": { "type": "tile", "settings": { "collection": "school-shoes" } },
-        "t5": { "type": "tile", "settings": { "collection": "waterproof-sandals" } },
-        "t6": { "type": "tile", "settings": { "collection": "clogs-mules" } },
-        "t7": { "type": "tile", "settings": { "collection": "led-shoes" } },
-        "t8": { "type": "tile", "settings": { "collection": "toddlers" } }
+        "t1": {
+          "type": "tile",
+          "settings": {
+            "collection": "sneakers"
+          }
+        },
+        "t2": {
+          "type": "tile",
+          "settings": {
+            "collection": "sandals"
+          }
+        },
+        "t3": {
+          "type": "tile",
+          "settings": {
+            "collection": "ballerinas"
+          }
+        },
+        "t4": {
+          "type": "tile",
+          "settings": {
+            "collection": "school-shoes"
+          }
+        },
+        "t5": {
+          "type": "tile",
+          "settings": {
+            "collection": "waterproof-sandals"
+          }
+        },
+        "t6": {
+          "type": "tile",
+          "settings": {
+            "collection": "clogs-mules"
+          }
+        },
+        "t7": {
+          "type": "tile",
+          "settings": {
+            "collection": "led-shoes"
+          }
+        },
+        "t8": {
+          "type": "tile",
+          "settings": {
+            "collection": "toddlers"
+          }
+        }
       },
-      "block_order": ["t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8"],
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8"
+      ],
       "settings": {
         "heading": "Shop by category",
         "subheading": "From first steps to school runs — there's a Hopits pair for every day.",
@@ -80,7 +163,6 @@
         "background": "default"
       }
     },
-
     "bestsellers": {
       "type": "featured-collection",
       "settings": {
@@ -95,55 +177,142 @@
         "background": "surface"
       }
     },
-
     "shop_by_age": {
       "type": "shop-by-age",
       "blocks": {
-        "a1": { "type": "age", "settings": { "collection": "toddlers", "label": "Toddlers", "sublabel": "Sizes 21-25" } },
-        "a2": { "type": "age", "settings": { "collection": "age-1-3-years", "label": "Age 1-5", "sublabel": "Sizes 21-27" } },
-        "a3": { "type": "age", "settings": { "collection": "age-3-9-years", "label": "Age 3-9", "sublabel": "Sizes 26-32" } },
-        "a4": { "type": "age", "settings": { "collection": "age-9-13-year", "label": "Age 9-13", "sublabel": "Sizes 32-38" } }
+        "a1": {
+          "type": "age",
+          "settings": {
+            "collection": "toddlers",
+            "label": "Toddlers",
+            "sublabel": "Sizes 21-25"
+          }
+        },
+        "a2": {
+          "type": "age",
+          "settings": {
+            "collection": "age-1-3-years",
+            "label": "Age 1-5",
+            "sublabel": "Sizes 21-27"
+          }
+        },
+        "a3": {
+          "type": "age",
+          "settings": {
+            "collection": "age-3-9-years",
+            "label": "Age 3-9",
+            "sublabel": "Sizes 26-32"
+          }
+        },
+        "a4": {
+          "type": "age",
+          "settings": {
+            "collection": "age-9-13-year",
+            "label": "Age 9-13",
+            "sublabel": "Sizes 32-38"
+          }
+        }
       },
-      "block_order": ["a1", "a2", "a3", "a4"],
+      "block_order": [
+        "a1",
+        "a2",
+        "a3",
+        "a4"
+      ],
       "settings": {
         "heading": "Shop by age",
         "subheading": "Sized right for every stage. Not sure? Our size finder takes ten seconds.",
         "background": "default"
       }
     },
-
     "marquee": {
       "type": "marquee",
       "blocks": {
-        "m1": { "type": "item", "settings": { "text": "Built for play" } },
-        "m2": { "type": "item", "settings": { "text": "Sized for growing feet" } },
-        "m3": { "type": "item", "settings": { "text": "Monsoon ready" } },
-        "m4": { "type": "item", "settings": { "text": "Free size exchange" } },
-        "m5": { "type": "item", "settings": { "text": "Made in India" } }
+        "m1": {
+          "type": "item",
+          "settings": {
+            "text": "Built for play"
+          }
+        },
+        "m2": {
+          "type": "item",
+          "settings": {
+            "text": "Sized for growing feet"
+          }
+        },
+        "m3": {
+          "type": "item",
+          "settings": {
+            "text": "Monsoon ready"
+          }
+        },
+        "m4": {
+          "type": "item",
+          "settings": {
+            "text": "Free size exchange"
+          }
+        },
+        "m5": {
+          "type": "item",
+          "settings": {
+            "text": "Made in India"
+          }
+        }
       },
-      "block_order": ["m1", "m2", "m3", "m4", "m5"],
-      "settings": { "background_color": "#FFC53D" }
+      "block_order": [
+        "m1",
+        "m2",
+        "m3",
+        "m4",
+        "m5"
+      ],
+      "settings": {
+        "background_color": "#FFC53D"
+      }
     },
-
     "story": {
       "type": "image-with-text",
       "blocks": {
-        "f1": { "type": "feature", "settings": { "icon": "foot", "title": "Flexible soles", "text": "Bend where little feet bend, so muscles develop naturally." } },
-        "f2": { "type": "feature", "settings": { "icon": "shield", "title": "Tough where it counts", "text": "Reinforced toes survive scooters, football and everything after." } },
-        "f3": { "type": "feature", "settings": { "icon": "heart", "title": "Skin-friendly linings", "text": "Breathable, non-toxic materials that stay comfortable all day." } }
+        "f1": {
+          "type": "feature",
+          "settings": {
+            "icon": "foot",
+            "title": "Flexible soles",
+            "text": "Bend where little feet bend, so muscles develop naturally."
+          }
+        },
+        "f2": {
+          "type": "feature",
+          "settings": {
+            "icon": "shield",
+            "title": "Tough where it counts",
+            "text": "Reinforced toes survive scooters, football and everything after."
+          }
+        },
+        "f3": {
+          "type": "feature",
+          "settings": {
+            "icon": "heart",
+            "title": "Skin-friendly linings",
+            "text": "Breathable, non-toxic materials that stay comfortable all day."
+          }
+        }
       },
-      "block_order": ["f1", "f2", "f3"],
+      "block_order": [
+        "f1",
+        "f2",
+        "f3"
+      ],
       "settings": {
         "media_position": "left",
         "eyebrow": "Why Hopits",
         "heading": "Built for growing feet",
         "text": "<p>Kids' feet grow roughly a centimetre every few months, and they spend most of that time running. We design every pair around both facts — light enough to move in, sturdy enough to last, and priced so outgrowing them doesn't sting.</p>",
         "button_label": "Read our story",
-        "button_link": "/pages/about",
+        "button_link": "/pages/about-us",
         "background": "default"
       }
     },
-
     "new_in": {
       "type": "featured-collection",
       "settings": {
@@ -158,7 +327,6 @@
         "background": "default"
       }
     },
-
     "testimonials": {
       "type": "testimonials",
       "blocks": {
@@ -190,14 +358,17 @@
           }
         }
       },
-      "block_order": ["r1", "r2", "r3"],
+      "block_order": [
+        "r1",
+        "r2",
+        "r3"
+      ],
       "settings": {
         "heading": "Loved by parents",
         "subheading": "What families tell us after a few months of wear and tear.",
         "background": "surface"
       }
     },
-
     "faq": {
       "type": "faq",
       "blocks": {
@@ -237,7 +408,13 @@
           }
         }
       },
-      "block_order": ["q1", "q2", "q3", "q4", "q5"],
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5"
+      ],
       "settings": {
         "heading": "Questions parents ask",
         "subheading": "Still stuck? Message us on WhatsApp and we'll help you size up.",

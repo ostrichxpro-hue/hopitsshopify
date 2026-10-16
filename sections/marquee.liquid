@@ -1,8 +1,8 @@
 <div class="section--tight" style="background: {{ section.settings.background_color }};">
-  <div class="marquee marquee--{{ section.settings.item_style | default: "pill" }}">
+  <div class="marquee marquee--{{ section.settings.item_style | default: 'pill' }}" data-marquee data-speed="{{ section.settings.speed }}">
     {%- comment -%} Duplicated track so the loop has no visible seam. {%- endcomment -%}
     {%- for i in (1..2) -%}
-      <div class="marquee__track" aria-hidden="{% if i == 2 %}true{% else %}false{% endif %}">
+      <div class="marquee__track" data-marquee-track aria-hidden="{% if i == 2 %}true{% else %}false{% endif %}">
         {%- for block in section.blocks -%}
           {%- assign pill_index = forloop.index0 | modulo: 5 -%}
           <span class="marquee__pill marquee__pill--c{{ pill_index }}" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</span>
@@ -28,6 +28,17 @@
         { "value": "plain", "label": "Plain text" }
       ],
       "default": "pill"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "min": 20,
+      "max": 140,
+      "step": 10,
+      "unit": "px",
+      "label": "Scroll speed",
+      "info": "Pixels per second. Items are cloned automatically so the loop never breaks.",
+      "default": 60
     }
   ],
   "blocks": [

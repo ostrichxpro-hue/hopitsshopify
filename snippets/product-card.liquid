@@ -52,6 +52,15 @@
 
   assign featured_variant = card_product.selected_or_first_available_variant
   assign second_image = card_product.media[1].preview_image
+
+  comment
+    Quick add depends on the size row: without it there is nothing for the
+    shopper to choose, so the two are driven by one flag.
+  endcomment
+  assign sizes_shown = false
+  if settings.card_show_sizes and size_index > -1 and card_product.available
+    assign sizes_shown = true
+  endif
 -%}
 
 <div class="product-card" data-product-card data-product-id="{{ card_product.id }}">
@@ -142,7 +151,7 @@
     {%- endif -%}
 
     <div class="product-card__footer">
-      {%- if settings.card_show_sizes and size_index > -1 and card_product.available -%}
+      {%- if sizes_shown -%}
         <div class="card-sizes" role="group" aria-label="{{ 'products.product.choose_size' | t }}">
           {%- for variant in card_product.variants -%}
             {%- liquid
@@ -174,7 +183,7 @@
       {%- endif -%}
 
       {%- if quick_add and card_product.available -%}
-        {%- if size_index > -1 -%}
+        {%- if sizes_shown -%}
           <div class="quick-add">
             <button type="button" class="button button--ink button--small button--full" data-quick-add>
               {{ 'products.product.quick_add' | t }}

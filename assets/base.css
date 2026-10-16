@@ -1267,7 +1267,8 @@ body:not(.blobs-on) .blob { display: none; }
   gap: 4rem;
   flex: 0 0 auto;
   align-items: center;
-  animation: marquee 26s linear infinite;
+  will-change: transform;
+  animation: marquee var(--marquee-duration, 26s) linear infinite;
 }
 .marquee:hover .marquee__track { animation-play-state: paused; }
 .marquee__item {

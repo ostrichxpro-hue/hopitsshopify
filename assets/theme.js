@@ -733,6 +733,61 @@
     start();
   }
 
+  /* --- Marquee -------------------------------------------------------------- */
+
+  /**
+   * A two-track CSS marquee only loops seamlessly while each track is at least
+   * as wide as its container — otherwise the -100% translate opens a gap and
+   * the strip appears to stop. Clone the items until that holds, then set the
+   * duration from the final width so speed stays constant however many items
+   * the merchant adds.
+   */
+  function Marquee(root) {
+    var tracks = $$('[data-marquee-track]', root);
+    if (!tracks.length) return;
+
+    var pxPerSecond = Number(root.getAttribute('data-speed')) || 60;
+
+    function layout() {
+      var containerWidth = root.clientWidth;
+      if (!containerWidth) return;
+
+      tracks.forEach(function (track) {
+        var originals = track.__hopitsOriginals;
+        if (!originals) {
+          originals = Array.prototype.slice.call(track.children);
+          track.__hopitsOriginals = originals;
+        } else {
+          // Reset to the original set before re-measuring on resize.
+          while (track.children.length > originals.length) {
+            track.removeChild(track.lastChild);
+          }
+        }
+        if (!originals.length) return;
+
+        var guard = 0;
+        while (track.scrollWidth < containerWidth && guard < 20) {
+          originals.forEach(function (node) {
+            var clone = node.cloneNode(true);
+            clone.setAttribute('aria-hidden', 'true');
+            track.appendChild(clone);
+          });
+          guard++;
+        }
+
+        track.style.setProperty('--marquee-duration', track.scrollWidth / pxPerSecond + 's');
+      });
+    }
+
+    layout();
+    on(window, 'resize', debounce(layout, 200));
+
+    // Fonts land after first paint and change the measured width.
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(layout).catch(function () {});
+    }
+  }
+
   /* --- Kids size finder ---------------------------------------------------- */
 
   function SizeFinder(root) {
@@ -908,6 +963,7 @@
     $$('[data-predictive-search]', scope).forEach(PredictiveSearch);
     $$('[data-announcement]', scope).forEach(Announcement);
     $$('[data-slideshow]', scope).forEach(Slideshow);
+    $$('[data-marquee]', scope).forEach(Marquee);
     $$('[data-size-finder]', scope).forEach(SizeFinder);
     $$('[data-facets]', scope).forEach(Facets);
     $$('[data-recommendations]', scope).forEach(Recommendations);

@@ -293,7 +293,7 @@
         "id": "card_show_sizes",
         "label": "t:settings.product_card.show_sizes",
         "info": "t:settings.product_card.show_sizes_info",
-        "default": true
+        "default": false
       },
       {
         "type": "text",

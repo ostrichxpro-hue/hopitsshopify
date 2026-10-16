@@ -3,3 +3,5 @@ node_modules/
 *.log
 .shopify/
 .env
+
+# Deploy artifact is force-added when a build needs a public URL for Shopify import

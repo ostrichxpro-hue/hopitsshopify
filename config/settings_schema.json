@@ -49,13 +49,13 @@
         "type": "color",
         "id": "color_ink",
         "label": "t:settings.colors.ink",
-        "default": "#16203A"
+        "default": "#17210F"
       },
       {
         "type": "color",
         "id": "color_ink_soft",
         "label": "t:settings.colors.ink_soft",
-        "default": "#5B6580"
+        "default": "#5B6652"
       },
       {
         "type": "color",
@@ -67,7 +67,7 @@
         "type": "color",
         "id": "color_surface",
         "label": "t:settings.colors.surface",
-        "default": "#FFF8F0"
+        "default": "#F5F9F1"
       },
       {
         "type": "header",
@@ -77,37 +77,37 @@
         "type": "color",
         "id": "color_primary",
         "label": "t:settings.colors.primary",
-        "default": "#FF5F9E"
+        "default": "#90C379"
       },
       {
         "type": "color",
         "id": "color_primary_contrast",
         "label": "t:settings.colors.primary_contrast",
-        "default": "#FFFFFF"
+        "default": "#17210F"
       },
       {
         "type": "color",
         "id": "color_yellow",
         "label": "t:settings.colors.yellow",
-        "default": "#FFC53D"
+        "default": "#F4F3B6"
       },
       {
         "type": "color",
         "id": "color_teal",
         "label": "t:settings.colors.teal",
-        "default": "#2EC4B6"
+        "default": "#C8E9F0"
       },
       {
         "type": "color",
         "id": "color_grape",
         "label": "t:settings.colors.grape",
-        "default": "#7C5CFF"
+        "default": "#CEB6D8"
       },
       {
         "type": "color",
         "id": "color_coral",
         "label": "t:settings.colors.coral",
-        "default": "#FF7A5A"
+        "default": "#ECBAD6"
       },
       {
         "type": "header",
@@ -117,19 +117,38 @@
         "type": "color",
         "id": "color_sale",
         "label": "t:settings.colors.sale",
-        "default": "#E03131"
+        "default": "#D92D20"
       },
       {
         "type": "color",
         "id": "color_success",
         "label": "t:settings.colors.success",
-        "default": "#12B886"
+        "default": "#3F7A2E"
+      },
+      {
+        "type": "color",
+        "id": "color_deep",
+        "label": "t:settings.colors.deep",
+        "info": "t:settings.colors.deep_info",
+        "default": "#4A7836"
+      },
+      {
+        "type": "color",
+        "id": "color_warn",
+        "label": "t:settings.colors.warn",
+        "default": "#B45309"
+      },
+      {
+        "type": "color",
+        "id": "color_star",
+        "label": "t:settings.colors.star",
+        "default": "#C8860A"
       },
       {
         "type": "color",
         "id": "color_border",
         "label": "t:settings.colors.border",
-        "default": "#E8E4DE"
+        "default": "#E2E8DC"
       }
     ]
   },

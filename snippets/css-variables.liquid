@@ -22,11 +22,27 @@
 
     --hp-primary-rgb: {{ settings.color_primary | color_extract: 'red' }}, {{ settings.color_primary | color_extract: 'green' }}, {{ settings.color_primary | color_extract: 'blue' }};
     --hp-ink-rgb: {{ settings.color_ink | color_extract: 'red' }}, {{ settings.color_ink | color_extract: 'green' }}, {{ settings.color_ink | color_extract: 'blue' }};
-    --hp-primary-dark: {{ settings.color_primary | color_darken: 10 }};
-    --hp-primary-tint: {{ settings.color_primary | color_lighten: 38 }};
-    --hp-teal-tint: {{ settings.color_teal | color_lighten: 42 }};
-    --hp-yellow-tint: {{ settings.color_yellow | color_lighten: 30 }};
-    --hp-grape-tint: {{ settings.color_grape | color_lighten: 36 }};
+
+    {%- comment -%}
+      The brand palette is already pastel, so grounds use the colours as given.
+      Lightening them further would wash them out to near-white.
+    {%- endcomment -%}
+    --hp-deep: {{ settings.color_deep }};
+    --hp-primary-dark: {{ settings.color_deep }};
+    --hp-warn: {{ settings.color_warn }};
+    --hp-star: {{ settings.color_star }};
+
+    --hp-sky: {{ settings.color_teal }};
+    --hp-butter: {{ settings.color_yellow }};
+    --hp-lilac: {{ settings.color_grape }};
+    --hp-blush: {{ settings.color_coral }};
+    --hp-green-pale: {{ settings.color_primary | color_lighten: 20 }};
+
+    --hp-teal-tint: {{ settings.color_teal }};
+    --hp-yellow-tint: {{ settings.color_yellow }};
+    --hp-grape-tint: {{ settings.color_grape }};
+    --hp-coral-tint: {{ settings.color_coral }};
+    --hp-primary-tint: {{ settings.color_primary | color_lighten: 20 }};
 
     --hp-font-body: {{ body_font.family }}, {{ body_font.fallback_families }};
     --hp-font-body-weight: {{ body_font.weight }};

@@ -102,7 +102,7 @@ normally and links navigate with JS disabled.
 ```bash
 npm install -g @shopify/cli@latest
 
-shopify theme dev  --store hopits.myshopify.com   # local preview with hot reload
+shopify theme dev  --store kazar-max.myshopify.com   # local preview with hot reload
 shopify theme check                               # lint (currently: 0 offenses)
 shopify theme push --unpublished                  # upload as a draft theme
 ```

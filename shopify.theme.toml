@@ -5,9 +5,9 @@
 #   shopify theme push  --environment production    # push to the live theme (asks first)
 
 [environments.development]
-store = "hopits.myshopify.com"
+store = "kazar-max.myshopify.com"
 theme = "Hopits D2C (dev)"
 unpublished = true
 
 [environments.production]
-store = "hopits.myshopify.com"
+store = "kazar-max.myshopify.com"

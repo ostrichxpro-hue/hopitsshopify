@@ -432,6 +432,135 @@
         "subheading": "Still stuck? Message us on WhatsApp and we'll help you size up.",
         "background": "default"
       }
+    },
+    "exclusive": {
+      "type": "tabbed-collections",
+      "blocks": {
+        "t_girls": {
+          "type": "tab",
+          "settings": {
+            "collection": "girls",
+            "label": "Girls"
+          }
+        },
+        "t_boys": {
+          "type": "tab",
+          "settings": {
+            "collection": "boys",
+            "label": "Boys"
+          }
+        },
+        "t_tots": {
+          "type": "tab",
+          "settings": {
+            "collection": "toddlers",
+            "label": "Toddlers"
+          }
+        }
+      },
+      "block_order": [
+        "t_girls",
+        "t_boys",
+        "t_tots"
+      ],
+      "settings": {
+        "heading": "Exclusive designs",
+        "subheading": "Styles you won't find anywhere else, built for how kids actually move.",
+        "link_label": "View all",
+        "products_to_show": 8,
+        "background": "default",
+        "divider_top": "none"
+      }
+    },
+    "promos": {
+      "type": "promo-cards",
+      "blocks": {
+        "p1": {
+          "type": "card",
+          "settings": {
+            "eyebrow": "Rain or shine",
+            "heading": "Monsoon ready",
+            "button_label": "Shop SplashSteps",
+            "button_link": "/collections/waterproof-sandals",
+            "text_color": "light",
+            "scrim": true,
+            "button_style": "light"
+          }
+        },
+        "p2": {
+          "type": "card",
+          "settings": {
+            "eyebrow": "Back to school",
+            "heading": "Built to last a term",
+            "button_label": "Shop school shoes",
+            "button_link": "/collections/school-shoes",
+            "text_color": "dark",
+            "scrim": true,
+            "button_style": "primary"
+          }
+        },
+        "p3": {
+          "type": "card",
+          "settings": {
+            "eyebrow": "First steps",
+            "heading": "Tiny feet, big days",
+            "button_label": "Shop toddlers",
+            "button_link": "/collections/toddlers",
+            "text_color": "light",
+            "scrim": true,
+            "button_style": "light"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3"
+      ],
+      "settings": {
+        "heading": "",
+        "subheading": "",
+        "background": "default",
+        "divider_top": "none"
+      }
+    },
+    "shop_the_look": {
+      "type": "shoppable-image",
+      "blocks": {
+        "h1": {
+          "type": "hotspot",
+          "settings": {
+            "x": 28,
+            "y": 62
+          }
+        },
+        "h2": {
+          "type": "hotspot",
+          "settings": {
+            "x": 52,
+            "y": 70
+          }
+        },
+        "h3": {
+          "type": "hotspot",
+          "settings": {
+            "x": 76,
+            "y": 58
+          }
+        }
+      },
+      "block_order": [
+        "h1",
+        "h2",
+        "h3"
+      ],
+      "settings": {
+        "heading": "Shop the look",
+        "subheading": "Tap a dot to see what they're wearing.",
+        "background": "surface",
+        "divider_top": "wave",
+        "divider_color": "#FFFFFF"
+      }
     }
   },
   "order": [
@@ -439,10 +568,13 @@
     "usp_bar",
     "categories",
     "bestsellers",
+    "exclusive",
     "shop_by_age",
     "marquee",
+    "promos",
     "story",
     "new_in",
+    "shop_the_look",
     "testimonials",
     "faq"
   ]

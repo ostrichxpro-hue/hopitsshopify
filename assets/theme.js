@@ -788,6 +788,118 @@
     }
   }
 
+  /* --- Tabs + scroll progress ----------------------------------------------- */
+
+  function Tabs(root) {
+    var tabs = $$('[data-tab]', root);
+    var panels = $$('[data-tab-panel]', root);
+    if (!tabs.length) return;
+
+    function select(index) {
+      tabs.forEach(function (tab, i) {
+        tab.setAttribute('aria-selected', i === index ? 'true' : 'false');
+      });
+      panels.forEach(function (panel, i) {
+        panel.hidden = i !== index;
+      });
+      // Rows inside a hidden panel measure as zero, so refresh once visible.
+      $$('[data-scroller]', panels[index]).forEach(paintProgress);
+    }
+
+    tabs.forEach(function (tab, i) {
+      on(tab, 'click', function () {
+        select(i);
+      });
+      // Arrow keys move between tabs, per the tablist pattern.
+      on(tab, 'keydown', function (e) {
+        var next = null;
+        if (e.key === 'ArrowRight') next = (i + 1) % tabs.length;
+        if (e.key === 'ArrowLeft') next = (i - 1 + tabs.length) % tabs.length;
+        if (next === null) return;
+        e.preventDefault();
+        select(next);
+        tabs[next].focus();
+      });
+    });
+  }
+
+  function paintProgress(scroller) {
+    var wrap = scroller.parentElement;
+    var bar = wrap && wrap.querySelector('[data-scroll-progress]');
+    var thumb = bar && bar.querySelector('[data-scroll-thumb]');
+    if (!thumb) return;
+
+    var scrollable = scroller.scrollWidth - scroller.clientWidth;
+    if (scrollable <= 1) {
+      bar.hidden = true;
+      return;
+    }
+    bar.hidden = false;
+
+    var visibleRatio = scroller.clientWidth / scroller.scrollWidth;
+    thumb.style.width = Math.max(12, visibleRatio * 100) + '%';
+
+    var progress = scroller.scrollLeft / scrollable;
+    var travel = bar.clientWidth - thumb.clientWidth;
+    thumb.style.transform = 'translateX(' + progress * travel + 'px)';
+  }
+
+  function ScrollProgress(scroller) {
+    paintProgress(scroller);
+    on(scroller, 'scroll', function () {
+      paintProgress(scroller);
+    }, { passive: true });
+    on(window, 'resize', debounce(function () {
+      paintProgress(scroller);
+    }, 150));
+  }
+
+  /* --- Shoppable image hotspots --------------------------------------------- */
+
+  function Shoppable(root) {
+    var dots = $$('[data-hotspot]', root);
+    if (!dots.length) return;
+
+    function closeAll(except) {
+      dots.forEach(function (dot) {
+        if (dot === except) return;
+        dot.setAttribute('aria-expanded', 'false');
+        var pop = document.getElementById(dot.getAttribute('aria-controls'));
+        if (pop) pop.hidden = true;
+      });
+    }
+
+    dots.forEach(function (dot) {
+      on(dot, 'click', function (e) {
+        e.stopPropagation();
+        var pop = document.getElementById(dot.getAttribute('aria-controls'));
+        if (!pop) return;
+        var isOpen = dot.getAttribute('aria-expanded') === 'true';
+        closeAll(dot);
+        dot.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+        pop.hidden = isOpen;
+
+        if (!isOpen) {
+          // Keep the card inside the image rather than letting it clip.
+          var parent = dot.parentElement;
+          parent.classList.remove('hotspot--flip-up', 'hotspot--flip-left', 'hotspot--flip-right');
+          var bounds = root.getBoundingClientRect();
+          var box = pop.getBoundingClientRect();
+          if (box.top < bounds.top) parent.classList.add('hotspot--flip-up');
+          if (box.left < bounds.left) parent.classList.add('hotspot--flip-right');
+          if (box.right > bounds.right) parent.classList.add('hotspot--flip-left');
+        }
+      });
+    });
+
+    on(document, 'click', function () {
+      closeAll(null);
+    });
+    on(document, 'keydown', function (e) {
+      if (e.key === 'Escape') closeAll(null);
+    });
+  }
+
   /* --- Kids size finder ---------------------------------------------------- */
 
   function SizeFinder(root) {
@@ -964,6 +1076,9 @@
     $$('[data-announcement]', scope).forEach(Announcement);
     $$('[data-slideshow]', scope).forEach(Slideshow);
     $$('[data-marquee]', scope).forEach(Marquee);
+    $$('[data-tabs-root]', scope).forEach(Tabs);
+    $$('[data-scroller]', scope).forEach(ScrollProgress);
+    $$('[data-shoppable]', scope).forEach(Shoppable);
     $$('[data-size-finder]', scope).forEach(SizeFinder);
     $$('[data-facets]', scope).forEach(Facets);
     $$('[data-recommendations]', scope).forEach(Recommendations);

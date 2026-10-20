@@ -2754,3 +2754,164 @@ input:checked + .variant-option--swatch { background: var(--hp-bg); border-color
 @media screen and (min-width: 750px) {
   .footer__grid { grid-template-columns: 1.2fr 1fr 1fr 1.4fr; }
 }
+
+/* ==========================================================================
+   Hero (full-bleed overlay)
+   ========================================================================== */
+.hero-x {
+  position: relative;
+  overflow: hidden;
+  background: var(--hp-surface);
+}
+
+.hero-x--h-small { --hero-h: 38rem; }
+.hero-x--h-medium { --hero-h: 48rem; }
+.hero-x--h-large { --hero-h: 58rem; }
+.hero-x--h-full { --hero-h: 78svh; }
+
+@media screen and (min-width: 750px) {
+  .hero-x--h-small { --hero-h: 46rem; }
+  .hero-x--h-medium { --hero-h: 58rem; }
+  .hero-x--h-large { --hero-h: 72rem; }
+  .hero-x--h-full { --hero-h: calc(100svh - 8rem); }
+}
+
+.hero-x__slide { position: relative; display: none; }
+.hero-x__slide.is-active { display: block; }
+
+/* --- Background image ----------------------------------------------------- */
+.hero-x__bg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+.hero-x__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hero-x__bg--empty {
+  background: linear-gradient(135deg, var(--hp-sky), var(--hp-butter) 45%, var(--hp-blush));
+}
+
+/* Scrim sits only behind the content side, so the photo stays visible. */
+.hero-x__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.hero-x__scrim--left {
+  background: linear-gradient(to right, rgba(0, 0, 0, var(--scrim, 0.35)) 0%, rgba(0, 0, 0, calc(var(--scrim, 0.35) * 0.55)) 45%, transparent 78%);
+}
+.hero-x__scrim--right {
+  background: linear-gradient(to left, rgba(0, 0, 0, var(--scrim, 0.35)) 0%, rgba(0, 0, 0, calc(var(--scrim, 0.35) * 0.55)) 45%, transparent 78%);
+}
+.hero-x__scrim--center {
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, var(--scrim, 0.35)) 0%, rgba(0, 0, 0, calc(var(--scrim, 0.35) * 0.6)) 55%, transparent 85%);
+}
+
+/* A dark slide needs the scrim to lighten rather than darken. */
+.hero-x__slide--dark .hero-x__scrim--left {
+  background: linear-gradient(to right, rgba(255, 255, 255, var(--scrim, 0.35)) 0%, rgba(255, 255, 255, calc(var(--scrim, 0.35) * 0.55)) 45%, transparent 78%);
+}
+.hero-x__slide--dark .hero-x__scrim--right {
+  background: linear-gradient(to left, rgba(255, 255, 255, var(--scrim, 0.35)) 0%, rgba(255, 255, 255, calc(var(--scrim, 0.35) * 0.55)) 45%, transparent 78%);
+}
+.hero-x__slide--dark .hero-x__scrim--center {
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, var(--scrim, 0.35)) 0%, rgba(255, 255, 255, calc(var(--scrim, 0.35) * 0.6)) 55%, transparent 85%);
+}
+
+/* --- Content -------------------------------------------------------------- */
+.hero-x__inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  min-height: var(--hero-h);
+  padding-block: 4.8rem;
+}
+
+.hero-x__content {
+  width: 100%;
+  max-width: 58rem;
+}
+.hero-x--overlay .hero-x__content--left { margin-right: auto; text-align: left; }
+.hero-x--overlay .hero-x__content--right { margin-left: auto; text-align: right; }
+.hero-x--overlay .hero-x__content--center { margin-inline: auto; text-align: center; }
+
+.hero-x--overlay .hero-x__content--right .hero__buttons,
+.hero-x--overlay .hero-x__content--right .hero__stats { justify-content: flex-end; }
+.hero-x--overlay .hero-x__content--center .hero__buttons,
+.hero-x--overlay .hero-x__content--center .hero__stats { justify-content: center; }
+
+.hero-x__slide--light .hero-x__content { color: #fff; }
+.hero-x__slide--light .hero-x__text { color: rgba(255, 255, 255, 0.92); }
+.hero-x__slide--light .hero-x__stats { border-top-color: rgba(255, 255, 255, 0.3); }
+.hero-x__slide--light .hero__stat-value { color: #fff; }
+.hero-x__slide--light .hero__stat-label { color: rgba(255, 255, 255, 0.82); }
+
+.hero-x__slide--dark .hero-x__content { color: var(--hp-ink); }
+.hero-x__slide--dark .hero-x__text { color: var(--hp-ink-soft); }
+
+.hero-x__title { margin-bottom: 1.6rem; }
+.hero-x__title em { font-style: normal; color: var(--hp-primary); white-space: nowrap; }
+.hero-x__slide--light .hero-x__title em { color: var(--hp-butter); }
+
+.hero-x__text {
+  margin-bottom: 2.8rem;
+  font-size: 1.75rem;
+}
+.hero-x__buttons { margin-top: 0; }
+.hero-x__stats { border-top: 1px solid rgba(var(--hp-ink-rgb), 0.16); }
+
+/* --- Split layout --------------------------------------------------------- */
+.hero-x--split .hero-x__inner {
+  display: grid;
+  gap: 2.4rem;
+  align-items: center;
+}
+@media screen and (min-width: 750px) {
+  .hero-x--split .hero-x__inner { grid-template-columns: 1fr 1fr; gap: 4.8rem; }
+}
+.hero-x--split .hero-x__content { max-width: none; }
+.hero-x--split .hero-x__media {
+  border-radius: calc(var(--hp-radius-card) * 1.6);
+  overflow: hidden;
+  background: var(--hp-image-bg);
+}
+.hero-x--split .hero-x__media img {
+  width: 100%;
+  height: 100%;
+  max-height: var(--hero-h);
+  object-fit: cover;
+}
+
+/* Keep the dots clear of the content on a tall hero */
+.hero-x .slideshow__dots { z-index: 3; }
+
+@media screen and (max-width: 749px) {
+  /* A narrow screen has no room for a side-pinned box; centre everything and
+     let the scrim cover the full frame instead of one edge. */
+  .hero-x--overlay .hero-x__content {
+    margin-inline: auto;
+    text-align: center;
+    max-width: 44rem;
+  }
+  .hero-x--overlay .hero-x__content .hero__buttons,
+  .hero-x--overlay .hero-x__content .hero__stats { justify-content: center; }
+  .hero-x__scrim--left,
+  .hero-x__scrim--right,
+  .hero-x__scrim--center {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, calc(var(--scrim, 0.35) * 0.7)) 0%, rgba(0, 0, 0, var(--scrim, 0.35)) 100%);
+  }
+  .hero-x__slide--dark .hero-x__scrim--left,
+  .hero-x__slide--dark .hero-x__scrim--right,
+  .hero-x__slide--dark .hero-x__scrim--center {
+    background: linear-gradient(to bottom, rgba(255, 255, 255, calc(var(--scrim, 0.35) * 0.7)) 0%, rgba(255, 255, 255, var(--scrim, 0.35)) 100%);
+  }
+  .hero-x__title { font-size: calc(3.6rem * var(--hp-heading-scale)); }
+  .hero-x__buttons { flex-direction: column; align-items: stretch; }
+}

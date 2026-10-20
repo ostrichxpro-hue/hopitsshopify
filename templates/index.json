@@ -9,11 +9,15 @@
             "eyebrow": "New season drop",
             "heading": "<p>Shoes built for <em>little adventurers</em></p>",
             "text": "Lightweight, flexible and tough enough for every puddle, playground and school run. Sizes 21 to 34.",
-            "media_position": "right",
             "button_label": "Shop all shoes",
             "button_link": "/collections/shop",
             "button_2_label": "Find my size",
-            "button_2_link": ""
+            "button_2_link": "",
+            "content_position": "left",
+            "text_color": "light",
+            "overlay_opacity": 40,
+            "focal_x": 70,
+            "focal_y": 50
           }
         },
         "slide_2": {
@@ -22,11 +26,15 @@
             "eyebrow": "Monsoon ready",
             "heading": "<p>SplashSteps: <em>made for puddles</em></p>",
             "text": "Waterproof sandals that rinse clean in seconds. Every splash, jump and adventure covered.",
-            "media_position": "right",
             "button_label": "Shop SplashSteps",
             "button_link": "/collections/waterproof-sandals",
             "button_2_label": "Find my size",
-            "button_2_link": ""
+            "button_2_link": "",
+            "content_position": "right",
+            "text_color": "light",
+            "overlay_opacity": 40,
+            "focal_x": 30,
+            "focal_y": 50
           }
         }
       },
@@ -37,13 +45,15 @@
       "settings": {
         "autoplay": true,
         "speed": 6,
-        "show_stats": true,
+        "show_stats": false,
         "stat_1_value": "50,000+",
         "stat_1_label": "Happy little feet",
         "stat_2_value": "4.6★",
         "stat_2_label": "Average rating",
         "stat_3_value": "7 days",
-        "stat_3_label": "Easy size exchange"
+        "stat_3_label": "Easy size exchange",
+        "layout": "overlay",
+        "height": "large"
       }
     },
     "usp_bar": {

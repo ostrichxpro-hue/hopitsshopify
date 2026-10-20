@@ -1,90 +1,163 @@
-<div class="hero" data-slideshow data-autoplay="{{ section.settings.autoplay }}" data-speed="{{ section.settings.speed }}">
-  <span class="blob blob--1"></span>
-  <span class="blob blob--2"></span>
+{%- comment -%}
+  Hero. Two layouts:
+    overlay - full-bleed image with the content sitting on top of it. The
+              content box can be pinned left, centre or right so it never
+              lands on the subject of the photo.
+    split   - the older side-by-side arrangement, kept for pages that want it.
+{%- endcomment -%}
+{%- liquid
+  assign layout = section.settings.layout | default: 'overlay'
+  assign height = section.settings.height | default: 'medium'
+-%}
 
+<div
+  class="hero-x hero-x--{{ layout }} hero-x--h-{{ height }}"
+  data-slideshow
+  data-autoplay="{{ section.settings.autoplay }}"
+  data-speed="{{ section.settings.speed }}"
+>
   {%- for block in section.blocks -%}
-    <div class="slideshow__slide{% if forloop.first %} is-active{% endif %}" data-slide {{ block.shopify_attributes }}>
-      <div class="page-width">
-        <div class="hero__grid{% if block.settings.media_position == 'left' %} hero--media-left{% endif %}">
-          <div class="hero__body">
-            {%- if block.settings.eyebrow != blank -%}
-              <span class="hero__eyebrow">
-                {% render 'icon', icon: 'sparkle' %}
-                {{ block.settings.eyebrow | escape }}
-              </span>
+    {%- liquid
+      assign position = block.settings.content_position | default: 'left'
+      assign tone = block.settings.text_color | default: 'light'
+      assign has_image = false
+      if block.settings.image != blank or block.settings.image_mobile != blank
+        assign has_image = true
+      endif
+    -%}
+    <div
+      class="hero-x__slide hero-x__slide--{{ tone }}{% if forloop.first %} is-active{% endif %}"
+      data-slide
+      {{ block.shopify_attributes }}
+    >
+      {%- if layout == 'overlay' -%}
+        {%- if has_image -%}
+          <picture class="hero-x__bg">
+            {%- if block.settings.image_mobile != blank -%}
+              <source
+                media="(max-width: 749px)"
+                srcset="{{ block.settings.image_mobile | image_url: width: 750 }} 750w, {{ block.settings.image_mobile | image_url: width: 1100 }} 1100w"
+                sizes="100vw"
+              >
+            {%- endif -%}
+            {%- assign desktop_image = block.settings.image | default: block.settings.image_mobile -%}
+            <img
+              src="{{ desktop_image | image_url: width: 1800 }}"
+              srcset="
+                {{ desktop_image | image_url: width: 900 }} 900w,
+                {{ desktop_image | image_url: width: 1400 }} 1400w,
+                {{ desktop_image | image_url: width: 1800 }} 1800w,
+                {{ desktop_image | image_url: width: 2400 }} 2400w
+              "
+              sizes="100vw"
+              alt="{{ desktop_image.alt | default: block.settings.heading | strip_html | escape }}"
+              width="{{ desktop_image.width }}"
+              height="{{ desktop_image.height }}"
+              loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+              {% if forloop.first %}fetchpriority="high"{% endif %}
+              style="object-position: {{ block.settings.focal_x }}% {{ block.settings.focal_y }}%;"
+            >
+          </picture>
+        {%- else -%}
+          <span class="hero-x__bg hero-x__bg--empty" aria-hidden="true"></span>
+        {%- endif -%}
+
+        {%- comment -%}
+          A gradient scrim behind the content side only, so the photo stays
+          visible while the type keeps its contrast.
+        {%- endcomment -%}
+        {%- if block.settings.overlay_opacity > 0 -%}
+          <span
+            class="hero-x__scrim hero-x__scrim--{{ position }}"
+            style="--scrim: {{ block.settings.overlay_opacity | divided_by: 100.0 }};"
+            aria-hidden="true"
+          ></span>
+        {%- endif -%}
+      {%- endif -%}
+
+      <div class="hero-x__inner page-width">
+        <div class="hero-x__content hero-x__content--{{ position }}">
+          {%- if block.settings.eyebrow != blank -%}
+            <span class="hero__eyebrow">
+              {% render 'icon', icon: 'sparkle' %}
+              {{ block.settings.eyebrow | escape }}
+            </span>
+          {%- endif -%}
+
+          {%- if block.settings.heading != blank -%}
+            <h2 class="hero-x__title h1">{{ block.settings.heading }}</h2>
+          {%- endif -%}
+
+          {%- if block.settings.text != blank -%}
+            <p class="hero-x__text">{{ block.settings.text | escape }}</p>
+          {%- endif -%}
+
+          <div class="hero__buttons hero-x__buttons">
+            {%- if block.settings.button_label != blank -%}
+              <a href="{{ block.settings.button_link | default: '#' }}" class="button button--primary button--large">
+                {{ block.settings.button_label | escape }}
+              </a>
             {%- endif -%}
 
-            <h1 class="hero__title h1">{{ block.settings.heading }}</h1>
-
-            {%- if block.settings.text != blank -%}
-              <p class="hero__text">{{ block.settings.text | escape }}</p>
-            {%- endif -%}
-
-            <div class="hero__buttons">
-              {%- if block.settings.button_label != blank -%}
-                <a href="{{ block.settings.button_link }}" class="button button--primary button--large">
-                  {{ block.settings.button_label | escape }}
+            {%- if block.settings.button_2_label != blank -%}
+              {%- if block.settings.button_2_link != blank -%}
+                <a href="{{ block.settings.button_2_link }}" class="button button--large {% if tone == 'light' %}button--light{% else %}button--secondary{% endif %}">
+                  {{ block.settings.button_2_label | escape }}
                 </a>
+              {%- elsif settings.enable_size_guide -%}
+                <button type="button" class="button button--large {% if tone == 'light' %}button--light{% else %}button--secondary{% endif %}" data-panel-open="SizeGuideModal">
+                  {% render 'icon', icon: 'ruler' %}
+                  {{ block.settings.button_2_label | escape }}
+                </button>
               {%- endif -%}
-              {%- if block.settings.button_2_label != blank -%}
-                {%- if block.settings.button_2_link != blank -%}
-                  <a href="{{ block.settings.button_2_link }}" class="button button--secondary button--large">
-                    {{ block.settings.button_2_label | escape }}
-                  </a>
-                {%- elsif settings.enable_size_guide -%}
-                  <button type="button" class="button button--secondary button--large" data-panel-open="SizeGuideModal">
-                    {% render 'icon', icon: 'ruler' %}
-                    {{ block.settings.button_2_label | escape }}
-                  </button>
+            {%- endif -%}
+          </div>
+
+          {%- if section.settings.show_stats -%}
+            <div class="hero__stats hero-x__stats">
+              {%- for i in (1..3) -%}
+                {%- liquid
+                  case i
+                    when 1
+                      assign stat_value = section.settings.stat_1_value
+                      assign stat_label = section.settings.stat_1_label
+                    when 2
+                      assign stat_value = section.settings.stat_2_value
+                      assign stat_label = section.settings.stat_2_label
+                    when 3
+                      assign stat_value = section.settings.stat_3_value
+                      assign stat_label = section.settings.stat_3_label
+                  endcase
+                -%}
+                {%- if stat_value != blank -%}
+                  <div>
+                    <span class="hero__stat-value">{{ stat_value | escape }}</span>
+                    <span class="hero__stat-label">{{ stat_label | escape }}</span>
+                  </div>
                 {%- endif -%}
-              {%- endif -%}
+              {%- endfor -%}
             </div>
-
-            {%- if section.settings.show_stats -%}
-              <div class="hero__stats">
-                {%- if section.settings.stat_1_value != blank -%}
-                  <div>
-                    <span class="hero__stat-value">{{ section.settings.stat_1_value | escape }}</span>
-                    <span class="hero__stat-label">{{ section.settings.stat_1_label | escape }}</span>
-                  </div>
-                {%- endif -%}
-                {%- if section.settings.stat_2_value != blank -%}
-                  <div>
-                    <span class="hero__stat-value">{{ section.settings.stat_2_value | escape }}</span>
-                    <span class="hero__stat-label">{{ section.settings.stat_2_label | escape }}</span>
-                  </div>
-                {%- endif -%}
-                {%- if section.settings.stat_3_value != blank -%}
-                  <div>
-                    <span class="hero__stat-value">{{ section.settings.stat_3_value | escape }}</span>
-                    <span class="hero__stat-label">{{ section.settings.stat_3_label | escape }}</span>
-                  </div>
-                {%- endif -%}
-              </div>
-            {%- endif -%}
-          </div>
-
-          <div class="hero__media">
-            {%- if block.settings.image != blank -%}
-              <span class="media media--landscape">
-                <img
-                  src="{{ block.settings.image | image_url: width: 1200 }}"
-                  srcset="{{ block.settings.image | image_url: width: 600 }} 600w, {{ block.settings.image | image_url: width: 1200 }} 1200w, {{ block.settings.image | image_url: width: 1800 }} 1800w"
-                  sizes="(min-width: 750px) 50vw, 100vw"
-                  alt="{{ block.settings.image.alt | default: block.settings.heading | escape }}"
-                  width="{{ block.settings.image.width }}"
-                  height="{{ block.settings.image.height }}"
-                  loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
-                  {% if forloop.first %}fetchpriority="high"{% endif %}
-                >
-              </span>
-            {%- else -%}
-              <span class="media media--landscape">
-                {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
-              </span>
-            {%- endif -%}
-          </div>
+          {%- endif -%}
         </div>
+
+        {%- if layout == 'split' -%}
+          <div class="hero-x__media">
+            {%- if has_image -%}
+              {%- assign split_image = block.settings.image | default: block.settings.image_mobile -%}
+              <img
+                src="{{ split_image | image_url: width: 1200 }}"
+                srcset="{{ split_image | image_url: width: 600 }} 600w, {{ split_image | image_url: width: 1200 }} 1200w"
+                sizes="(min-width: 750px) 50vw, 100vw"
+                alt="{{ split_image.alt | default: block.settings.heading | strip_html | escape }}"
+                width="{{ split_image.width }}"
+                height="{{ split_image.height }}"
+                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+              >
+            {%- else -%}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
       </div>
     </div>
   {%- endfor -%}
@@ -107,12 +180,34 @@
 {% schema %}
 {
   "name": "Hero",
-  "max_blocks": 4,
+  "max_blocks": 5,
   "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "overlay", "label": "Full image, content on top" },
+        { "value": "split", "label": "Image beside the content" }
+      ],
+      "default": "overlay"
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "Height",
+      "options": [
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" },
+        { "value": "full", "label": "Full screen" }
+      ],
+      "default": "large"
+    },
     { "type": "checkbox", "id": "autoplay", "label": "Auto-rotate slides", "default": true },
     { "type": "range", "id": "speed", "min": 4, "max": 12, "step": 1, "unit": "s", "label": "Slide duration", "default": 6 },
     { "type": "header", "content": "Trust stats" },
-    { "type": "checkbox", "id": "show_stats", "label": "Show stats row", "default": true },
+    { "type": "checkbox", "id": "show_stats", "label": "Show stats row", "default": false },
     { "type": "text", "id": "stat_1_value", "label": "Stat 1 value", "default": "50,000+" },
     { "type": "text", "id": "stat_1_label", "label": "Stat 1 label", "default": "Happy little feet" },
     { "type": "text", "id": "stat_2_value", "label": "Stat 2 value", "default": "4.6★" },
@@ -125,20 +220,51 @@
       "type": "slide",
       "name": "Slide",
       "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "image_picker", "id": "image_mobile", "label": "Mobile image", "info": "Optional. A wide shot crops badly on a phone." },
+        {
+          "type": "range",
+          "id": "focal_x",
+          "min": 0, "max": 100, "step": 5, "unit": "%",
+          "label": "Image focus, left to right",
+          "info": "Which part of the photo stays in frame when it is cropped.",
+          "default": 50
+        },
+        { "type": "range", "id": "focal_y", "min": 0, "max": 100, "step": 5, "unit": "%", "label": "Image focus, top to bottom", "default": 50 },
+        { "type": "header", "content": "Content" },
+        {
+          "type": "select",
+          "id": "content_position",
+          "label": "Content position",
+          "info": "Put the content opposite the subject of the photo.",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Centre" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "select",
+          "id": "text_color",
+          "label": "Text colour",
+          "options": [
+            { "value": "light", "label": "Light" },
+            { "value": "dark", "label": "Dark" }
+          ],
+          "default": "light"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "min": 0, "max": 80, "step": 5, "unit": "%",
+          "label": "Darken behind the content",
+          "info": "Raise this if the heading is hard to read against the photo.",
+          "default": 35
+        },
         { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "New season drop" },
         { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>Shoes built for <em>little adventurers</em></p>" },
         { "type": "text", "id": "text", "label": "Text", "default": "Lightweight, flexible and tough enough for every puddle, playground and school run." },
-        { "type": "image_picker", "id": "image", "label": "Image" },
-        {
-          "type": "select",
-          "id": "media_position",
-          "label": "Image position",
-          "options": [
-            { "value": "right", "label": "Right" },
-            { "value": "left", "label": "Left" }
-          ],
-          "default": "right"
-        },
         { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop all shoes" },
         { "type": "url", "id": "button_link", "label": "Button link" },
         { "type": "text", "id": "button_2_label", "label": "Second button label", "default": "Find my size" },
@@ -147,10 +273,7 @@
     }
   ],
   "presets": [
-    {
-      "name": "Hero",
-      "blocks": [{ "type": "slide" }]
-    }
+    { "name": "Hero", "blocks": [{ "type": "slide" }] }
   ]
 }
 {% endschema %}

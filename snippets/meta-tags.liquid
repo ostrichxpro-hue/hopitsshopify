@@ -105,7 +105,13 @@
         "url": {{ shop.url | json }},
         "potentialAction": {
           "@type": "SearchAction",
-          "target": {{ shop.url | append: routes.search_url | append: "?q={search_term_string}" | json }},
+          {%- comment -%}
+            schema.org requires the literal {search_term_string} placeholder.
+            It cannot live inside a Liquid expression: the lexer stops at the
+            closing brace and the variable never terminates. Emit it as plain
+            template text instead, with only the safe parts interpolated.
+          {%- endcomment -%}
+          "target": "{{ shop.url }}{{ routes.search_url }}?q={search_term_string}",
           "query-input": "required name=search_term_string"
         }
       }

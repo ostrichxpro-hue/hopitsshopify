@@ -37,7 +37,7 @@
       "type": "header",
       "settings": {
         "menu": "main-menu",
-        "layout": "left"
+        "layout": "inline"
       }
     }
   },

@@ -1,4 +1,4 @@
-<header class="header{% if section.settings.layout == 'center' %} header--center{% endif %}">
+<header class="header header--{{ section.settings.layout | default: 'inline' }}">
   <div class="page-width header__inner">
     <button
       type="button"
@@ -8,10 +8,6 @@
     >
       {% render 'icon', icon: 'menu' %}
     </button>
-
-    {%- if section.settings.layout == 'center' -%}
-      <nav class="nav" role="navigation">{% render 'nav-list', menu: section.settings.menu, section: section %}</nav>
-    {%- endif -%}
 
     <a href="{{ routes.root_url }}" class="header__logo">
       {%- if settings.logo != blank -%}
@@ -27,9 +23,7 @@
       {%- endif -%}
     </a>
 
-    {%- if section.settings.layout != 'center' -%}
-      <nav class="nav" role="navigation">{% render 'nav-list', menu: section.settings.menu, section: section %}</nav>
-    {%- endif -%}
+    <nav class="nav" role="navigation">{% render 'nav-list', menu: section.settings.menu, section: section %}</nav>
 
     <div class="header__actions">
       <button type="button" class="header__icon" data-panel-open="SearchModal" aria-label="{{ 'general.search.title' | t }}">
@@ -157,10 +151,10 @@
       "id": "layout",
       "label": "Layout",
       "options": [
-        { "value": "left", "label": "Logo left, menu right" },
-        { "value": "center", "label": "Logo centred" }
+        { "value": "inline", "label": "Logo left, menu centred, actions right" },
+        { "value": "stacked", "label": "Logo centred, menu on its own row" }
       ],
-      "default": "left"
+      "default": "inline"
     },
     {
       "type": "link_list",

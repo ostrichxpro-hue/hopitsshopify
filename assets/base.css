@@ -609,9 +609,30 @@ body:not(.blobs-on) .blob { display: none; }
   gap: 1.2rem;
   min-height: 6.4rem;
 }
+.header__logo { justify-self: center; }
+
 @media screen and (min-width: 990px) {
-  .header__inner { min-height: 8rem; gap: 2.4rem; }
-  .header--center .header__inner { grid-template-columns: 1fr auto 1fr; }
+  .header__inner {
+    /* Equal outer columns are what actually centres the nav, not text-align. */
+    grid-template-columns: 1fr auto 1fr;
+    min-height: 8rem;
+    gap: 2.4rem;
+  }
+  .header__logo { justify-self: start; }
+  .nav { justify-self: center; }
+  .header__actions { justify-self: end; }
+
+  /* Stacked: logo centred on the first row, nav on its own row beneath. */
+  .header--stacked .header__inner {
+    grid-template-areas:
+      'toggle logo actions'
+      'nav nav nav';
+    row-gap: 0;
+  }
+  .header--stacked .header__menu-toggle { grid-area: toggle; }
+  .header--stacked .header__logo { grid-area: logo; justify-self: center; }
+  .header--stacked .header__actions { grid-area: actions; }
+  .header--stacked .nav { grid-area: nav; padding-bottom: 1.2rem; }
 }
 
 .header__logo { display: inline-flex; align-items: center; text-decoration: none; }
@@ -670,7 +691,6 @@ body:not(.blobs-on) .blob { display: none; }
 .nav { display: none; }
 @media screen and (min-width: 990px) {
   .nav { display: block; }
-  .header__menu-toggle { display: none; }
 }
 .nav__list {
   display: flex;
@@ -797,6 +817,11 @@ body:not(.blobs-on) .blob { display: none; }
   cursor: pointer;
 }
 .header__menu-toggle svg { width: 2.4rem; height: 2.4rem; }
+
+/* Declared after the base rule above, or the cascade would re-show it. */
+@media screen and (min-width: 990px) {
+  .header__menu-toggle { display: none; }
+}
 
 .mobile-nav {
   position: fixed;

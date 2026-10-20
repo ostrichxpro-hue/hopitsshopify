@@ -1106,6 +1106,7 @@ body:not(.blobs-on) .blob { display: none; }
   background: rgba(255, 255, 255, 0.12);
 }
 .usp__icon svg { width: 2.2rem; height: 2.2rem; }
+.usp__body { display: flex; flex-direction: column; min-width: 0; }
 .usp__title { font-family: var(--hp-font-heading); font-weight: 600; font-size: 1.45rem; }
 .usp__text { font-size: 1.3rem; opacity: 0.75; }
 
@@ -3146,8 +3147,6 @@ input:checked + .variant-option--swatch { background: var(--hp-bg); border-color
   .product-card__title { font-size: 1.4rem; }
   .price { font-size: 1.45rem; }
 
-  .usp-bar__grid { grid-template-columns: 1fr; gap: 1.2rem; }
-  .usp { justify-content: flex-start; }
 
   .footer__grid { gap: 2.4rem; }
   .footer { padding-block: 3.2rem 2.4rem; }
@@ -3276,4 +3275,42 @@ input:checked + .variant-option--swatch { background: var(--hp-bg); border-color
   .hero-x__text { font-size: 1.55rem; margin-bottom: 2rem; }
   .hero__eyebrow { margin-bottom: 1.2rem; font-size: 1.2rem; padding: 0.5rem 1.2rem; }
   .hero-x__buttons .button { min-height: 5rem; font-size: 1.55rem; }
+}
+
+
+/* ==========================================================================
+   Trust bar: marquee on phones
+   Four stacked benefit rows take half a phone screen. Scrolling them keeps
+   the whole set visible in one band.
+   ========================================================================== */
+.usp-bar__marquee { display: none; }
+
+@media screen and (max-width: 749px) {
+  .usp-bar--m-marquee .usp-bar__static { display: none; }
+  .usp-bar--m-marquee .usp-bar__marquee {
+    display: flex;
+    gap: 0;
+    padding-block: 1.8rem;
+  }
+  .usp-bar--m-marquee .marquee__track { gap: 0; }
+
+  /* Each benefit becomes an inline unit with a divider after it. */
+  .usp-bar--m-marquee .usp {
+    flex: 0 0 auto;
+    gap: 1rem;
+    padding-inline: 1.8rem;
+    white-space: nowrap;
+  }
+  .usp-bar--m-marquee .usp + .usp { border-left: 1px solid currentColor; }
+  .usp-bar--bar.usp-bar--m-marquee .usp + .usp { border-left-color: rgba(255, 255, 255, 0.22); }
+  .usp-bar--panel.usp-bar--m-marquee .usp + .usp { border-left-color: var(--hp-border); }
+
+  .usp-bar--m-marquee .usp__icon { width: 3.6rem; height: 3.6rem; }
+  .usp-bar--m-marquee .usp__icon svg { width: 1.9rem; height: 1.9rem; }
+  .usp-bar--m-marquee .usp__title { font-size: 1.4rem; }
+  .usp-bar--m-marquee .usp__text { font-size: 1.25rem; }
+
+  /* Stacked option keeps the old behaviour. */
+  .usp-bar--m-stack .usp-bar__grid { grid-template-columns: 1fr; gap: 1.2rem; }
+  .usp-bar--m-stack .usp { justify-content: flex-start; }
 }

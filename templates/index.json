@@ -99,7 +99,10 @@
         "u3",
         "u4"
       ],
-      "settings": {}
+      "settings": {
+        "mobile_style": "marquee",
+        "mobile_speed": 45
+      }
     },
     "categories": {
       "type": "collection-tiles",
@@ -728,7 +731,9 @@
       "settings": {
         "layout": "panel",
         "divider_top": "wave",
-        "divider_color": "#FFFFFF"
+        "divider_color": "#FFFFFF",
+        "mobile_style": "marquee",
+        "mobile_speed": 45
       }
     }
   },

@@ -69,6 +69,31 @@
           "settings": {
             "heading": "Specifications"
           }
+        },
+        "size_help": {
+          "type": "size_help",
+          "settings": {
+            "text": "Between sizes? Go a size up — and swap it free within 7 days if it's wrong.",
+            "link_label": "Find my size"
+          }
+        },
+        "payments": {
+          "type": "payments",
+          "settings": {
+            "text": "Cash on delivery available · UPI · Cards · Net banking"
+          }
+        },
+        "delivery": {
+          "type": "delivery",
+          "settings": {
+            "heading": "Check delivery to your pincode",
+            "zone_rules": "11 | 2 | 4\n12 | 2 | 4\n40 | 2 | 4\n41 | 2 | 4\n56 | 2 | 4\n60 | 2 | 4\n70 | 2 | 4\n50 | 3 | 5\n38 | 3 | 5\n20 | 3 | 5",
+            "default_days": "4 | 7",
+            "cod_blocked_prefixes": "",
+            "cod_yes": "Cash on delivery available",
+            "cod_no": "Prepaid orders only for this pincode",
+            "invalid_text": "Enter a valid 6-digit pincode"
+          }
         }
       },
       "block_order": [
@@ -77,8 +102,11 @@
         "rating",
         "price",
         "variant_picker",
+        "size_help",
         "stock",
         "buy_buttons",
+        "payments",
+        "delivery",
         "trust",
         "description",
         "specs",

@@ -275,6 +275,41 @@
               </div>
             </div>
 
+          {%- when 'delivery' -%}
+            <div {{ block.shopify_attributes }}>{% render 'delivery-check', block: block %}</div>
+
+          {%- when 'size_help' -%}
+            {%- comment -%}
+              Sizing is the single biggest hesitation on children's footwear.
+              This sits directly under the size options rather than in a
+              collapsed row further down the page.
+            {%- endcomment -%}
+            <div class="size-help" {{ block.shopify_attributes }}>
+              <span class="size-help__icon">{% render 'icon', icon: 'foot' %}</span>
+              <span>
+                {{ block.settings.text | escape }}
+                {%- if settings.enable_size_guide -%}
+                  <button type="button" class="size-help__link" data-panel-open="SizeGuideModal">
+                    {{ block.settings.link_label | escape }}
+                  </button>
+                {%- endif -%}
+              </span>
+            </div>
+
+          {%- when 'payments' -%}
+            <div class="pay-row" {{ block.shopify_attributes }}>
+              {%- if block.settings.text != blank -%}
+                <span class="pay-row__text">{{ block.settings.text | escape }}</span>
+              {%- endif -%}
+              {%- if shop.enabled_payment_types.size > 0 -%}
+                <span class="pay-row__icons">
+                  {%- for type in shop.enabled_payment_types limit: 6 -%}
+                    {{ type | payment_type_svg_tag: class: 'pay-row__icon' }}
+                  {%- endfor -%}
+                </span>
+              {%- endif -%}
+            </div>
+
           {%- when 'specs' -%}
             <div class="accordion" {{ block.shopify_attributes }}>
               <div class="accordion__item">
@@ -409,6 +444,49 @@
       "settings": [
         { "type": "text", "id": "heading", "label": "Heading", "default": "Shipping and returns" },
         { "type": "richtext", "id": "content", "label": "Content", "default": "<p>Dispatched in 24 hours. Free size exchange within 7 days of delivery.</p>" }
+      ]
+    },
+    {
+      "type": "size_help",
+      "name": "Sizing reassurance",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Between sizes? Go a size up — and swap it free within 7 days if it's wrong." },
+        { "type": "text", "id": "link_label", "label": "Link label", "default": "Find my size" }
+      ]
+    },
+    {
+      "type": "payments",
+      "name": "Payment reassurance",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Cash on delivery available · UPI · Cards · Net banking" }
+      ]
+    },
+    {
+      "type": "delivery",
+      "name": "Delivery check",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Check delivery to your pincode" },
+        {
+          "type": "textarea",
+          "id": "zone_rules",
+          "label": "Delivery estimates by pincode",
+          "info": "One rule per line: PREFIX | MIN DAYS | MAX DAYS. Longest matching prefix wins. Use the first 2 to 3 digits.",
+          "default": "11 | 2 | 4\n12 | 2 | 4\n40 | 2 | 4\n41 | 2 | 4\n56 | 2 | 4\n60 | 2 | 4\n70 | 2 | 4\n50 | 3 | 5\n38 | 3 | 5\n20 | 3 | 5"
+        },
+        { "type": "text", "id": "default_days", "label": "Everywhere else", "info": "MIN | MAX", "default": "4 | 7" },
+        {
+          "type": "text",
+          "id": "cod_blocked_prefixes",
+          "label": "Pincode prefixes without COD",
+          "info": "Comma separated. Leave empty if COD is available everywhere.",
+          "default": ""
+        },
+        { "type": "text", "id": "cod_yes", "label": "COD available text", "default": "Cash on delivery available" },
+        { "type": "text", "id": "cod_no", "label": "COD unavailable text", "default": "Prepaid orders only for this pincode" },
+        { "type": "text", "id": "invalid_text", "label": "Invalid pincode text", "default": "Enter a valid 6-digit pincode" }
       ]
     },
     {

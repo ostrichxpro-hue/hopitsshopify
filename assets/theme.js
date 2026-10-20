@@ -1104,6 +1104,80 @@
     );
   }
 
+  /* --- Pincode delivery check ----------------------------------------------- */
+
+  function DeliveryCheck(root) {
+    var input = $('[data-pincode-input]', root);
+    var button = $('[data-pincode-submit]', root);
+    var output = $('[data-pincode-result]', root);
+    if (!input || !button || !output) return;
+
+    // "11 | 2 | 4" per line. Longest prefix wins, so a 3-digit rule beats a
+    // 2-digit one for the same pincode.
+    var rules = (root.getAttribute('data-rules') || '')
+      .split('\n')
+      .map(function (line) {
+        var p = line.split('|').map(function (x) { return x.trim(); });
+        if (p.length < 3 || !p[0]) return null;
+        return { prefix: p[0], min: parseInt(p[1], 10), max: parseInt(p[2], 10) };
+      })
+      .filter(Boolean)
+      .sort(function (a, b) { return b.prefix.length - a.prefix.length; });
+
+    var fallback = (root.getAttribute('data-default-days') || '4 | 7')
+      .split('|')
+      .map(function (x) { return parseInt(x.trim(), 10); });
+
+    var codBlocked = (root.getAttribute('data-cod-blocked') || '')
+      .split(',')
+      .map(function (x) { return x.trim(); })
+      .filter(Boolean);
+
+    function businessDate(days) {
+      var d = new Date();
+      var added = 0;
+      while (added < days) {
+        d.setDate(d.getDate() + 1);
+        // Treat Sunday as non-delivering; most Indian couriers run Saturdays.
+        if (d.getDay() !== 0) added++;
+      }
+      return d.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' });
+    }
+
+    function run() {
+      var pin = (input.value || '').replace(/\D/g, '');
+      output.hidden = false;
+
+      if (pin.length !== 6) {
+        output.className = 'delivery-check__result is-error';
+        output.textContent = root.getAttribute('data-invalid-label') || '';
+        return;
+      }
+
+      var match = rules.find(function (r) { return pin.indexOf(r.prefix) === 0; });
+      var min = match ? match.min : fallback[0];
+      var max = match ? match.max : fallback[1];
+
+      var cod = !codBlocked.some(function (p) { return pin.indexOf(p) === 0; });
+      var codLabel = cod
+        ? root.getAttribute('data-cod-label')
+        : root.getAttribute('data-cod-no-label');
+
+      output.className = 'delivery-check__result is-ok';
+      output.innerHTML =
+        '<strong>Arrives ' + businessDate(min) + ' \u2013 ' + businessDate(max) + '</strong>' +
+        '<span>' + codLabel + '</span>';
+    }
+
+    on(button, 'click', run);
+    on(input, 'keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); run(); }
+    });
+    on(input, 'input', function () {
+      input.value = input.value.replace(/\D/g, '').slice(0, 6);
+    });
+  }
+
   /* --- Sticky add to cart (phones) ------------------------------------------ */
 
   function StickyAtc() {
@@ -1191,6 +1265,7 @@
     $$('[data-scroller]', scope).forEach(ScrollProgress);
     $$('[data-shoppable]', scope).forEach(Shoppable);
     $$('[data-carousel]', scope).forEach(Carousel);
+    $$('[data-delivery-check]', scope).forEach(DeliveryCheck);
     $$('[data-size-finder]', scope).forEach(SizeFinder);
     $$('[data-facets]', scope).forEach(Facets);
     $$('[data-recommendations]', scope).forEach(Recommendations);

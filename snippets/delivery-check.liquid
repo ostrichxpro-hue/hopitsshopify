@@ -1,0 +1,44 @@
+{%- comment -%}
+  Pincode delivery check.
+
+  In India this is close to table stakes on a PDP: shoppers want to know it
+  reaches them, roughly when, and whether COD is available, before they add
+  to cart. Estimates come from merchant-configured prefix rules rather than a
+  live carrier API, so nothing here invents a promise the business has not
+  made.
+{%- endcomment -%}
+<div
+  class="delivery-check"
+  data-delivery-check
+  data-rules="{{ block.settings.zone_rules | escape }}"
+  data-default-days="{{ block.settings.default_days | escape }}"
+  data-cod-blocked="{{ block.settings.cod_blocked_prefixes | escape }}"
+  data-cod-label="{{ block.settings.cod_yes | escape }}"
+  data-cod-no-label="{{ block.settings.cod_no | escape }}"
+  data-invalid-label="{{ block.settings.invalid_text | escape }}"
+>
+  <div class="delivery-check__head">
+    <span class="delivery-check__icon">{% render 'icon', icon: 'truck' %}</span>
+    <strong>{{ block.settings.heading | escape }}</strong>
+  </div>
+
+  <div class="delivery-check__row">
+    <label class="visually-hidden" for="PincodeInput">{{ 'products.product.pincode_label' | t }}</label>
+    <input
+      type="text"
+      id="PincodeInput"
+      class="field__input"
+      inputmode="numeric"
+      autocomplete="postal-code"
+      maxlength="6"
+      pattern="[0-9]{6}"
+      placeholder="{{ 'products.product.pincode_placeholder' | t }}"
+      data-pincode-input
+    >
+    <button type="button" class="button button--ink button--small" data-pincode-submit>
+      {{ 'products.product.pincode_submit' | t }}
+    </button>
+  </div>
+
+  <div class="delivery-check__result" data-pincode-result hidden></div>
+</div>

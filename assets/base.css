@@ -3420,3 +3420,81 @@ input:checked + .variant-option--swatch { background: var(--hp-bg); border-color
 @media screen and (max-width: 749px) {
   .specs__row { grid-template-columns: 9rem minmax(0, 1fr); gap: 1rem; }
 }
+
+/* ==========================================================================
+   PDP conversion blocks
+   ========================================================================== */
+.size-help {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-top: 1.2rem;
+  padding: 1.2rem 1.4rem;
+  border-radius: var(--hp-radius-input);
+  background: var(--hp-butter);
+  color: var(--hp-ink);
+  font-size: 1.4rem;
+  line-height: 1.45;
+}
+.size-help__icon { flex: 0 0 auto; }
+.size-help__icon svg { width: 2rem; height: 2rem; }
+.size-help__link {
+  display: inline;
+  margin-left: 0.4rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-weight: 700;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.pay-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem 1.2rem;
+  margin-top: 1.2rem;
+}
+.pay-row__text { font-size: 1.35rem; color: var(--hp-ink-soft); }
+.pay-row__icons { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+.pay-row__icons svg { height: 2.2rem; width: auto; }
+
+.delivery-check {
+  margin-top: 2rem;
+  padding: 1.6rem;
+  border: 2px solid var(--hp-border);
+  border-radius: var(--hp-radius-card);
+}
+.delivery-check__head {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+  font-size: 1.45rem;
+}
+.delivery-check__icon { color: var(--hp-deep); display: grid; place-items: center; }
+.delivery-check__icon svg { width: 2rem; height: 2rem; }
+
+.delivery-check__row { display: flex; gap: 0.8rem; }
+.delivery-check__row .field__input { flex: 1; min-width: 0; }
+
+.delivery-check__result {
+  display: grid;
+  gap: 0.2rem;
+  margin-top: 1rem;
+  padding: 1rem 1.2rem;
+  border-radius: var(--hp-radius-input);
+  font-size: 1.4rem;
+}
+.delivery-check__result[hidden] { display: none; }
+.delivery-check__result.is-ok { background: rgba(63, 122, 46, 0.12); color: var(--hp-success); }
+.delivery-check__result.is-ok span { color: var(--hp-ink-soft); font-size: 1.3rem; }
+.delivery-check__result.is-error { background: rgba(217, 45, 32, 0.1); color: var(--hp-sale); font-weight: 600; }
+
+/* Judge.me writes "No reviews" into its badge. Advertising an empty review
+   count on every product costs more trust than showing nothing. */
+.product__rating:has(.jdgm-prev-badge[data-number-of-reviews='0']) { display: none; }

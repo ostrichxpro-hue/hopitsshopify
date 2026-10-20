@@ -622,7 +622,8 @@
         "profile_url": "",
         "button_label": "Follow on Instagram",
         "background": "default",
-        "divider_top": "none"
+        "divider_top": "none",
+        "image_ratio": "portrait"
       }
     },
     "press": {

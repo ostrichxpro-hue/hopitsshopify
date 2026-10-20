@@ -2565,6 +2565,9 @@ input:checked + .variant-option--swatch { background: var(--hp-bg); border-color
 }
 
 /* --- Follow us ------------------------------------------------------------ */
+.follow-grid--square { --follow-ratio: 1; }
+.follow-grid--portrait { --follow-ratio: 4 / 5; }
+
 .follow-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2580,7 +2583,7 @@ input:checked + .variant-option--swatch { background: var(--hp-bg); border-color
 .follow-tile {
   position: relative;
   display: block;
-  aspect-ratio: 1;
+  aspect-ratio: var(--follow-ratio, 4 / 5);
   border-radius: var(--hp-radius-card);
   overflow: hidden;
   background: var(--hp-image-bg);

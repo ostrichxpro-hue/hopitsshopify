@@ -284,6 +284,29 @@
 </div>
 
 {%- comment -%}
+  Sticky buy bar for phones. It mirrors the real form rather than owning its
+  own, so the variant picker stays the single source of truth.
+{%- endcomment -%}
+<div class="sticky-atc" data-sticky-atc>
+  <span class="sticky-atc__info">
+    <span class="sticky-atc__title">{{ product.title | escape }}</span>
+    <span class="sticky-atc__price" data-sticky-price>{{ current_variant.price | money }}</span>
+  </span>
+  <button
+    type="button"
+    class="button button--primary"
+    data-sticky-add
+    {% unless current_variant.available %}aria-disabled="true"{% endunless %}
+  >
+    {%- if current_variant.available -%}
+      {{ 'products.product.add_to_cart' | t }}
+    {%- else -%}
+      {{ 'products.product.sold_out' | t }}
+    {%- endif -%}
+  </button>
+</div>
+
+{%- comment -%}
   Variant data for the picker. price_html is pre-rendered so switching a variant
   never has to reimplement money formatting in JS.
 {%- endcomment -%}

@@ -1066,6 +1066,79 @@
     );
   }
 
+  /* --- Sticky add to cart (phones) ------------------------------------------ */
+
+  function StickyAtc() {
+    var bar = $('[data-sticky-atc]');
+    var form = $('form[data-cart-form]');
+    if (!bar || !form) return;
+
+    var submit = form.querySelector('[type="submit"]');
+    var addButton = bar.querySelector('[data-sticky-add]');
+    var priceTarget = bar.querySelector('[data-sticky-price]');
+
+    // Tapping the bar runs the real form, so validation and the variant
+    // picker's selection are never duplicated here.
+    on(addButton, 'click', function () {
+      if (addButton.getAttribute('aria-disabled') === 'true') return;
+      form.requestSubmit ? form.requestSubmit() : form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+    });
+
+    document.addEventListener('hopits:variant:changed', function (e) {
+      var variant = e.detail;
+      if (priceTarget && variant.price_html) {
+        var text = new DOMParser().parseFromString(variant.price_html, 'text/html');
+        var regular = text.querySelector('.price__regular');
+        priceTarget.textContent = regular ? regular.textContent.trim() : priceTarget.textContent;
+      }
+      if (variant.available) {
+        addButton.removeAttribute('aria-disabled');
+        addButton.textContent = strings.addToCart || 'Add to cart';
+      } else {
+        addButton.setAttribute('aria-disabled', 'true');
+        addButton.textContent = strings.soldOut || 'Sold out';
+      }
+    });
+
+    if (!submit || !('IntersectionObserver' in window)) return;
+
+    // Show the bar only once the real button has scrolled away.
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries[0].isIntersecting;
+        bar.classList.toggle('is-visible', !visible);
+        document.body.classList.toggle('has-sticky-atc', !visible);
+      },
+      { rootMargin: '0px 0px -40px 0px' }
+    );
+    observer.observe(submit);
+  }
+
+  /* --- Header that hides on the way down ------------------------------------ */
+
+  function scrollAwareHeader() {
+    if (!window.matchMedia('(max-width: 749px)').matches) return;
+    var last = window.scrollY;
+    var ticking = false;
+
+    on(window, 'scroll', function () {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(function () {
+        var y = window.scrollY;
+        var delta = y - last;
+        // Ignore small jitters and never hide at the very top.
+        if (Math.abs(delta) > 6 && y > 120) {
+          document.body.classList.toggle('header-hidden', delta > 0);
+        } else if (y <= 120) {
+          document.body.classList.remove('header-hidden');
+        }
+        last = y;
+        ticking = false;
+      });
+    }, { passive: true });
+  }
+
   /* --- Boot ---------------------------------------------------------------- */
 
   function init(scope) {
@@ -1093,6 +1166,8 @@
   } else {
     init();
     stickyHeader();
+    StickyAtc();
+    scrollAwareHeader();
   }
 
   // Re-initialise when the theme editor swaps a section.

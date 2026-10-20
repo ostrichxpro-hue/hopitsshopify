@@ -1,0 +1,56 @@
+{%- comment -%}
+  Fixed bottom navigation on phones. This is the single element that makes a
+  storefront read as an app rather than a website. Hidden from 750px up.
+{%- endcomment -%}
+{%- if settings.enable_mobile_tabbar -%}
+  <nav class="tabbar" aria-label="{{ 'general.accessibility.menu' | t }}">
+    <a class="tabbar__item{% if request.page_type == 'index' %} is-current{% endif %}" href="{{ routes.root_url }}">
+      <span class="tabbar__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 9.5V20h13V9.5"/><path d="M9.5 20v-5.5h5V20"/></svg>
+      </span>
+      <span class="tabbar__label">Home</span>
+    </a>
+
+    <a class="tabbar__item{% if request.page_type == 'collection' or request.page_type == 'list-collections' %} is-current{% endif %}" href="{{ routes.all_products_collection_url }}">
+      <span class="tabbar__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></svg>
+      </span>
+      <span class="tabbar__label">Shop</span>
+    </a>
+
+    <button type="button" class="tabbar__item" data-panel-open="SearchModal">
+      <span class="tabbar__icon">{% render 'icon', icon: 'search' %}</span>
+      <span class="tabbar__label">{{ 'general.search.title' | t }}</span>
+    </button>
+
+    {%- if settings.cart_type == 'drawer' -%}
+      <button type="button" class="tabbar__item" data-panel-open="CartDrawer">
+        <span class="tabbar__icon">
+          {% render 'icon', icon: 'cart' %}
+          <span class="tabbar__badge" data-cart-count {% if cart.item_count == 0 %}hidden{% endif %}>{{ cart.item_count }}</span>
+        </span>
+        <span class="tabbar__label">Cart</span>
+      </button>
+    {%- else -%}
+      <a class="tabbar__item{% if request.page_type == 'cart' %} is-current{% endif %}" href="{{ routes.cart_url }}">
+        <span class="tabbar__icon">
+          {% render 'icon', icon: 'cart' %}
+          <span class="tabbar__badge" data-cart-count {% if cart.item_count == 0 %}hidden{% endif %}>{{ cart.item_count }}</span>
+        </span>
+        <span class="tabbar__label">Cart</span>
+      </a>
+    {%- endif -%}
+
+    {%- if shop.customer_accounts_enabled -%}
+      <a class="tabbar__item{% if request.page_type contains 'customers' %} is-current{% endif %}" href="{{ routes.account_url }}">
+        <span class="tabbar__icon">{% render 'icon', icon: 'user' %}</span>
+        <span class="tabbar__label">{{ 'sections.header.account' | t }}</span>
+      </a>
+    {%- else -%}
+      <button type="button" class="tabbar__item" data-panel-open="MobileNav">
+        <span class="tabbar__icon">{% render 'icon', icon: 'menu' %}</span>
+        <span class="tabbar__label">{{ 'sections.header.menu' | t }}</span>
+      </button>
+    {%- endif -%}
+  </nav>
+{%- endif -%}

@@ -54,7 +54,8 @@
     "blocks": {},
     "color_deep": "#4A7836",
     "color_warn": "#B45309",
-    "color_star": "#C8860A"
+    "color_star": "#C8860A",
+    "enable_mobile_tabbar": true
   },
   "presets": {
     "Hopits Brand": {

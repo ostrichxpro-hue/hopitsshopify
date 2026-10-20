@@ -3,8 +3,18 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="theme-color" content="{{ settings.color_primary }}">
+    {%- comment -%}
+      viewport-fit=cover is what makes env(safe-area-inset-*) resolve to
+      anything other than zero on a notched phone. Without it the bottom bar
+      sits under the home indicator.
+    {%- endcomment -%}
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="theme-color" content="{{ settings.color_background }}">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="{{ shop.name | escape }}">
+    <meta name="format-detection" content="telephone=no">
     <link rel="canonical" href="{{ canonical_url }}">
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
 
@@ -100,6 +110,7 @@
     {%- endif -%}
 
     {% render 'size-guide-modal' %}
+    {% render 'mobile-tabbar' %}
     {% render 'whatsapp-button' %}
 
     <div id="ToastRegion" class="toast-region" role="status" aria-live="polite"></div>

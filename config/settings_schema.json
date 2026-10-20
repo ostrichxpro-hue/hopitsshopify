@@ -314,6 +314,13 @@
     "name": "t:settings.cart.name",
     "settings": [
       {
+        "type": "checkbox",
+        "id": "enable_mobile_tabbar",
+        "label": "t:settings.cart.mobile_tabbar",
+        "info": "t:settings.cart.mobile_tabbar_info",
+        "default": true
+      },
+      {
         "type": "select",
         "id": "cart_type",
         "label": "t:settings.cart.type",

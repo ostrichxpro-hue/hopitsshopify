@@ -76,7 +76,9 @@
       "show_note": "Enable order note",
       "free_shipping_bar": "Show free shipping progress bar",
       "free_shipping_threshold": "Free shipping threshold",
-      "free_shipping_threshold_info": "In your store currency, without decimals."
+      "free_shipping_threshold_info": "In your store currency, without decimals.",
+      "mobile_tabbar": "Show mobile bottom bar",
+      "mobile_tabbar_info": "App-style navigation fixed to the bottom of the screen on phones."
     },
     "sizing": {
       "name": "Kids size guide",

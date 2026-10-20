@@ -177,7 +177,10 @@
         "background": "default",
         "tile_style": "blob",
         "divider_top": "none",
-        "blob_shape": "arch"
+        "blob_shape": "arch",
+        "tile_layout": "carousel",
+        "cards_desktop": 4.5,
+        "cards_mobile": 2.5
       }
     },
     "bestsellers": {

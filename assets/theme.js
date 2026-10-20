@@ -854,6 +854,44 @@
     }, 150));
   }
 
+  /* --- Carousel arrows ------------------------------------------------------ */
+
+  function Carousel(root) {
+    var scroller = $('[data-scroller]', root);
+    var prev = $('[data-carousel-prev]', root.closest('.section') || document);
+    var next = $('[data-carousel-next]', root.closest('.section') || document);
+    if (!scroller || (!prev && !next)) return;
+
+    function step() {
+      var first = scroller.firstElementChild;
+      if (!first) return scroller.clientWidth;
+      var styles = window.getComputedStyle(scroller);
+      var gap = parseFloat(styles.columnGap || styles.gap) || 0;
+      return first.getBoundingClientRect().width + gap;
+    }
+
+    function sync() {
+      var max = scroller.scrollWidth - scroller.clientWidth;
+      if (prev) prev.disabled = scroller.scrollLeft <= 1;
+      if (next) next.disabled = scroller.scrollLeft >= max - 1;
+    }
+
+    if (prev) {
+      on(prev, 'click', function () {
+        scroller.scrollBy({ left: -step(), behavior: 'smooth' });
+      });
+    }
+    if (next) {
+      on(next, 'click', function () {
+        scroller.scrollBy({ left: step(), behavior: 'smooth' });
+      });
+    }
+
+    on(scroller, 'scroll', debounce(sync, 80), { passive: true });
+    on(window, 'resize', debounce(sync, 150));
+    sync();
+  }
+
   /* --- Shoppable image hotspots --------------------------------------------- */
 
   function Shoppable(root) {
@@ -1152,6 +1190,7 @@
     $$('[data-tabs-root]', scope).forEach(Tabs);
     $$('[data-scroller]', scope).forEach(ScrollProgress);
     $$('[data-shoppable]', scope).forEach(Shoppable);
+    $$('[data-carousel]', scope).forEach(Carousel);
     $$('[data-size-finder]', scope).forEach(SizeFinder);
     $$('[data-facets]', scope).forEach(Facets);
     $$('[data-recommendations]', scope).forEach(Recommendations);

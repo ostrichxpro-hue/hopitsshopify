@@ -3314,3 +3314,66 @@ input:checked + .variant-option--swatch { background: var(--hp-bg); border-color
   .usp-bar--m-stack .usp-bar__grid { grid-template-columns: 1fr; gap: 1.2rem; }
   .usp-bar--m-stack .usp { justify-content: flex-start; }
 }
+
+/* ==========================================================================
+   Fractional-width carousel
+   Showing 4.5 cards rather than 4 leaves a half card cut off at the edge,
+   which tells the shopper the row scrolls without needing an arrow to say so.
+   ========================================================================== */
+.scroller--cols {
+  --sc-gap: 1.2rem;
+  --cols: var(--cols-m, 2.5);
+  grid-auto-columns: calc((100% - (var(--cols) - 1) * var(--sc-gap)) / var(--cols));
+  gap: var(--sc-gap);
+}
+@media screen and (min-width: 750px) {
+  .scroller--cols {
+    --sc-gap: 2.4rem;
+    --cols: var(--cols-d, 4.5);
+  }
+}
+
+.cat-carousel { position: relative; }
+
+/* The grid children are anchors, not list items, so reset the list styling
+   the base .scroller rule assumes. */
+.scroller--cols > * { scroll-snap-align: start; }
+
+.section-header__tools {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.carousel-nav { display: none; gap: 0.6rem; }
+@media screen and (min-width: 990px) {
+  .carousel-nav { display: flex; }
+}
+
+.carousel-nav__btn {
+  display: grid;
+  place-items: center;
+  width: 4.4rem;
+  height: 4.4rem;
+  padding: 0;
+  border: 2px solid var(--hp-border);
+  border-radius: 50%;
+  background: var(--hp-bg);
+  color: var(--hp-ink);
+  cursor: pointer;
+  transition: border-color 0.16s ease, background-color 0.16s ease, opacity 0.16s ease;
+}
+.carousel-nav__btn svg { width: 2rem; height: 2rem; }
+.carousel-nav__btn:hover:not(:disabled) { border-color: var(--hp-ink); background: var(--hp-surface); }
+.carousel-nav__btn:disabled { opacity: 0.32; cursor: not-allowed; }
+[data-carousel-prev] svg { transform: rotate(180deg); }
+
+@media screen and (max-width: 749px) {
+  /* Bleed to the screen edge, with scroll padding keeping the first card
+     aligned to the heading above it. */
+  .cat-carousel .scroller--cols {
+    margin-inline: -1.8rem;
+    padding-inline: 1.8rem;
+    scroll-padding-left: 1.8rem;
+  }
+}

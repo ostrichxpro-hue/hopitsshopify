@@ -11,7 +11,7 @@
 -%}
 
 <div
-  class="hero-x hero-x--{{ layout }} hero-x--h-{{ height }}"
+  class="hero-x hero-x--{{ layout }} hero-x--h-{{ height }} hero-x--m-{{ section.settings.mobile_layout | default: 'below' }}"
   data-slideshow
   data-autoplay="{{ section.settings.autoplay }}"
   data-speed="{{ section.settings.speed }}"
@@ -191,6 +191,17 @@
         { "value": "split", "label": "Image beside the content" }
       ],
       "default": "overlay"
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "On phones",
+      "info": "Overlaying a tall block of text hides the photo on a narrow screen.",
+      "options": [
+        { "value": "below", "label": "Image on top, content beneath" },
+        { "value": "overlay", "label": "Content over the image" }
+      ],
+      "default": "below"
     },
     {
       "type": "select",

@@ -92,7 +92,7 @@
     <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
   </head>
 
-  <body class="template-{{ request.page_type | handle }} card-shadow-{{ settings.card_shadow }}{% if settings.enable_blobs %} blobs-on{% endif %}">
+  <body class="template-{{ request.page_type | handle }} card-shadow-{{ settings.card_shadow }}{% if settings.enable_blobs %} blobs-on{% endif %}{% if settings.enable_mobile_tabbar %} has-tabbar{% endif %}">
     <a class="skip-link button button--primary" href="#MainContent">
       {{ 'general.accessibility.skip_to_content' | t }}
     </a>

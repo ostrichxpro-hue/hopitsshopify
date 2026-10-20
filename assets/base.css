@@ -200,6 +200,16 @@ p:last-child { margin-bottom: 0; }
 .button--small { min-height: 3.8rem; padding: 0.7rem 1.6rem; font-size: 1.35rem; }
 .button--large { min-height: 5.6rem; padding: 1.5rem 3.4rem; font-size: 1.7rem; }
 
+/* An unsized SVG in a flex row stretches to the line height, so every icon
+   inside a button needs explicit dimensions. */
+.button svg {
+  flex: 0 0 auto;
+  width: 2rem;
+  height: 2rem;
+}
+.button--small svg { width: 1.7rem; height: 1.7rem; }
+.button--large svg { width: 2.2rem; height: 2.2rem; }
+
 /* --- Focus ---------------------------------------------------------------- */
 :focus-visible {
   outline: 3px solid var(--hp-deep);
@@ -1003,6 +1013,8 @@ body:not(.blobs-on) .blob { display: none; }
   font-size: 1.3rem;
   font-weight: 700;
 }
+.hero__eyebrow svg { flex: 0 0 auto; width: 1.5rem; height: 1.5rem; }
+
 .hero__title { margin-bottom: 1.6rem; }
 .hero__title em {
   font-style: normal;
@@ -3185,4 +3197,83 @@ input:checked + .variant-option--swatch { background: var(--hp-bg); border-color
 @media screen and (max-width: 749px) {
   .header { transition: transform 0.28s cubic-bezier(0.32, 0.72, 0, 1); }
   body.header-hidden .header { transform: translateY(-100%); }
+}
+
+
+/* ==========================================================================
+   Mobile: remove navigation the bottom bar already provides
+   ========================================================================== */
+@media screen and (max-width: 749px) {
+  body.has-tabbar .header__actions > * { display: none; }
+
+  /* Keep the column so the logo stays optically centred between the
+     hamburger and the right edge. */
+  body.has-tabbar .header__actions {
+    width: 4.4rem;
+    min-width: 4.4rem;
+  }
+}
+
+/* ==========================================================================
+   Hero on phones
+   A full-height overlay works on a wide screen where the content occupies a
+   third of the frame. At 390px the same content fills the whole thing and the
+   photograph disappears behind it.
+   ========================================================================== */
+@media screen and (max-width: 749px) {
+  /* Stacked: the image gets its own space and is never covered. */
+  .hero-x--m-below .hero-x__bg {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+  }
+  .hero-x--m-below .hero-x__bg--empty { display: block; }
+  .hero-x--m-below .hero-x__scrim { display: none; }
+
+  .hero-x--m-below .hero-x__inner {
+    min-height: 0;
+    padding-block: 2.8rem 3.6rem;
+  }
+
+  /* Content now sits on the page, not on a photo, so light type would
+     vanish. Force the ink palette regardless of the slide's setting. */
+  .hero-x--m-below .hero-x__slide--light .hero-x__content,
+  .hero-x--m-below .hero-x__slide--dark .hero-x__content { color: var(--hp-ink); }
+  .hero-x--m-below .hero-x__slide--light .hero-x__text,
+  .hero-x--m-below .hero-x__slide--dark .hero-x__text { color: var(--hp-ink-soft); }
+  .hero-x--m-below .hero-x__slide--light .hero-x__title em { color: var(--hp-primary); }
+  .hero-x--m-below .hero-x__slide--light .hero-x__stats { border-top-color: var(--hp-border); }
+  .hero-x--m-below .hero-x__slide--light .hero__stat-value { color: var(--hp-primary); }
+  .hero-x--m-below .hero-x__slide--light .hero__stat-label { color: var(--hp-ink-soft); }
+
+  /* The second button is white-on-photo by default; on a white page it needs
+     an outline instead. */
+  .hero-x--m-below .button--light {
+    --button-bg: transparent;
+    --button-fg: var(--hp-ink);
+    border-color: var(--hp-ink);
+  }
+
+  /* Dots sit under the content rather than floating over the buttons. */
+  .hero-x--m-below .slideshow__dots {
+    position: static;
+    transform: none;
+    justify-content: center;
+    margin: 0 0 2.4rem;
+  }
+
+  /* Overlay on a phone: pin the content low so the top of the shot shows. */
+  .hero-x--m-overlay .hero-x__inner {
+    align-items: flex-end;
+    padding-bottom: 4rem;
+  }
+  .hero-x--m-overlay .hero-x__slide { --hero-h: 60svh; }
+
+  /* Tighter type either way — the desktop scale is far too loud at 390px. */
+  .hero-x__title { font-size: calc(3.2rem * var(--hp-heading-scale)); margin-bottom: 1.2rem; }
+  .hero-x__text { font-size: 1.55rem; margin-bottom: 2rem; }
+  .hero__eyebrow { margin-bottom: 1.2rem; font-size: 1.2rem; padding: 0.5rem 1.2rem; }
+  .hero-x__buttons .button { min-height: 5rem; font-size: 1.55rem; }
 }

@@ -300,7 +300,7 @@
         "id": "size_option_names",
         "label": "t:settings.product_card.size_option_names",
         "info": "t:settings.product_card.size_option_names_info",
-        "default": "Size, UK Size, EU Size"
+        "default": "Size, Shoe size, UK Size, EU Size"
       },
       {
         "type": "text",

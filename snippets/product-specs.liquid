@@ -1,0 +1,43 @@
+{%- comment -%}
+  Product specifications from Shopify's standard taxonomy metafields.
+
+  These already exist on every product in this catalogue, populated by
+  Shopify's product taxonomy. They are list.metaobject_reference, so each
+  value resolves to a metaobject whose `label` field holds the display text
+  ("Waterproof", "Arch support"). Nothing here needs creating.
+{%- endcomment -%}
+{%- liquid
+  assign spec_keys = 'footwear-material,closure-type,shoe-features,shoe-fit,toe-style,sneaker-style,occasion-style,activity,heel-height-type,color-pattern,care-instructions' | split: ','
+  assign spec_labels = 'Material,Closure,Features,Fit,Toe style,Style,Occasion,Activity,Heel height,Colour,Care' | split: ','
+  assign rendered = 0
+-%}
+
+{%- capture spec_rows -%}
+  {%- for key in spec_keys -%}
+    {%- liquid
+      assign field = product.metafields.shopify[key]
+      assign label = spec_labels[forloop.index0]
+    -%}
+    {%- if field != blank and field.value != blank -%}
+      {%- capture values -%}
+        {%- for entry in field.value -%}
+          {%- if entry.label != blank -%}
+            {{- entry.label -}}{%- unless forloop.last -%}, {% endunless -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endcapture -%}
+      {%- assign values = values | strip -%}
+      {%- if values != blank -%}
+        <div class="specs__row">
+          <dt class="specs__label">{{ label | strip }}</dt>
+          <dd class="specs__value">{{ values }}</dd>
+        </div>
+        {%- assign rendered = rendered | plus: 1 -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- if rendered > 0 -%}
+  <dl class="specs">{{ spec_rows }}</dl>
+{%- endif -%}

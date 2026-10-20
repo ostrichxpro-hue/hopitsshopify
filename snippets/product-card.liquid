@@ -34,18 +34,27 @@
   assign size_names = settings.size_option_names | downcase | split: ','
   assign color_names = settings.color_option_names | downcase | split: ','
 
+  comment
+    Option names are inconsistent across this catalogue: "Shoe size", "size"
+    and "Size" all appear. Exact matching missed the majority, so test for
+    containment in either direction.
+  endcomment
   for option in card_product.options_with_values
     assign option_name = option.name | downcase | strip
     for candidate in size_names
-      assign candidate_name = candidate | strip
-      if option_name == candidate_name and size_index == -1
-        assign size_index = forloop.parentloop.index0
+      assign candidate_name = candidate | downcase | strip
+      if size_index == -1 and candidate_name != blank
+        if option_name contains candidate_name or candidate_name contains option_name
+          assign size_index = forloop.parentloop.index0
+        endif
       endif
     endfor
     for candidate in color_names
-      assign candidate_name = candidate | strip
-      if option_name == candidate_name and color_index == -1
-        assign color_index = forloop.parentloop.index0
+      assign candidate_name = candidate | downcase | strip
+      if color_index == -1 and candidate_name != blank
+        if option_name contains candidate_name or candidate_name contains option_name
+          assign color_index = forloop.parentloop.index0
+        endif
       endif
     endfor
   endfor

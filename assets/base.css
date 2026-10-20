@@ -3380,3 +3380,43 @@ input:checked + .variant-option--swatch { background: var(--hp-bg); border-color
     scroll-padding-left: 1.8rem;
   }
 }
+
+/* ==========================================================================
+   Product specifications, A+ content, reviews
+   ========================================================================== */
+.specs { margin: 0; }
+.specs__row {
+  display: grid;
+  grid-template-columns: 11rem minmax(0, 1fr);
+  gap: 1.2rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--hp-border);
+}
+.specs__row:last-child { border-bottom: 0; }
+.specs__label {
+  margin: 0;
+  font-family: var(--hp-font-heading);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--hp-ink-soft);
+}
+.specs__value { margin: 0; font-size: 1.45rem; }
+
+.product__rating { margin-bottom: 1.2rem; }
+/* Judge.me hides its own badge until its script runs; reveal it so the
+   stars are visible even before the app embed loads. */
+.product__rating .jdgm-prev-badge { display: block !important; }
+
+.aplus { display: grid; gap: 1.6rem; }
+.aplus__image {
+  width: 100%;
+  height: auto;
+  border-radius: var(--hp-radius-card);
+}
+@media screen and (min-width: 750px) {
+  .aplus { gap: 2.4rem; }
+}
+
+@media screen and (max-width: 749px) {
+  .specs__row { grid-template-columns: 9rem minmax(0, 1fr); gap: 1rem; }
+}

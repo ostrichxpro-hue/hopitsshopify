@@ -1,0 +1,43 @@
+{%- comment -%}
+  Judge.me review widget. The metafield holds pre-rendered HTML, so the
+  reviews are in the markup before any script loads; the Judge.me app embed
+  then enhances it with sorting, pagination and the write-review form.
+{%- endcomment -%}
+{%- assign jdgm_widget = product.metafields.judgeme.widget -%}
+{%- if jdgm_widget != blank -%}
+  <div class="section{% if section.settings.background == 'surface' %} section--surface{% endif %}" id="reviews">
+    <div class="page-width page-width--narrow">
+      {{ jdgm_widget }}
+    </div>
+  </div>
+{%- elsif request.design_mode -%}
+  <div class="section">
+    <div class="page-width page-width--narrow">
+      <p class="empty-state">
+        No Judge.me review data on this product yet. Enable the Judge.me app embed under Theme settings &rarr; App embeds for the widget to appear.
+      </p>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Product reviews",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Renders the Judge.me widget from the product's judgeme.widget metafield. Enable the Judge.me app embed on this theme so the script can make it interactive."
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "default", "label": "Page background" },
+        { "value": "surface", "label": "Soft surface" }
+      ],
+      "default": "surface"
+    }
+  ]
+}
+{% endschema %}

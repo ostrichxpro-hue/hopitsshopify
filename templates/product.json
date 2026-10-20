@@ -59,17 +59,29 @@
         "share": {
           "type": "share",
           "settings": {}
+        },
+        "rating": {
+          "type": "rating",
+          "settings": {}
+        },
+        "specs": {
+          "type": "specs",
+          "settings": {
+            "heading": "Specifications"
+          }
         }
       },
       "block_order": [
         "vendor",
         "title",
+        "rating",
         "price",
         "variant_picker",
         "stock",
         "buy_buttons",
         "trust",
         "description",
+        "specs",
         "shipping",
         "care",
         "share"
@@ -131,10 +143,25 @@
         "mobile_style": "marquee",
         "mobile_speed": 45
       }
+    },
+    "aplus": {
+      "type": "product-aplus",
+      "settings": {
+        "heading": "",
+        "background": "default"
+      }
+    },
+    "reviews": {
+      "type": "product-reviews",
+      "settings": {
+        "background": "surface"
+      }
     }
   },
   "order": [
     "main",
+    "aplus",
+    "reviews",
     "related",
     "usp_bar"
   ]

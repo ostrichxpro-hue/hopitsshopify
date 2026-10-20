@@ -31,7 +31,7 @@
     "card_show_swatches": true,
     "card_quick_add": true,
     "card_show_sizes": false,
-    "size_option_names": "Size, UK Size, EU Size",
+    "size_option_names": "Size, Shoe size, UK Size, EU Size",
     "color_option_names": "Color, Colour, Shade",
     "cart_type": "drawer",
     "cart_show_note": true,

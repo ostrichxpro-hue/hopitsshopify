@@ -1,0 +1,30 @@
+{%- comment -%}
+  A+ content banners from custom.a_plus_1..3, which are file_reference
+  metafields pointing at images already uploaded to Files.
+{%- endcomment -%}
+{%- liquid
+  assign aplus_keys = 'a_plus_1,a_plus_2,a_plus_3' | split: ','
+  assign found = 0
+-%}
+{%- capture aplus_images -%}
+  {%- for key in aplus_keys -%}
+    {%- assign media = product.metafields.custom[key].value -%}
+    {%- if media != blank -%}
+      <img
+        src="{{ media | image_url: width: 1400 }}"
+        srcset="{{ media | image_url: width: 700 }} 700w, {{ media | image_url: width: 1400 }} 1400w, {{ media | image_url: width: 2000 }} 2000w"
+        sizes="(min-width: 1100px) 1200px, 100vw"
+        alt="{{ media.alt | default: product.title | escape }}"
+        width="{{ media.width | default: 1400 }}"
+        height="{{ media.height | default: 900 }}"
+        loading="lazy"
+        class="aplus__image"
+      >
+      {%- assign found = found | plus: 1 -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- if found > 0 -%}
+  <div class="aplus">{{ aplus_images }}</div>
+{%- endif -%}

@@ -453,32 +453,16 @@
     "exclusive": {
       "type": "tabbed-collections",
       "blocks": {
-        "t_girls": {
+        "t_main": {
           "type": "tab",
           "settings": {
-            "collection": "girls",
-            "label": "Girls"
-          }
-        },
-        "t_boys": {
-          "type": "tab",
-          "settings": {
-            "collection": "boys",
-            "label": "Boys"
-          }
-        },
-        "t_tots": {
-          "type": "tab",
-          "settings": {
-            "collection": "toddlers",
-            "label": "Toddlers"
+            "collection": "shop",
+            "label": ""
           }
         }
       },
       "block_order": [
-        "t_girls",
-        "t_boys",
-        "t_tots"
+        "t_main"
       ],
       "settings": {
         "heading": "Exclusive designs",

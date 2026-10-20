@@ -1,0 +1,60 @@
+{%- comment -%}
+  Add-ons beside the buy button. Deliberately compact rather than a second
+  product grid: this competes with the add to cart for attention, so it
+  stays a list of small rows.
+
+  Single-variant add-ons go straight into the cart. Anything with real
+  options links to its own page instead of guessing a variant for the
+  shopper.
+{%- endcomment -%}
+{%- liquid
+  assign source = collections[block.settings.collection]
+  assign limit = block.settings.products_to_show | default: 3
+  assign shown = 0
+-%}
+
+{%- if source.products.size > 0 -%}
+  <div class="addons">
+    <div class="addons__head">
+      <span class="addons__icon">{% render 'icon', icon: 'sparkle' %}</span>
+      <strong>{{ block.settings.heading | escape }}</strong>
+    </div>
+
+    <ul class="addons__list">
+      {%- for addon in source.products -%}
+        {%- if addon.id != product.id and shown < limit and addon.available -%}
+          {%- liquid
+            assign shown = shown | plus: 1
+            assign single = false
+            if addon.variants.size == 1
+              assign single = true
+            endif
+          -%}
+          <li class="addon" data-product-card>
+            <a href="{{ addon.url }}" class="addon__media" tabindex="-1" aria-hidden="true">
+              {%- if addon.featured_media -%}
+                <img src="{{ addon.featured_media | image_url: width: 140, height: 140, crop: 'center' }}" alt="" width="70" height="70" loading="lazy">
+              {%- endif -%}
+            </a>
+
+            <div class="addon__body">
+              <a href="{{ addon.url }}" class="addon__title">{{ addon.title | escape }}</a>
+              <span class="addon__price">{{ addon.price | money }}</span>
+            </div>
+
+            {%- if single -%}
+              <input type="hidden" data-quick-add-variant value="{{ addon.variants.first.id }}">
+              <button type="button" class="addon__add" data-quick-add aria-label="{{ 'products.product.add_to_cart' | t }}: {{ addon.title | escape }}">
+                {% render 'icon', icon: 'plus' %}
+              </button>
+            {%- else -%}
+              <a href="{{ addon.url }}" class="addon__add addon__add--link" aria-label="{{ 'products.product.view_details' | t }}: {{ addon.title | escape }}">
+                {% render 'icon', icon: 'chevron-right' %}
+              </a>
+            {%- endif -%}
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+{%- endif -%}

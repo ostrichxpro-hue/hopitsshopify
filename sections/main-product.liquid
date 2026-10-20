@@ -275,6 +275,9 @@
               </div>
             </div>
 
+          {%- when 'addons' -%}
+            <div {{ block.shopify_attributes }}>{% render 'product-addons', product: product, block: block %}</div>
+
           {%- when 'delivery' -%}
             <div {{ block.shopify_attributes }}>{% render 'delivery-check', block: block %}</div>
 
@@ -461,6 +464,16 @@
       "limit": 1,
       "settings": [
         { "type": "text", "id": "text", "label": "Text", "default": "Cash on delivery available · UPI · Cards · Net banking" }
+      ]
+    },
+    {
+      "type": "addons",
+      "name": "Add-ons",
+      "limit": 2,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Add to your order" },
+        { "type": "collection", "id": "collection", "label": "Collection", "info": "Low-priced complements work best here: socks, charms, care items." },
+        { "type": "range", "id": "products_to_show", "min": 1, "max": 5, "step": 1, "label": "Items to show", "default": 3 }
       ]
     },
     {

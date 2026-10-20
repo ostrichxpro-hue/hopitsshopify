@@ -94,6 +94,14 @@
             "cod_no": "Prepaid orders only for this pincode",
             "invalid_text": "Enter a valid 6-digit pincode"
           }
+        },
+        "addons": {
+          "type": "addons",
+          "settings": {
+            "heading": "Add to your order",
+            "collection": "charms",
+            "products_to_show": 3
+          }
         }
       },
       "block_order": [
@@ -106,6 +114,7 @@
         "stock",
         "buy_buttons",
         "payments",
+        "addons",
         "delivery",
         "trust",
         "description",

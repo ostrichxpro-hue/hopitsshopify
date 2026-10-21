@@ -1,0 +1,43 @@
+{%- comment -%}
+  Shiprocket Fastrr headless checkout.
+
+  Ported from the live theme. This is the real checkout for Indian traffic:
+  the switcher in theme.liquid hides Shopify's own checkout button and shows
+  Fastrr's instead, which is why Shopify's session funnel reports a fraction
+  of actual orders.
+
+  Kept faithful to the live theme apart from the button colour, which now
+  follows the theme's primary token instead of a hardcoded hex. The hex
+  remains as the fallback.
+{%- endcomment -%}
+<script type="application/javascript">
+  checkoutBuyer = "https://fastrr-boost-ui.pickrr.com/";
+</script>
+<input type="hidden" value="{{ shop.domain }}" id="sellerDomain">
+<link rel="stylesheet" href="https://fastrr-boost-ui.pickrr.com/assets/styles/shopify.css">
+<script src="https://fastrr-boost-ui.pickrr.com/assets/js/channels/shopify.js" defer></script>
+<script src="https://shiprocket-sns.pickrr.com/script.js" defer></script>
+<script src="https://shiprocket-pad.pickrr.com/script.js" defer></script>
+
+<input type="hidden" id="template" value="custom-text">
+<input type="hidden" id="customText" value="{{ settings.fastrr_button_text | default: 'Buy it Now' }}">
+
+<style>
+  .sr-headless-checkout {
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: var(--hp-radius-button, 40px);
+    height: 56px;
+    letter-spacing: 1.08px;
+    background-color: var(--hp-primary, #90C379);
+    margin-bottom: 0;
+    color: var(--hp-on-primary, #000);
+  }
+  .sr-checkout-visible2 { text-transform: capitalize !important; }
+  .shiprocket-headless { width: 100% !important; }
+  .full-width img { width: fit-content; }
+  .sr-powered-by,
+  .sr-checkout-visible1[alt='right_arrow'] { filter: invert(1); }
+  .sr-powered-by { right: 15px !important; }
+</style>

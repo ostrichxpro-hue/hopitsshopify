@@ -55,7 +55,11 @@
     "color_deep": "#4A7836",
     "color_warn": "#B45309",
     "color_star": "#C8860A",
-    "enable_mobile_tabbar": true
+    "enable_mobile_tabbar": true,
+    "enable_fastrr_checkout": true,
+    "fastrr_button_text": "Buy it Now",
+    "enable_sr_chatbot": true,
+    "snapmint_mid": "7918"
   },
   "presets": {
     "Hopits Brand": {

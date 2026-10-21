@@ -1,0 +1,33 @@
+{%- comment -%}
+  Chooses between Shiprocket Fastrr and Shopify's native checkout.
+
+  Ported verbatim in behaviour from the live theme: Indian timezones get
+  Fastrr, everyone else gets Shopify. Reproduced rather than improved,
+  because changing which checkout a shopper sees is a business decision, not
+  a theme one.
+
+  Worth knowing: timezone is a weak proxy for location. A customer on a VPN,
+  travelling, or with a misconfigured device clock falls through to Shopify's
+  checkout. Those cases are very likely the small number of checkouts that do
+  show up in Shopify's funnel.
+{%- endcomment -%}
+{%- if settings.enable_fastrr_checkout -%}
+  <script>
+    (function () {
+      var indiaTimezones = ['Asia/Kolkata', 'Asia/Calcutta'];
+      var tz = '';
+      try {
+        tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      } catch (e) {}
+
+      var useFastrr = indiaTimezones.indexOf(tz) !== -1;
+      var css = useFastrr
+        ? 'button[name="checkout"],.shopify-payment-button__button--unbranded{display:none!important}'
+        : '.shiprocket-headless{display:none!important}';
+
+      var style = document.createElement('style');
+      style.textContent = css;
+      document.head.appendChild(style);
+    })();
+  </script>
+{%- endif -%}

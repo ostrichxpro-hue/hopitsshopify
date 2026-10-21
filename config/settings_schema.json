@@ -419,6 +419,41 @@
     ]
   },
   {
+    "name": "t:settings.integrations.name",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "t:settings.integrations.intro"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_fastrr_checkout",
+        "label": "t:settings.integrations.fastrr",
+        "info": "t:settings.integrations.fastrr_info",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "fastrr_button_text",
+        "label": "t:settings.integrations.fastrr_text",
+        "default": "Buy it Now"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_sr_chatbot",
+        "label": "t:settings.integrations.chatbot",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "snapmint_mid",
+        "label": "t:settings.integrations.snapmint",
+        "info": "t:settings.integrations.snapmint_info",
+        "default": "7918"
+      }
+    ]
+  },
+  {
     "name": "t:settings.seo.name",
     "settings": [
       {

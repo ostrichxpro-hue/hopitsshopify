@@ -104,6 +104,16 @@
       "share_image": "Default social sharing image",
       "structured_data": "Output structured data",
       "structured_data_info": "Helps Google show ratings, prices and breadcrumbs."
+    },
+    "integrations": {
+      "name": "Integrations",
+      "intro": "Ported from the live theme. App embeds under Theme settings are separate and still need enabling here.",
+      "fastrr": "Shiprocket Fastrr checkout",
+      "fastrr_info": "Replaces Shopify's checkout button for visitors in Indian timezones. Turning this off falls back to Shopify checkout everywhere.",
+      "fastrr_text": "Fastrr button text",
+      "chatbot": "Shiprocket Eva chat",
+      "snapmint": "Snapmint merchant ID",
+      "snapmint_info": "Leave empty to remove the Snapmint script."
     }
   }
 }

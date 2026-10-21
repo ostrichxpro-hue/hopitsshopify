@@ -55,6 +55,14 @@
       {{ heading_bold | font_face: font_display: 'swap' }}
     {% endstyle %}
 
+    {%- comment -%}
+      Checkout integration ported from the live theme. Fastrr owns checkout
+      for Indian traffic, so it loads in head alongside the switcher.
+    {%- endcomment -%}
+    {%- if settings.enable_fastrr_checkout -%}
+      {% render 'sr-checkout' %}
+    {%- endif -%}
+
     {% render 'css-variables' %}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
@@ -90,6 +98,18 @@
     </script>
 
     <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+
+    {% render 'checkout-switcher' %}
+
+    {%- if settings.enable_sr_chatbot -%}
+      {% render 'sr-chatbot' %}
+    {%- endif -%}
+
+    {%- if settings.snapmint_mid != blank -%}
+      {%- comment -%}Snapmint pay-in-instalments, ported from the live theme.{%- endcomment -%}
+      <script>var mid = {{ settings.snapmint_mid | json }};</script>
+      <script src="https://checkout-merchant.snapmint.com/js/v1/{{ settings.snapmint_mid }}" defer></script>
+    {%- endif -%}
   </head>
 
   <body class="template-{{ request.page_type | handle }} card-shadow-{{ settings.card_shadow }}{% if settings.enable_blobs %} blobs-on{% endif %}{% if settings.enable_mobile_tabbar %} has-tabbar{% endif %}">

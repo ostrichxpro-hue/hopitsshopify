@@ -113,10 +113,18 @@ shopify theme push --unpublished                  # upload as a draft theme
 
 1. **Push unpublished and preview first.** `shopify theme push --unpublished` — the
    live theme is untouched until you publish from Online Store → Themes.
-2. **Re-add app embeds.** The current live theme runs GoKwik/Fastrr checkout.
-   App embeds and script tags do **not** carry over to a new theme — re-enable them
-   under Theme settings → App embeds, and verify checkout end to end on the preview
-   before publishing.
+2. **Verify checkout end to end before publishing.** Checkout is Shiprocket
+   Fastrr, ported into this theme as `snippets/sr-checkout.liquid` plus
+   `snippets/checkout-switcher.liquid`. The switcher reads the browser timezone
+   and, for Asia/Kolkata or Asia/Calcutta, hides Shopify's own checkout button so
+   Fastrr's takes over. Everyone outside those timezones falls through to Shopify
+   checkout, so test both paths.
+
+   GoKwik and KwikPass are deliberately **not** included. They were disabled or
+   mid-migration on the previous theme.
+
+   App embeds are separate from theme code and do not carry over: re-enable the
+   ones you still want under Theme settings → App embeds.
 3. **Set theme settings**: logo, favicon, WhatsApp number, social links, and the
    free-shipping threshold (defaults to ₹999).
 4. **Build the menus.** The header expects a `main-menu`; the mega menu is driven by
